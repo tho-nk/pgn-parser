@@ -1,14 +1,24 @@
-#include <concepts>
+#include "pgn-parsing/include/ParsingHelper.hpp"
 #include <iostream>
 
-std::integral auto factorial(std::integral auto a) {
-    if (a <= 0)
-        return 1;
-    else
-        return a * factorial(a - 1);
+void printQueue(const std::queue<std::string> &q) {
+    std::queue<std::string> temp = q; // Make a copy of the original queue
+
+    // Print elements while the temporary queue is not empty
+    while (!temp.empty()) {
+        std::cout << temp.front() << std::endl;
+        temp.pop();
+    }
+    std::cout << std::endl;
 }
 
-int main() {
-    std::cout << factorial(10) << std::endl;
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        std::cerr << "Usage: " << argv[0] << " <file_path>" << std::endl;
+        return 1;
+    }
+    std::filesystem::path filePath = argv[1];
+    auto q = mlp_ha::ParseFile(filePath);
+    printQueue(q);
     return 0;
 }
