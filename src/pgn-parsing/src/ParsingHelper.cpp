@@ -21,6 +21,53 @@ bool IsBalanced(std::string_view str) {
     return paren_count == 0 && curly_count == 0;
 }
 
+size_t getNextNonSpace(std::string_view text, size_t index) {
+    int firstNonSpace = index;
+    while (firstNonSpace < text.size()) {
+        if (text[firstNonSpace] != ' ') {
+            break;
+        }
+        ++firstNonSpace;
+    }
+    return firstNonSpace;
+}
+
+size_t getNextSpace(std::string_view text, size_t index) {
+    int firstNonSpace = index;
+    while (firstNonSpace < text.size()) {
+        if (text[firstNonSpace] == ' ') {
+            break;
+        }
+        ++firstNonSpace;
+    }
+    return firstNonSpace;
+}
+
+void getComment(std::string_view text, std::string &comment, size_t &index) {
+    // std::cout << "getComment:=" << text << std::endl;
+    int firstNonSpace = getNextNonSpace(text, index);
+    // std::cout << "getComment:=" << firstNonSpace << std::endl;
+    int indexBegin = firstNonSpace;
+    while (indexBegin < text.size()) {
+        if (text[indexBegin] == '(' || text[indexBegin] == '{') {
+            size_t found;
+            if (text[indexBegin] == '(') {
+                found = text.find(")", indexBegin + 1);
+            }
+            if (text[indexBegin] == '{') {
+                found = text.find("}", indexBegin + 1);
+            }
+            indexBegin = getNextNonSpace(text, found + 1);
+        } else {
+            break;
+        }
+    }
+    comment = text.substr(index, indexBegin - index);
+    index = getNextNonSpace(text, indexBegin);
+}
+
+// TODO comment after ;
+// TODO remain without " " and next line doesn't start with " "
 std::queue<std::string> ParseFile(const std::filesystem::path &path) {
     std::ifstream file(path);
 
@@ -30,7 +77,6 @@ std::queue<std::string> ParseFile(const std::filesystem::path &path) {
         return q;
     }
 
-    // Read and print each line of the file
     std::string aline;
     size_t round = 2;
     size_t begin = 0;

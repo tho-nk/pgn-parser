@@ -1,3 +1,4 @@
+#include "pgn-parsing/include/BoardGame.hpp"
 #include "pgn-parsing/include/ParsingHelper.hpp"
 #include <iostream>
 
@@ -18,7 +19,9 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     std::filesystem::path filePath = argv[1];
-    auto q = mlp_ha::ParseFile(filePath);
-    printQueue(q);
+    mlp_ha::BoardGame game{filePath};
+    game.loadData();
+    // auto q = mlp_ha::ParseFile(filePath);
+    // printQueue(q);
     return 0;
 }
