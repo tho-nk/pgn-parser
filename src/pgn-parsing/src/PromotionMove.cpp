@@ -1,4 +1,6 @@
 #include "PromotionMove.hpp"
+#include "BoardGame.hpp"
+#include "ParsingHelper.hpp"
 
 namespace mlp_ha {
 

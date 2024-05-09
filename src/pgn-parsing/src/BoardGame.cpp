@@ -106,14 +106,43 @@ void BoardGame::LoadData() {
     }
 }
 
-void BoardGame::ProcessMove(const King &king, const FromPosition &fromPosition) {}
-void BoardGame::ProcessMove(const Queen &queen, const FromPosition &fromPosition) {}
-void BoardGame::ProcessMove(const Rook &rook, const FromPosition &fromPosition) {}
-void BoardGame::ProcessMove(const Bishop &bishop, const FromPosition &fromPosition) {}
-void BoardGame::ProcessMove(const Knight &knight, const FromPosition &fromPosition) {}
+void BoardGame::ProcessMove(const King &king, const FromPosition &fromPosition) {
+    std::cout << "Begin ProcessMove King" << std::endl;
+    std::cout << "King: fromPosition.row:=" << fromPosition.row << ", fromPosition.col:=" << fromPosition.col
+              << ", King.row:=" << king.GetPostion().row << ", King.col:=" << king.GetPostion().col << std::endl;
+    std::cout << "End ProcessMove king\n" << std::endl;
+}
+void BoardGame::ProcessMove(const Queen &queen, const FromPosition &fromPosition) {
+    std::cout << "Begin ProcessMove queen" << std::endl;
+    std::cout << "queen: fromPosition.row:=" << fromPosition.row << ", fromPosition.col:=" << fromPosition.col
+              << ", queen.row:=" << queen.GetPostion().row << ", queen.col:=" << queen.GetPostion().col << std::endl;
+    std::cout << "End ProcessMove queen\n" << std::endl;
+}
+void BoardGame::ProcessMove(const Rook &rook, const FromPosition &fromPosition) {
+    std::cout << "Begin ProcessMove rook" << std::endl;
+    std::cout << "rook: fromPosition.row:=" << fromPosition.row << ", fromPosition.col:=" << fromPosition.col
+              << ", rook.row:=" << rook.GetPostion().row << ", rook.col:=" << rook.GetPostion().col << std::endl;
+    std::cout << "End ProcessMove rook\n" << std::endl;
+}
+void BoardGame::ProcessMove(const Bishop &bishop, const FromPosition &fromPosition) {
+    std::cout << "Begin ProcessMove bishop" << std::endl;
+    std::cout << "bishop: fromPosition.row:=" << fromPosition.row << ", fromPosition.col:=" << fromPosition.col
+              << ", bishop.row:=" << bishop.GetPostion().row << ", bishop.col:=" << bishop.GetPostion().col
+              << std::endl;
+    std::cout << "End ProcessMove bishop\n" << std::endl;
+}
+void BoardGame::ProcessMove(const Knight &knight, const FromPosition &fromPosition) {
+    std::cout << "Begin ProcessMove knight" << std::endl;
+    std::cout << "knight: fromPosition.row:=" << fromPosition.row << ", fromPosition.col:=" << fromPosition.col
+              << ", knight.row:=" << knight.GetPostion().row << ", knight.col:=" << knight.GetPostion().col
+              << std::endl;
+    std::cout << "End ProcessMove Pawn\n" << std::endl;
+}
 void BoardGame::ProcessMove(const Pawn &pawn, const FromPosition &fromPosition) {
-    std::cout << "fromPosition.row:=" << fromPosition.row << ", fromPosition.col:=" << fromPosition.col
+    std::cout << "Begin ProcessMove Pawn" << std::endl;
+    std::cout << "Pawn: fromPosition.row:=" << fromPosition.row << ", fromPosition.col:=" << fromPosition.col
               << ", pawn.row:=" << pawn.GetPostion().row << ", pawn.col:=" << pawn.GetPostion().col << std::endl;
+    std::cout << "End ProcessMove Pawn\n" << std::endl;
 }
 void BoardGame::ProcessMove(const EmptyPiece &empty, const FromPosition &fromPosition) {}
 
