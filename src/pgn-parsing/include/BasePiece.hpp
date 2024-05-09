@@ -8,6 +8,10 @@ namespace mlp_ha {
 template <typename ConcretePiece> class BasePiece {
   public:
     BasePiece() : type_(" "), color_(Color::Undefined) {}
+    BasePiece(const BasePiece &) = delete;
+    BasePiece &operator=(const BasePiece &) = delete;
+    BasePiece(BasePiece &&) = default;
+    BasePiece &operator=(BasePiece &&) = default;
     ~BasePiece() = default;
 
     ConcretePiece &GetPiece() { return *static_cast<ConcretePiece *>(this); }

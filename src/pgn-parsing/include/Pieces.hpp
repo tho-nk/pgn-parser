@@ -15,10 +15,15 @@ constexpr size_t ROWS = 8;
 
 class EmptyPiece : public BasePiece<EmptyPiece> {
   public:
-    EmptyPiece() = default;
-    ~EmptyPiece() = default;
+    EmptyPiece(const Color &color, const Position &position) {
+        type_ = " ";
+        color_ = color;
+        position_ = position;
+    }
 
     Positions ComputeFromPositions(const std::string &) { return {}; }
+
+    EmptyPiece() = default;
 };
 
 using Piece = std::variant<EmptyPiece, Bishop, King, Knight, Pawn, Queen, Rook>;
