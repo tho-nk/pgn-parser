@@ -20,7 +20,8 @@ int main(int argc, char *argv[]) {
     }
     std::filesystem::path filePath = argv[1];
     mlp_ha::BoardGame game{filePath};
-    game.loadData();
+    game.LoadData();
+    game.Draw();
     // auto q = mlp_ha::ParseFile(filePath);
     // printQueue(q);
     return 0;
