@@ -6,7 +6,7 @@ namespace mlp_ha {
 class King : public BasePiece<King> {
   public:
     King(const Color &color, const Position &position) {
-        type_ = "K";
+        type_ = PieceType::King;
         color_ = color;
         position_ = position;
     }

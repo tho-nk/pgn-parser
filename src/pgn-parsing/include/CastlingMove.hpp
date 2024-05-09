@@ -1,0 +1,18 @@
+#pragma once
+
+#include "Move.hpp"
+
+namespace mlp_ha {
+
+class CastlingMove : public Move {
+  public:
+    CastlingMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment);
+    CastlingMove(const CastlingMove &) = delete;
+    CastlingMove &operator=(const CastlingMove &) = delete;
+    CastlingMove(CastlingMove &&) = delete;
+    CastlingMove &operator=(CastlingMove &&) = delete;
+    ~CastlingMove() = default;
+
+    virtual void ProcessMove(const std::shared_ptr<BoardGame> &boardGame) final;
+};
+} // namespace mlp_ha

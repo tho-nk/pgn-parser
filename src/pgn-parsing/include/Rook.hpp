@@ -6,7 +6,7 @@ namespace mlp_ha {
 class Rook : public BasePiece<Rook> {
   public:
     Rook(const Color &color, const Position &position) {
-        type_ = "R";
+        type_ = PieceType::Rook;
         color_ = color;
         position_ = position;
     }

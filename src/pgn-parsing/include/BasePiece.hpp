@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Types.hpp"
-#include <iostream>
+#include <sstream>
 
 namespace mlp_ha {
 
 template <typename ConcretePiece> class BasePiece {
   public:
-    BasePiece() : type_(" "), color_(Color::Undefined) {}
+    BasePiece() : type_(PieceType::Undefined), color_(Color::Undefined) {}
     BasePiece(const BasePiece &) = delete;
     BasePiece &operator=(const BasePiece &) = delete;
     BasePiece(BasePiece &&) = default;
@@ -18,16 +18,9 @@ template <typename ConcretePiece> class BasePiece {
     ConcretePiece const &GetPiece() const { return *static_cast<ConcretePiece const *>(this); }
 
     std::string GetDraw() {
-        std::string result = "";
-        if (color_ == Color::White) {
-            result += "w";
-        } else if (color_ == Color::Black) {
-            result += "b";
-        } else {
-            result += " ";
-        }
-        result += type_;
-        return result;
+        std::ostringstream ss;
+        ss << color_ << type_;
+        return ss.str();
     }
 
     void SetPosition(const Position &position) { this->position_ = position; }
@@ -36,7 +29,10 @@ template <typename ConcretePiece> class BasePiece {
 
     Color GetColor() const { return color_; }
 
-    Positions ComputeFromPositions(const std::string &move) { return GetPiece().ComputeFromPositions(move); }
+    // Positions ComputeFromPositions(const std::string &move) {
+    //     std::cout << "BasePiece::ComputeFromPositions" << std::endl;
+    //     return {}; // GetPiece().ComputeFromPositions(move);
+    // }
 
   protected:
     PieceType type_;

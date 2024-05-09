@@ -68,10 +68,17 @@ void BoardGame::Run() {
         const auto &whiteMove = round.GetWhiteMove();
         // const auto whitePice = GetPiece(whiteMove);
         const auto &blackMove = round.GetBlackMove();
-        // std::cout << "round:=" << roundIndex << ", roundComment:=" << round.GetComment()
-        //           << ", whiteMove:=" << whiteMove.GetMove() << ", whiteComment:=" << whiteMove.GetComment()
-        //           << ", blackMove:=" << blackMove.GetMove() << ", blackComment:=" << blackMove.GetComment()
-        //           << std::endl;
+        std::cout << "round:=" << roundIndex << std::endl;
+
+        /*std::cout << "round:=" << roundIndex << ", roundComment:=" << round.GetComment()
+        << ", whiteMoveType:=" << whiteMove->GetMoveType() << ", whiteMove:=" << whiteMove->GetMoveText()
+        << ", whiteComment:=" << whiteMove->GetComment() << ", blackMoveType:=" << blackMove->GetMoveType()
+        << ", blackMove:=" << blackMove->GetMoveText() << ", blackComment:=" << blackMove->GetComment() << std::endl;
+        */
+        whiteMove->ProcessMove(shared_from_this());
+        blackMove->ProcessMove(shared_from_this());
+
+        std::cout << std::endl;
     }
 }
 
@@ -98,5 +105,16 @@ void BoardGame::LoadData() {
         rounds_.emplace_back(roundText);
     }
 }
+
+void BoardGame::ProcessMove(const King &king, const FromPosition &fromPosition) {}
+void BoardGame::ProcessMove(const Queen &queen, const FromPosition &fromPosition) {}
+void BoardGame::ProcessMove(const Rook &rook, const FromPosition &fromPosition) {}
+void BoardGame::ProcessMove(const Bishop &bishop, const FromPosition &fromPosition) {}
+void BoardGame::ProcessMove(const Knight &knight, const FromPosition &fromPosition) {}
+void BoardGame::ProcessMove(const Pawn &pawn, const FromPosition &fromPosition) {
+    std::cout << "fromPosition.row:=" << fromPosition.row << ", fromPosition.col:=" << fromPosition.col
+              << ", pawn.row:=" << pawn.GetPostion().row << ", pawn.col:=" << pawn.GetPostion().col << std::endl;
+}
+void BoardGame::ProcessMove(const EmptyPiece &empty, const FromPosition &fromPosition) {}
 
 } // namespace mlp_ha

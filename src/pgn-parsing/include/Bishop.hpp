@@ -7,7 +7,7 @@ namespace mlp_ha {
 class Bishop : public BasePiece<Bishop> {
   public:
     Bishop(const Color &color, const Position &position) {
-        type_ = "B";
+        type_ = PieceType::Bishop;
         color_ = color;
         position_ = position;
     }

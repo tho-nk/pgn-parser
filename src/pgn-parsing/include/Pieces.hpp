@@ -16,7 +16,7 @@ constexpr size_t ROWS = 8;
 class EmptyPiece : public BasePiece<EmptyPiece> {
   public:
     EmptyPiece(const Color &color, const Position &position) {
-        type_ = " ";
+        type_ = PieceType::Undefined;
         color_ = color;
         position_ = position;
     }
@@ -29,4 +29,27 @@ class EmptyPiece : public BasePiece<EmptyPiece> {
 using Piece = std::variant<EmptyPiece, Bishop, King, Knight, Pawn, Queen, Rook>;
 using Pieces = std::array<std::array<Piece, COLUMNS>, ROWS>;
 
+inline Piece CreatePiece(const std::string &pieceType, const Color &color, const Position &position) {
+    const auto type = StringToPieceType(pieceType);
+
+    switch (type) {
+    case PieceType::King:
+        return King(color, position);
+    case PieceType::Queen:
+        return Queen(color, position);
+    case PieceType::Rook:
+        return Rook(color, position);
+    case PieceType::Bishop:
+        return Bishop(color, position);
+    case PieceType::Knight:
+        return Knight(color, position);
+    case PieceType::Pawn:
+        return Pawn(color, position);
+    case PieceType::Undefined:
+        return EmptyPiece(color, position);
+    default:
+        std::cerr << "error type" << std::endl;
+        break;
+    }
+}
 } // namespace mlp_ha

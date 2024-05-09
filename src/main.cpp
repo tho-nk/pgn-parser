@@ -19,10 +19,10 @@ int main(int argc, char *argv[]) {
         return 1;
     }
     std::filesystem::path filePath = argv[1];
-    mlp_ha::BoardGame game{filePath};
-    game.LoadData();
-    game.Draw();
-    game.Run();
+    auto game = std::make_shared<mlp_ha::BoardGame>(filePath);
+    game->LoadData();
+    game->Draw();
+    game->Run();
     // auto q = mlp_ha::ParseFile(filePath);
     // printQueue(q);
     return 0;

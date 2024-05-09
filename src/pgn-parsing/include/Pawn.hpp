@@ -7,12 +7,15 @@ namespace mlp_ha {
 class Pawn : public BasePiece<Pawn> {
   public:
     Pawn(const Color &color, const Position &position) {
-        type_ = "P";
+        type_ = PieceType::Pawn;
         color_ = color;
         position_ = position;
     }
 
-    Positions ComputeFromPositions(const std::string &) { return {}; }
+    Positions ComputeFromPositions(const std::string &p) {
+        std::cout << "Pawn::ComputeFromPositions:= " << p << std::endl;
+        return {};
+    }
 
     Pawn() = default;
 };

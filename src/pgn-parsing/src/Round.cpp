@@ -1,5 +1,6 @@
 
 #include "Round.hpp"
+#include "MoveFactory.hpp"
 #include "ParsingHelper.hpp"
 #include <regex>
 
@@ -11,6 +12,22 @@ Round::Round(/*const BoardGame &boardGame, */ const std::string &str) : /*boardG
     ParseRoundText(str);
 }
 void Round::ParseRoundText(const std::string &str) {
+    auto getMoveType = [&](std::string_view type) {
+        auto found = type.find("x");
+        if (found != std::string::npos) {
+            return MoveType::AttackMove;
+        }
+        found = type.find("O");
+        if (found != std::string::npos) {
+            return MoveType::CastlingMove;
+        }
+        found = type.find("=");
+        if (found != std::string::npos) {
+            return MoveType::PromotionMove;
+        }
+        return MoveType::BasicMove;
+    };
+
     auto found = str.find(".");
     // std::cout << "Round::ParseRoundText str:=" << str << ", found:=" << found << std::endl;
     roundIndex_ = std::stoi(str.substr(0, found));
@@ -29,7 +46,7 @@ void Round::ParseRoundText(const std::string &str) {
     helper::GetComment(moveText, whiteMoveComment, indexBeginBlackMove);
     // std::cout << "whiteMoveComment:=" << whiteMoveComment << std::endl;
 
-    whiteMove_.SetMove(whiteMove, whiteMoveComment);
+    whiteMove_ = move_factory::CreateMove(getMoveType(whiteMove), Color::White, whiteMove, whiteMoveComment);
 
     auto indexEndBlackMove = helper::GetNextSpace(moveText, indexBeginBlackMove);
     std::string blackMove = moveText.substr(indexBeginBlackMove, indexEndBlackMove - indexBeginBlackMove);
@@ -41,7 +58,7 @@ void Round::ParseRoundText(const std::string &str) {
     helper::GetComment(moveText, blackMoveComment, indexEnd);
     // std::cout << "blackMoveComment:=" << blackMoveComment << std::endl;
 
-    blackMove_.SetMove(blackMove, blackMoveComment);
+    blackMove_ = move_factory::CreateMove(getMoveType(blackMove), Color::Black, blackMove, blackMoveComment);
 }
 
 } // namespace mlp_ha

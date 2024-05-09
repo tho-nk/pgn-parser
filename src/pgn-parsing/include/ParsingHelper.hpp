@@ -30,6 +30,12 @@ inline void TrimSpace(std::string &s) {
     LeftTrim(s);
 }
 
+inline void removeUnwantedChars(std::string &str) {
+    str.erase(std::remove_if(str.begin(), str.end(),
+                             [](char c) { return c == '+' || c == '#' || c == '!' || c == '?' || c == '\n'; }),
+              str.end());
+}
+
 void Remove3Dot(std::string &str);
 
 std::queue<std::string> ParseFile(const std::filesystem::path &path);
