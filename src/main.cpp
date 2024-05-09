@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
     mlp_ha::BoardGame game{filePath};
     game.LoadData();
     game.Draw();
+    game.Run();
     // auto q = mlp_ha::ParseFile(filePath);
     // printQueue(q);
     return 0;

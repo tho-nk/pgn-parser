@@ -3,6 +3,7 @@
 
 namespace mlp_ha {
 
+namespace helper {
 bool IsBalanced(std::string_view str) {
     int paren_count = 0;
     int curly_count = 0;
@@ -21,7 +22,7 @@ bool IsBalanced(std::string_view str) {
     return paren_count == 0 && curly_count == 0;
 }
 
-size_t getNextNonSpace(std::string_view text, size_t index) {
+size_t GetNextNonSpace(std::string_view text, size_t index) {
     int firstNonSpace = index;
     while (firstNonSpace < text.size()) {
         if (text[firstNonSpace] != ' ') {
@@ -32,7 +33,7 @@ size_t getNextNonSpace(std::string_view text, size_t index) {
     return firstNonSpace;
 }
 
-size_t getNextSpace(std::string_view text, size_t index) {
+size_t GetNextSpace(std::string_view text, size_t index) {
     int firstNonSpace = index;
     while (firstNonSpace < text.size()) {
         if (text[firstNonSpace] == ' ') {
@@ -43,10 +44,10 @@ size_t getNextSpace(std::string_view text, size_t index) {
     return firstNonSpace;
 }
 
-void getComment(std::string_view text, std::string &comment, size_t &index) {
-    // std::cout << "getComment:=" << text << std::endl;
-    int firstNonSpace = getNextNonSpace(text, index);
-    // std::cout << "getComment:=" << firstNonSpace << std::endl;
+void GetComment(std::string_view text, std::string &comment, size_t &index) {
+    // std::cout << "GetComment:=" << text << std::endl;
+    int firstNonSpace = GetNextNonSpace(text, index);
+    // std::cout << "GetComment:=" << firstNonSpace << std::endl;
     int indexBegin = firstNonSpace;
     while (indexBegin < text.size()) {
         if (text[indexBegin] == '(' || text[indexBegin] == '{') {
@@ -57,13 +58,25 @@ void getComment(std::string_view text, std::string &comment, size_t &index) {
             if (text[indexBegin] == '{') {
                 found = text.find("}", indexBegin + 1);
             }
-            indexBegin = getNextNonSpace(text, found + 1);
+            indexBegin = GetNextNonSpace(text, found + 1);
+        } else if (text[indexBegin] == '$') {
+            do {
+                ++indexBegin;
+            } while (isdigit(text[indexBegin]) || std::isspace(text[indexBegin]));
+
         } else {
             break;
         }
     }
     comment = text.substr(index, indexBegin - index);
-    index = getNextNonSpace(text, indexBegin);
+    index = GetNextNonSpace(text, indexBegin);
+}
+
+void Remove3Dot(std::string &str) {
+    auto found = str.find("...");
+    if (found != std::string::npos) {
+        str = str.substr(found + 3);
+    }
 }
 
 // TODO comment after ;
@@ -103,5 +116,5 @@ std::queue<std::string> ParseFile(const std::filesystem::path &path) {
     q.push(remain);
     return q;
 }
-
+} // namespace helper
 } // namespace mlp_ha

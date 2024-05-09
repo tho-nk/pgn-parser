@@ -17,6 +17,9 @@ class BoardGame {
     void Run();
 
   private:
+    Piece GetPiece(const Move &move);
+
+  private:
     std::filesystem::path filePath_;
     Rounds rounds_;
     Pieces pieces_;

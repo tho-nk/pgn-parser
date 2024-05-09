@@ -10,11 +10,16 @@ class Round {
     Round(/*const BoardGame &boardGame,*/ const std::string &str);
     ~Round() = default;
 
+    int GetRoundIndex() const { return roundIndex_; }
+    const Move &GetWhiteMove() const { return whiteMove_; }
+    const Move &GetBlackMove() const { return blackMove_; }
+    const std::string &GetComment() const { return roundComment_; }
+
   private:
     int roundIndex_;
     std::string roundComment_;
-    // std::tuple<Move, Move> moves_;
-    Move aMove;
+    Move whiteMove_;
+    Move blackMove_;
     // const BoardGame &boardGame_;
 
   private:

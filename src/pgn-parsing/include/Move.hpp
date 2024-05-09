@@ -14,12 +14,20 @@ namespace mlp_ha {
 class Move {
   public:
     Move() = default;
-    Move(/*const BoardGame &boardGame, */ const std::string &move, const std::string &comment);
     Move(const Move &) = delete;
     Move operator=(const Move &) = delete;
+    Move(Move &&) = delete;
+    Move operator=(Move &&) = delete;
     ~Move() = default;
 
     std::pair<FromPosition, ToPosition> ExtractPosition();
+    void SetMove(std::string move, std::string comment) {
+        move_ = std::move(move);
+        comment_ = std::move(comment);
+    }
+
+    const std::string &GetMove() const { return move_; }
+    const std::string &GetComment() const { return comment_; }
 
   private:
     std::string move_;

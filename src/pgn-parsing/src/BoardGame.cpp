@@ -39,13 +39,27 @@ BoardGame::BoardGame(const std::filesystem::path &filePath) : filePath_(filePath
     pieces_[7][4] = King(Color::Black, Position{0, 4});
 }
 
-void BoardGame::Run() {}
-void BoardGame::Draw() {
-    // for (auto c = 0; c < COLUMNS - 1; ++c) {
-    //     std::cout << "--|";
-    // }
-    // std::cout << "--" << std::endl;
+Piece BoardGame::GetPiece(const Move &move) {
+    FromPosition from;
+    ToPosition to;
+    Piece piece = EmptyPiece{};
+    const auto moveText = move.GetMove();
+}
 
+void BoardGame::Run() {
+    for (const auto &round : rounds_) {
+        auto roundIndex = round.GetRoundIndex();
+        const auto &whiteMove = round.GetWhiteMove();
+        // const auto whitePice = GetPiece(whiteMove);
+        const auto &blackMove = round.GetBlackMove();
+        std::cout << "round:=" << roundIndex << ", roundComment:=" << round.GetComment()
+                  << ", whiteMove:=" << whiteMove.GetMove() << ", whiteComment:=" << whiteMove.GetComment()
+                  << ", blackMove:=" << blackMove.GetMove() << ", blackComment:=" << blackMove.GetComment()
+                  << std::endl;
+    }
+}
+
+void BoardGame::Draw() {
     for (int r = ROWS - 1; r >= 0; --r) {
         for (auto c = 0; c < COLUMNS - 1; ++c) {
             std::visit(
@@ -61,13 +75,11 @@ void BoardGame::Draw() {
 }
 
 void BoardGame::LoadData() {
-    auto roundQueue = ParseFile(filePath_);
+    auto roundQueue = helper::ParseFile(filePath_);
     while (!roundQueue.empty()) {
         auto roundText = roundQueue.front();
-        std::cout << "BoardGame::loadData roundText := " << roundText << std::endl;
         roundQueue.pop();
         rounds_.emplace_back(roundText);
-        std::cout << std::endl;
     }
 }
 
