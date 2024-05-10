@@ -151,8 +151,8 @@ void BoardGame::ProcessMove(const Pawn &pawn, const FromPosition &fromPosition) 
 }
 void BoardGame::ProcessMove(const EmptyPiece &empty, const FromPosition &fromPosition) {}
 
-void BoardGame::ComputeFromPosition(const PiecesReference &subPieces, const ToPosition &toPosition,
-                                    FromPosition &fromPosition) {
+void BoardGame::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition,
+                                 FromPosition &fromPosition) {
     if (fromPosition.IsValid()) {
         return;
     }
@@ -323,8 +323,97 @@ void BoardGame::MovePiece(const FromPosition &fromPosition, const ToPosition toP
     auto tmpT = Position(toPosition.row, toPosition.col);
 
     pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
-    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[fromPosition.row][fromPosition.col]);
-    std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, pieces_[toPosition.row][toPosition.col]);
+
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, pieces_[fromPosition.row][fromPosition.col]);
+
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
+}
+
+void BoardGame::AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition) {
+
+    auto tmpF = Position(fromPosition.row, fromPosition.col);
+    auto tmpT = Position(toPosition.row, toPosition.col);
+    pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
+
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
+    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col});
+}
+
+void BoardGame::ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition,
+                                  FromPosition &fromPosition) {
+
+    if (fromPosition.IsValid()) {
+        return;
+    }
+
+    bool isValid = false;
+    for (auto &it : subPieces) {
+        std::visit(
+            [&](auto &&piece) {
+                // if ((fromPosition.row != -1 && piece.GetPosition().row == fromPosition.row) ||
+                //     (fromPosition.col != -1 && piece.GetPosition().col == fromPosition.col)) {
+
+                isValid = IsValidAttackMove(piece, toPosition);
+                if (isValid) {
+                    if ((fromPosition.row != -1 && fromPosition.row != piece.GetPosition().row) ||
+                        (fromPosition.col != -1 && fromPosition.col != piece.GetPosition().col)) {
+                        isValid = false;
+                    } else {
+                        fromPosition.row = piece.GetPosition().row;
+                        fromPosition.col = piece.GetPosition().col;
+                    }
+                }
+                // }
+            },
+            it.get());
+        if (isValid)
+            break;
+    }
+    if (!isValid) {
+        std::cerr << "BoardGame::ComputeFromPosition Error" << std::endl;
+    }
+}
+
+bool BoardGame::IsValidAttackMove(const King &king, const ToPosition &toPosition) {
+    return IsValidMove(king, toPosition);
+}
+bool BoardGame::IsValidAttackMove(const Queen &queen, const ToPosition &toPosition) {
+    return IsValidMove(queen, toPosition);
+}
+bool BoardGame::IsValidAttackMove(const Rook &rook, const ToPosition &toPosition) {
+    return IsValidMove(rook, toPosition);
+}
+bool BoardGame::IsValidAttackMove(const Bishop &bishop, const ToPosition &toPosition) {
+    return IsValidMove(bishop, toPosition);
+}
+bool BoardGame::IsValidAttackMove(const Knight &knight, const ToPosition &toPosition) {
+    return IsValidMove(knight, toPosition);
+}
+bool BoardGame::IsValidAttackMove(const EmptyPiece &empty, const ToPosition &toPosition) {
+    return IsValidMove(empty, toPosition);
+}
+
+bool BoardGame::IsValidAttackMove(const Pawn &pawn, const ToPosition &toPosition) {
+    if (pawn.GetColor() == Color::White) {
+        // no need to check Check. there only one pawn can move
+        if (std::abs(pawn.GetPosition().col - toPosition.col) != 1) {
+            return false;
+        }
+        if (pawn.GetPosition().row + 1 != toPosition.row) {
+            return false;
+        }
+        return true;
+    } else if (pawn.GetColor() == Color::Black) {
+        // no need to check Check. there only one pawn can move
+        if (std::abs(pawn.GetPosition().col - toPosition.col) != 1) {
+            return false;
+        }
+        if (pawn.GetPosition().row - 1 != toPosition.row) {
+            return false;
+        }
+        return true;
+    }
+    return false;
 }
 
 } // namespace mlp_ha

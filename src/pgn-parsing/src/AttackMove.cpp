@@ -1,6 +1,7 @@
 #include "AttackMove.hpp"
 #include "BoardGame.hpp"
 #include "ParsingHelper.hpp"
+#include <ranges>
 
 namespace mlp_ha {
 
@@ -32,8 +33,29 @@ void AttackMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
         fromPosition.col = remain[0] - 'a';
     }
 
-    Piece aPiece(CreatePiece(pieceType, this->color_, toPosition));
-    std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromPosition); }, aPiece);
+    auto type = StringToPieceType(pieceType);
+
+    PiecesReference subPieces;
+    if (fromPosition.IsValid()) {
+        subPieces.push_back(std::ref(boardGame->GetPieces()[fromPosition.row][fromPosition.col]));
+    } else {
+        auto begin = boardGame->GetPieces().front().begin();
+        auto end = boardGame->GetPieces().back().end();
+        auto arange =
+            std::ranges::subrange(boardGame->GetPieces().front().begin(), boardGame->GetPieces().back().end());
+        for (const auto &var : arange) {
+            std::visit(
+                [&](const auto &value) {
+                    if (value.GetType() == type && value.GetColor() == this->color_) {
+                        subPieces.push_back(
+                            std::ref(boardGame->GetPieces()[value.GetPosition().row][value.GetPosition().col]));
+                    }
+                },
+                var);
+        }
+    }
+    boardGame->ProcessAttackMove(subPieces, toPosition, fromPosition);
+    boardGame->AttackPiece(fromPosition, toPosition);
 }
 
 } // namespace mlp_ha

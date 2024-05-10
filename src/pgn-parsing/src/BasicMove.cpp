@@ -1,7 +1,7 @@
 #include "BasicMove.hpp"
 #include "BoardGame.hpp"
 #include "ParsingHelper.hpp"
-#include <ranges> // Include the Ranges library
+#include <ranges>
 
 namespace mlp_ha {
 
@@ -55,7 +55,7 @@ void BasicMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
     // Piece aPiece(CreatePiece(pieceType, this->color_, toPosition));
     // std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromPosition); }, aPiece);
 
-    boardGame->ComputeFromPosition(subPieces, toPosition, fromPosition);
+    boardGame->ProcessBasicMove(subPieces, toPosition, fromPosition);
     boardGame->MovePiece(fromPosition, toPosition);
     // for (auto &it : subPieces) {
     //     std::visit([&](auto &&piece) { std::cout << "THOTHO:=" << piece.GetDraw(); }, it.get());
