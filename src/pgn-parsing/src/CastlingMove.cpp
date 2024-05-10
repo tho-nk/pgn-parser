@@ -16,7 +16,7 @@ void CastlingMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
     if (str == "O-O-O") {
         ToPosition toPositionKing{0, 2};
         FromPosition fromKing{0, 4};
-        ToPosition toPositionRook{0, 2};
+        ToPosition toPositionRook{0, 3};
         FromPosition fromRook{0, 0};
 
         if (this->color_ == Color::Black) {
@@ -31,10 +31,10 @@ void CastlingMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
         std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromKing); }, king);
         std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromRook); }, rook);
     } else {
-        ToPosition toPositionKing{0, 2};
+        ToPosition toPositionKing{0, 6};
         FromPosition fromKing{0, 4};
-        ToPosition toPositionRook{0, 2};
-        FromPosition fromRook{0, 0};
+        ToPosition toPositionRook{0, 5};
+        FromPosition fromRook{0, 7};
 
         if (this->color_ == Color::Black) {
             toPositionKing.row = 7;

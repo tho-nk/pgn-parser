@@ -17,7 +17,7 @@ template <typename ConcretePiece> class BasePiece {
     ConcretePiece &GetPiece() { return *static_cast<ConcretePiece *>(this); }
     ConcretePiece const &GetPiece() const { return *static_cast<ConcretePiece const *>(this); }
 
-    std::string GetDraw() {
+    std::string GetDraw() const {
         std::ostringstream ss;
         ss << color_ << type_;
         return ss.str();
@@ -25,10 +25,11 @@ template <typename ConcretePiece> class BasePiece {
 
     void SetPosition(const Position &position) { this->position_ = position; }
 
-    Position GetPostion() const { return position_; }
+    const Position &GetPosition() const { return position_; }
 
-    Color GetColor() const { return color_; }
+    const Color &GetColor() const { return color_; }
 
+    const PieceType &GetType() const { return type_; }
     // Positions ComputeFromPositions(const std::string &move) {
     //     std::cout << "BasePiece::ComputeFromPositions" << std::endl;
     //     return {}; // GetPiece().ComputeFromPositions(move);

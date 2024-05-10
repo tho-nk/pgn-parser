@@ -1,6 +1,7 @@
 #include "BasicMove.hpp"
 #include "BoardGame.hpp"
 #include "ParsingHelper.hpp"
+#include <ranges> // Include the Ranges library
 
 namespace mlp_ha {
 
@@ -29,8 +30,38 @@ void BasicMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
             index++;
         }
     }
-    Piece aPiece(CreatePiece(pieceType, this->color_, toPosition));
-    std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromPosition); }, aPiece);
+    auto type = StringToPieceType(pieceType);
+
+    PiecesReference subPieces;
+    if (fromPosition.IsValid()) {
+        subPieces.push_back(std::ref(boardGame->GetPieces()[fromPosition.row][fromPosition.col]));
+    } else {
+        auto begin = boardGame->GetPieces().front().begin();
+        auto end = boardGame->GetPieces().back().end();
+        auto arange =
+            std::ranges::subrange(boardGame->GetPieces().front().begin(), boardGame->GetPieces().back().end());
+        for (const auto &var : arange) {
+            std::visit(
+                [&](const auto &value) {
+                    if (value.GetType() == type && value.GetColor() == this->color_) {
+                        subPieces.push_back(
+                            std::ref(boardGame->GetPieces()[value.GetPosition().row][value.GetPosition().col]));
+                    }
+                },
+                var);
+        }
+    }
+
+    // Piece aPiece(CreatePiece(pieceType, this->color_, toPosition));
+    // std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromPosition); }, aPiece);
+
+    boardGame->ComputeFromPosition(subPieces, toPosition, fromPosition);
+    boardGame->MovePiece(fromPosition, toPosition);
+    // for (auto &it : subPieces) {
+    //     std::visit([&](auto &&piece) { std::cout << "THOTHO:=" << piece.GetDraw(); }, it.get());
+    //     std::visit([&](auto &&piece) { fromPosition = boardGame->ComputeFromPosition(piece, toPosition); },
+    //     it.get());
+    // }
 }
 
 } // namespace mlp_ha

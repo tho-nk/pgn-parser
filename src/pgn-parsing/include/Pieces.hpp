@@ -10,8 +10,6 @@
 #include <variant>
 
 namespace mlp_ha {
-constexpr size_t COLUMNS = 8;
-constexpr size_t ROWS = 8;
 
 class EmptyPiece : public BasePiece<EmptyPiece> {
   public:
@@ -28,6 +26,7 @@ class EmptyPiece : public BasePiece<EmptyPiece> {
 
 using Piece = std::variant<EmptyPiece, Bishop, King, Knight, Pawn, Queen, Rook>;
 using Pieces = std::array<std::array<Piece, COLUMNS>, ROWS>;
+using PiecesReference = std::vector<std::reference_wrapper<const Piece>>;
 
 inline Piece CreatePiece(const std::string &pieceType, const Color &color, const Position &position) {
     const auto type = StringToPieceType(pieceType);

@@ -5,12 +5,17 @@
 
 namespace mlp_ha {
 
+constexpr size_t COLUMNS = 8;
+constexpr size_t ROWS = 8;
+
 enum class Color { White, Black, Undefined };
 std::ostream &operator<<(std::ostream &os, const Color color);
 
 struct Position {
+    Position(int r = -1, int c = -1) : row(r), col(c) {}
     int row;
     int col;
+    bool IsValid() { return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS; }
 };
 
 enum class PieceType { King, Queen, Rook, Bishop, Knight, Pawn, Undefined };

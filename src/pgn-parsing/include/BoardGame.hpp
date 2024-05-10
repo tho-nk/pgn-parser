@@ -25,8 +25,21 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
     void ProcessMove(const Pawn &pawn, const FromPosition &FromPosition);
     void ProcessMove(const EmptyPiece &empty, const FromPosition &FromPosition);
 
-  private:
-    Piece GetPiece(const Move &move);
+    // Visit pieces to get a from position
+
+    bool IsValidMove(const King &king, const ToPosition &toPosition);
+    bool IsValidMove(const Queen &queen, const ToPosition &toPosition);
+    bool IsValidMove(const Rook &rook, const ToPosition &toPosition);
+    bool IsValidMove(const Bishop &bishop, const ToPosition &toPosition);
+    bool IsValidMove(const Knight &knight, const ToPosition &toPosition);
+    bool IsValidMove(const Pawn &pawn, const ToPosition &toPosition);
+    bool IsValidMove(const EmptyPiece &empty, const ToPosition &toPosition);
+
+    void ComputeFromPosition(const PiecesReference &subPieces, const ToPosition &toPosition,
+                             FromPosition &fromPosition);
+
+    void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
+    const Pieces &GetPieces() const { return pieces_; }
 
   private:
     std::filesystem::path filePath_;
