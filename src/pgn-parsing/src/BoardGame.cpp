@@ -3,7 +3,8 @@
 #include <algorithm>
 
 namespace mlp_ha {
-BoardGame::BoardGame(const std::filesystem::path &filePath) : filePath_(filePath) {
+BoardGame::BoardGame(const std::filesystem::path &filePath)
+    : filePath_(filePath), whiteKingPosition_(0, 4), blackKingPosition_(7, 4) {
     for (int r = 0; r < ROWS; ++r) {
         for (int c = 0; c < COLUMNS; ++c) {
             pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c});
@@ -33,12 +34,12 @@ BoardGame::BoardGame(const std::filesystem::path &filePath) : filePath_(filePath
     pieces_[7][5].emplace<Bishop>(Color::Black, Position{7, 5});
 
     // Queens
-    pieces_[0][3].emplace<Queen>(Color::White, Position{7, 3});
+    pieces_[0][3].emplace<Queen>(Color::White, Position{0, 3});
     pieces_[7][3].emplace<Queen>(Color::Black, Position{7, 3});
 
     // Kings
     pieces_[0][4].emplace<King>(Color::White, Position{0, 4});
-    pieces_[7][4].emplace<King>(Color::Black, Position{0, 4});
+    pieces_[7][4].emplace<King>(Color::Black, Position{7, 4});
 
     // Draw();
     // std::cout << "NEXT" << std::endl;
@@ -155,27 +156,132 @@ void BoardGame::ComputeFromPosition(const PiecesReference &subPieces, const ToPo
     if (fromPosition.IsValid()) {
         return;
     }
+
+    bool isValid = false;
     for (auto &it : subPieces) {
-        bool isValid = false;
         std::visit(
             [&](auto &&piece) {
                 isValid = IsValidMove(piece, toPosition);
                 if (isValid) {
-                    fromPosition.row = piece.GetPosition().row;
-                    fromPosition.col = piece.GetPosition().col;
+                    if ((fromPosition.row != -1 && fromPosition.row != piece.GetPosition().row) ||
+                        (fromPosition.col != -1 && fromPosition.col != piece.GetPosition().col)) {
+                        isValid = false;
+                    } else {
+                        fromPosition.row = piece.GetPosition().row;
+                        fromPosition.col = piece.GetPosition().col;
+                    }
                 }
             },
             it.get());
         if (isValid)
             break;
     }
+    if (!isValid) {
+        std::cerr << "BoardGame::ComputeFromPosition Error" << std::endl;
+    }
 }
 
-bool BoardGame::IsValidMove(const King &king, const ToPosition &toPosition) { return false; }
-bool BoardGame::IsValidMove(const Queen &queen, const ToPosition &toPosition) { return false; }
-bool BoardGame::IsValidMove(const Rook &rook, const ToPosition &toPosition) { return false; }
-bool BoardGame::IsValidMove(const Bishop &bishop, const ToPosition &toPosition) { return false; }
-bool BoardGame::IsValidMove(const Knight &knight, const ToPosition &toPosition) { return false; }
+bool BoardGame::IsValidMove(const King &king, const ToPosition &toPosition) {
+    auto canQueenMove = [&]() { return true; }();
+    return canQueenMove;
+}
+bool BoardGame::IsValidMove(const Queen &queen, const ToPosition &toPosition) {
+    // basiclly there is only one queen, no need to check but for security
+    auto canQueenMove = [&]() { return true; };
+    if (canQueenMove()) {
+        // TODO
+        if (IsKingChedked()) {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool BoardGame::IsValidMove(const Rook &rook, const ToPosition &toPosition) {
+    auto canRookMove = [&]() {
+        // Rook can move only along rows or columns
+        if (rook.GetPosition().row != toPosition.row && rook.GetPosition().col != toPosition.col) {
+            return false; // Not moving along a row or column
+        }
+
+        if (rook.GetPosition().row == toPosition.row) {
+            int start_col = std::min(rook.GetPosition().col, toPosition.col);
+            int end_col = std::max(rook.GetPosition().col, toPosition.col);
+            for (int c = start_col + 1; c < end_col; ++c) {
+                if (!std::holds_alternative<EmptyPiece>(pieces_[toPosition.row][c])) {
+                    return false;
+                }
+            }
+        } else {
+            int start_row = std::min(rook.GetPosition().row, rook.GetPosition().row);
+            int end_row = std::max(rook.GetPosition().row, rook.GetPosition().row);
+            for (int r = start_row + 1; r < end_row; ++r) {
+                if (!std::holds_alternative<EmptyPiece>(pieces_[r][toPosition.col])) {
+                    return false;
+                }
+            }
+        }
+        return true; // No pieces obstruct movement
+    };
+    if (canRookMove()) {
+        // TODO
+        if (IsKingChedked()) {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool BoardGame::IsValidMove(const Bishop &bishop, const ToPosition &toPosition) {
+    auto canBishopMove = [&]() {
+        // Calculate the absolute differences in row and column
+        int dR = std::abs(bishop.GetPosition().row - toPosition.row);
+        int dC = std::abs(bishop.GetPosition().col - toPosition.col);
+
+        // A bishop can move only diagonally, so the dR and dC must be equal
+        // and the positions must not be the same:  && p1 != p2; not need here (the move was confirmed)
+        // there is only on bishop can move to that position, no need to check obstacle
+        return (dR == dC);
+    };
+    if (canBishopMove()) {
+        // TODO
+        if (IsKingChedked()) {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
+
+bool BoardGame::IsValidMove(const Knight &knight, const ToPosition &toPosition) {
+    auto canKnightMove = [&]() {
+        // Possible moves for a knight
+        constexpr int dr[] = {-2, -1, 1, 2, 2, 1, -1, -2};
+        constexpr int dc[] = {-1, -2, -2, -1, 1, 2, 2, 1};
+
+        // Check all possible moves from knight
+        for (int i = 0; i < 8; ++i) {
+            int newR = knight.GetPosition().row + dr[i];
+            int newC = knight.GetPosition().col + dc[i];
+            // Check if the move leads to toPosition
+            if (newR == toPosition.row && newC == toPosition.col) {
+                return true;
+            }
+        }
+        // If none of the moves lead to toPosition
+        return false;
+    };
+    if (canKnightMove()) {
+        // TODO
+        if (IsKingChedked()) {
+            return false;
+        }
+        return true;
+    }
+    return false;
+}
 
 bool BoardGame::IsValidMove(const Pawn &pawn, const ToPosition &toPosition) {
     if (pawn.GetColor() == Color::White) {
@@ -213,7 +319,12 @@ bool BoardGame::IsValidMove(const Pawn &pawn, const ToPosition &toPosition) {
 bool BoardGame::IsValidMove(const EmptyPiece &empty, const ToPosition &toPosition) { return false; }
 
 void BoardGame::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
+    auto tmpF = Position(fromPosition.row, fromPosition.col);
+    auto tmpT = Position(toPosition.row, toPosition.col);
+
     pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[fromPosition.row][fromPosition.col]);
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, pieces_[toPosition.row][toPosition.col]);
 }
 
 } // namespace mlp_ha

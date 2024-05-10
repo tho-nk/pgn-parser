@@ -42,9 +42,15 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
     const Pieces &GetPieces() const { return pieces_; }
 
   private:
+    // TODO
+    bool IsKingChedked() { return false; }
+
+  private:
     std::filesystem::path filePath_;
     Rounds rounds_;
     Pieces pieces_;
+    Position whiteKingPosition_;
+    Position blackKingPosition_;
 };
 
 } // namespace mlp_ha
