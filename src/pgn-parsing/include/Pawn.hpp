@@ -4,6 +4,8 @@
 
 namespace mlp_ha {
 
+class BoardGame;
+
 class Pawn : public BasePiece<Pawn> {
   public:
     Pawn(const Color &color, const Position &position) {
@@ -18,6 +20,9 @@ class Pawn : public BasePiece<Pawn> {
     }
 
     Pawn() = default;
+
+    // private:
+    bool IsValidBasicMove_(const Position &position) const;
 };
 
 } // namespace mlp_ha

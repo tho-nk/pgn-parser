@@ -5,20 +5,19 @@ namespace mlp_ha {
 
 class BoardGame;
 
-class Rook : public BasePiece<Rook> {
+class EmptyPiece : public BasePiece<EmptyPiece> {
   public:
-    Rook(const Color &color, const Position &position) {
-        type_ = PieceType::Rook;
+    EmptyPiece(const Color &color, const Position &position) {
+        type_ = PieceType::Undefined;
         color_ = color;
         position_ = position;
     }
 
     Positions ComputeFromPositions(const std::string &) { return {}; }
 
-    Rook() = default;
+    EmptyPiece() = default;
 
     // private:
     bool IsValidBasicMove_(const Position &position) const;
 };
-
 } // namespace mlp_ha

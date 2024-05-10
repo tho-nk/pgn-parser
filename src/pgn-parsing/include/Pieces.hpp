@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Bishop.hpp"
+#include "EmptyPiece.hpp"
 #include "King.hpp"
 #include "Knight.hpp"
 #include "Pawn.hpp"
@@ -10,19 +11,6 @@
 #include <variant>
 
 namespace mlp_ha {
-
-class EmptyPiece : public BasePiece<EmptyPiece> {
-  public:
-    EmptyPiece(const Color &color, const Position &position) {
-        type_ = PieceType::Undefined;
-        color_ = color;
-        position_ = position;
-    }
-
-    Positions ComputeFromPositions(const std::string &) { return {}; }
-
-    EmptyPiece() = default;
-};
 
 using Piece = std::variant<EmptyPiece, Bishop, King, Knight, Pawn, Queen, Rook>;
 using Pieces = std::array<std::array<Piece, COLUMNS>, ROWS>;

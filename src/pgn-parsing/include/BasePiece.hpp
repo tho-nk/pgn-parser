@@ -1,21 +1,22 @@
 #pragma once
 
 #include "Types.hpp"
+#include <memory>
 #include <sstream>
 
 namespace mlp_ha {
+// class BoardGame;
 
 template <typename ConcretePiece> class BasePiece {
   public:
-    BasePiece() : type_(PieceType::Undefined), color_(Color::Undefined) {}
     BasePiece(const BasePiece &) = delete;
     BasePiece &operator=(const BasePiece &) = delete;
     BasePiece(BasePiece &&) = default;
     BasePiece &operator=(BasePiece &&) = default;
     ~BasePiece() = default;
 
-    ConcretePiece &GetPiece() { return *static_cast<ConcretePiece *>(this); }
-    ConcretePiece const &GetPiece() const { return *static_cast<ConcretePiece const *>(this); }
+    ConcretePiece &self() { return *static_cast<ConcretePiece *>(this); }
+    ConcretePiece const &self() const { return *static_cast<ConcretePiece const *>(this); }
 
     std::string GetDraw() const {
         std::ostringstream ss;
@@ -30,12 +31,13 @@ template <typename ConcretePiece> class BasePiece {
     const Color &GetColor() const { return color_; }
 
     const PieceType &GetType() const { return type_; }
-    // Positions ComputeFromPositions(const std::string &move) {
-    //     std::cout << "BasePiece::ComputeFromPositions" << std::endl;
-    //     return {}; // GetPiece().ComputeFromPositions(move);
-    // }
+
+    bool IsValidBasicMove(const Position &position) const { return self().IsValidBasicMove_(position); }
 
   protected:
+    friend ConcretePiece;
+    BasePiece() : type_(PieceType::Undefined), color_(Color::Undefined) {}
+
     PieceType type_;
     Color color_;
     Position position_;

@@ -4,6 +4,8 @@
 
 namespace mlp_ha {
 
+class BoardGame;
+
 class Bishop : public BasePiece<Bishop> {
   public:
     Bishop(const Color &color, const Position &position) {
@@ -15,6 +17,9 @@ class Bishop : public BasePiece<Bishop> {
     Positions ComputeFromPositions(const std::string &) { return {}; }
 
     Bishop() = default;
+
+    // private:
+    bool IsValidBasicMove_(const Position &position) const;
 };
 
 } // namespace mlp_ha

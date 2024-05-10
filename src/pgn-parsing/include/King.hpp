@@ -3,6 +3,8 @@
 
 namespace mlp_ha {
 
+class BoardGame;
+
 class King : public BasePiece<King> {
   public:
     King(const Color &color, const Position &position) {
@@ -14,6 +16,9 @@ class King : public BasePiece<King> {
     Positions ComputeFromPositions(const std::string &) { return {}; }
 
     King() = default;
+
+    // private:
+    bool IsValidBasicMove_(const Position &position) const;
 };
 
 } // namespace mlp_ha
