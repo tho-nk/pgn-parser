@@ -2,8 +2,8 @@
 
 // #include "BoardGame.hpp"
 #include "Move.hpp"
-#include <list>
 #include <memory>
+#include <vector>
 
 namespace mlp_ha {
 class Round {
@@ -27,6 +27,6 @@ class Round {
     void ParseRoundText(const std::string &str);
 };
 
-using Rounds = std::list<Round>;
+using Rounds = std::vector<Round>;
 
 } // namespace mlp_ha

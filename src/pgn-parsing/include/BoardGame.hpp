@@ -49,6 +49,9 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
 
     void ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
     void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
+
+    void ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
+                              const ToPosition &toPosition);
     const Pieces &GetPieces() const { return pieces_; }
 
   private:

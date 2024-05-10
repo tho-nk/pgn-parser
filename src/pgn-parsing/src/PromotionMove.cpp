@@ -16,9 +16,11 @@ void PromotionMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
     // get pawn square,
     // get new piece type.
     std::string_view remain(str.data(), str.length() - 2);
-    std::string_view dest(str.data() + str.length() - 2, 2);
-    ToPosition toPosition{dest[1] - '1', dest[0] - 'a'};
-    FromPosition fromPosition{-1, -1};
+    ToPosition toPosition{remain[1] - '1', remain[0] - 'a'};
+    FromPosition fromPosition{toPosition.row - 1, toPosition.col};
+    std::string pieceType(str.data() + str.length() - 1, 1);
+    auto type = StringToPieceType(pieceType);
+    boardGame->ProcessPromotionMove(type, this->color_, fromPosition, toPosition);
 }
 
 } // namespace mlp_ha

@@ -96,7 +96,7 @@ std::queue<std::string> ParseFile(const std::filesystem::path &path) {
     size_t end = 0;
     std::string remain = "";
     while (std::getline(file, aline)) {
-        auto line = remain + aline;
+        auto line = remain + " " + aline;
         std::string to_find = std::to_string(round) + ".";
         size_t found = line.find(to_find);
         while (found != std::string::npos) {

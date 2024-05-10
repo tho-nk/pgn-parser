@@ -416,4 +416,37 @@ bool BoardGame::IsValidAttackMove(const Pawn &pawn, const ToPosition &toPosition
     return false;
 }
 
+void BoardGame::ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
+                                     const ToPosition &toPosition) {
+
+    Piece newPiece;
+    switch (pieceType) {
+    // case PieceType::King:
+    //     break;
+    case PieceType::Queen:
+        newPiece.emplace<Queen>(color, toPosition);
+        break;
+    case PieceType::Rook:
+        newPiece.emplace<Queen>(color, toPosition);
+        break;
+    case PieceType::Bishop:
+        newPiece.emplace<Queen>(color, toPosition);
+        break;
+    case PieceType::Knight:
+        newPiece.emplace<Queen>(color, toPosition);
+        break;
+    case PieceType::Pawn:
+        newPiece.emplace<Queen>(color, toPosition);
+        break;
+    case PieceType::Undefined:
+        break;
+    default:
+        break;
+    }
+    pieces_[toPosition.row][toPosition.col].swap(newPiece);
+    std::visit([&](auto &&piece) { piece.SetPosition(Position{toPosition.row, toPosition.col}); },
+               pieces_[toPosition.row][toPosition.col]);
+    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined,
+                                                                    Position{fromPosition.row, fromPosition.col});
+}
 } // namespace mlp_ha

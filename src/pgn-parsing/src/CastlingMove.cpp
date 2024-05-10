@@ -25,11 +25,9 @@ void CastlingMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
             toPositionRook.row = 7;
             fromRook.row = 7;
         }
+        boardGame->MovePiece(fromKing, toPositionKing);
+        boardGame->MovePiece(fromRook, toPositionRook);
 
-        Piece king(CreatePiece("K", this->color_, toPositionKing));
-        Piece rook(CreatePiece("R", this->color_, toPositionRook));
-        std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromKing); }, king);
-        std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromRook); }, rook);
     } else {
         ToPosition toPositionKing{0, 6};
         FromPosition fromKing{0, 4};
@@ -43,10 +41,8 @@ void CastlingMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
             fromRook.row = 7;
         }
 
-        Piece king(CreatePiece("K", this->color_, toPositionKing));
-        Piece rook(CreatePiece("R", this->color_, toPositionRook));
-        std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromKing); }, king);
-        std::visit([&](const auto &piece) { boardGame->ProcessMove(piece, fromRook); }, rook);
+        boardGame->MovePiece(fromKing, toPositionKing);
+        boardGame->MovePiece(fromRook, toPositionRook);
     }
 }
 
