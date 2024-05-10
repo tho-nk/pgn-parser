@@ -1,6 +1,7 @@
 
 #include "move/include/Round.hpp"
 #include "common/include/ParsingHelper.hpp"
+#include "game/include/BoardGame.hpp"
 #include "move/include/MoveFactory.hpp"
 
 namespace mlp_ha {
@@ -9,6 +10,9 @@ Round::Round(const std::string &str) : roundIndex_(0) { ParseRoundText(str); }
 
 void Round::ParseRoundText(const std::string &str) {
     auto getMoveType = [&](std::string_view type) {
+        if (type.empty()) {
+            return MoveType::Undefined;
+        }
         auto found = type.find("x");
         if (found != std::string::npos) {
             return MoveType::AttackMove;
@@ -51,4 +55,19 @@ void Round::ParseRoundText(const std::string &str) {
     blackMove_ = move_factory::CreateMove(getMoveType(blackMove), Color::Black, blackMove, blackMoveComment);
 }
 
+void Round::Run(const std::shared_ptr<BoardGame> &boardGame) const {
+    std::cout << "round:=" << roundIndex_ << std::endl;
+    std::cout << "White move:" << std::endl;
+    if (whiteMove_) {
+        whiteMove_->ProcessMove(boardGame);
+    }
+    boardGame->Draw();
+    std::cout << std::endl;
+    std::cout << "Black move" << std::endl;
+    if (blackMove_) {
+        blackMove_->ProcessMove(boardGame);
+    }
+    boardGame->Draw();
+    std::cout << "\n\n\n" << std::endl;
+}
 } // namespace mlp_ha

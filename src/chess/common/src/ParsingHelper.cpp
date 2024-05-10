@@ -81,13 +81,13 @@ void Remove3Dot(std::string &str) {
 
 // TODO comment after ;
 // TODO remain without " " and next line doesn't start with " "
-std::queue<std::string> ParseFile(const std::filesystem::path &path) {
+ParsingHelper ParseFile(const std::filesystem::path &path) {
     std::ifstream file(path);
 
     std::queue<std::string> q;
     if (!file.is_open()) {
         std::cerr << "Error opening the file" << std::endl;
-        return q;
+        return ParsingHelper{};
     }
 
     std::string aline;
@@ -96,25 +96,32 @@ std::queue<std::string> ParseFile(const std::filesystem::path &path) {
     size_t end = 0;
     std::string remain = "";
     while (std::getline(file, aline)) {
-        auto line = remain + " " + aline;
-        std::string to_find = std::to_string(round) + ".";
-        size_t found = line.find(to_find);
-        while (found != std::string::npos) {
-            auto sub = line.substr(begin, found - begin);
-            if (IsBalanced(sub)) {
-                q.push(sub);
-                line = line.substr(found);
-                ++round;
-                to_find = std::to_string(round) + ".";
-                found = line.find(to_find);
-            } else {
-                found = line.find(to_find, found + 1);
+        if (!aline.empty()) {
+            if (aline[0] == '[') {
+                std::cout << "tag:=" << aline << std::endl;
+                continue;
             }
+            auto line = remain + " " + aline;
+            std::string to_find = std::to_string(round) + ".";
+            size_t found = line.find(to_find);
+            while (found != std::string::npos) {
+                auto sub = line.substr(begin, found - begin);
+                if (IsBalanced(sub)) {
+                    q.push(sub);
+                    line = line.substr(found);
+                    ++round;
+                    to_find = std::to_string(round) + ".";
+                    found = line.find(to_find);
+                } else {
+                    found = line.find(to_find, found + 1);
+                }
+            }
+            remain = line;
         }
-        remain = line;
     }
-    q.push(remain);
-    return q;
+    std::cout << "remain:=" << remain << std::endl;
+    // q.push(remain);
+    return ParsingHelper{q, remain};
 }
 } // namespace helper
 } // namespace mlp_ha

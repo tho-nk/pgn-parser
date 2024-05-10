@@ -14,10 +14,7 @@ class Pawn : public BasePiece<Pawn> {
         position_ = position;
     }
 
-    Positions ComputeFromPositions(const std::string &p) {
-        std::cout << "Pawn::ComputeFromPositions:= " << p << std::endl;
-        return {};
-    }
+    Positions ComputeFromPositions(const std::string &p) { return {}; }
 
     Pawn() = default;
 

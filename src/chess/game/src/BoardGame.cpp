@@ -44,19 +44,9 @@ BoardGame::BoardGame(const std::filesystem::path &filePath)
 
 void BoardGame::Run() {
     for (const auto &round : rounds_) {
-        auto roundIndex = round.GetRoundIndex();
-        const auto &whiteMove = round.GetWhiteMove();
-        const auto &blackMove = round.GetBlackMove();
-        std::cout << "round:=" << roundIndex << std::endl;
-        std::cout << "White move" << std::endl;
-        whiteMove->ProcessMove(shared_from_this());
-        Draw();
-        std::cout << std::endl;
-        std::cout << "Black move" << std::endl;
-        blackMove->ProcessMove(shared_from_this());
-        Draw();
-        std::cout << "\n\n\n" << std::endl;
+        round.Run(shared_from_this());
     }
+    Draw();
 }
 
 void BoardGame::Draw() {
@@ -75,12 +65,26 @@ void BoardGame::Draw() {
 }
 
 void BoardGame::LoadData() {
-    auto roundQueue = helper::ParseFile(filePath_);
-    while (!roundQueue.empty()) {
-        auto roundText = roundQueue.front();
-        roundQueue.pop();
+    auto parsingHelper = helper::ParseFile(filePath_);
+    while (!parsingHelper.roundQueue.empty()) {
+        auto roundText = parsingHelper.roundQueue.front();
+        parsingHelper.roundQueue.pop();
         rounds_.emplace_back(roundText);
     }
+
+    auto found = parsingHelper.lastRun.find("1-0");
+    if (found == std::string::npos) {
+        found = parsingHelper.lastRun.find("0-1");
+    }
+    if (found == std::string::npos) {
+        found = parsingHelper.lastRun.find("1/2-1/2");
+    }
+    if (found == std::string::npos) {
+        std::cerr << "Error result" << std::endl;
+    }
+    auto roundText = parsingHelper.lastRun.substr(0, found);
+    std::cout << "roundText:=" << roundText << std::endl;
+    rounds_.emplace_back(roundText);
 }
 
 void BoardGame::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition,
@@ -251,6 +255,9 @@ bool BoardGame::IsValidMove(const Pawn &pawn, const ToPosition &toPosition) {
 bool BoardGame::IsValidMove(const EmptyPiece &empty, const ToPosition &toPosition) { return false; }
 
 void BoardGame::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
+    if (!fromPosition.IsValid() || !toPosition.IsValid()) {
+        std::cout << "HELLO Invalid" << std::endl;
+    }
     auto tmpF = Position(fromPosition.row, fromPosition.col);
     auto tmpT = Position(toPosition.row, toPosition.col);
 

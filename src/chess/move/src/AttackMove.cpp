@@ -9,9 +9,9 @@ AttackMove::AttackMove(const MoveType &moveType, const Color &color, std::string
     : Move(moveType, color, moveText, comment) {}
 
 void AttackMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
-    std::cout << "AttackMove::ProcessMove" << std::endl;
+    // std::cout << "AttackMove::ProcessMove" << std::endl;
     auto str = moveText_;
-    std::cout << moveText_ << std::endl;
+    // std::cout << moveText_ << std::endl;
     helper::removeUnwantedChars(str);
     std::string_view remain(str.data(), str.length() - 3); // exclude 'x'
     std::string_view dest(str.data() + str.length() - 2, 2);

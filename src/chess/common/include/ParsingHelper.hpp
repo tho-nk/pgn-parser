@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <filesystem>
 #include <iostream>
+#include <map>
 #include <queue>
 #include <string>
 #include <string_view>
@@ -38,6 +39,12 @@ inline void removeUnwantedChars(std::string &str) {
 
 void Remove3Dot(std::string &str);
 
-std::queue<std::string> ParseFile(const std::filesystem::path &path);
+struct ParsingHelper {
+    // std::map<std::string, std::string> tagGame;
+    std::queue<std::string> roundQueue;
+    std::string lastRun;
+};
+
+ParsingHelper ParseFile(const std::filesystem::path &path);
 } // namespace helper
 } // namespace mlp_ha

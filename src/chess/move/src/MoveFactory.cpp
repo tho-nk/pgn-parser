@@ -27,6 +27,7 @@ std::shared_ptr<Move> CreateMove(const MoveType &moveType, const Color &color, s
         break;
     default:
         std::cerr << "error type" << std::endl;
+        return nullptr;
         break;
     }
 }
