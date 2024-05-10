@@ -3,6 +3,7 @@
 #include "move/include/Round.hpp"
 #include "piece/include/Pieces.hpp"
 #include <filesystem>
+#include <optional>
 #include <variant>
 
 namespace mlp_ha {
@@ -16,17 +17,9 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
     void Draw();
     void Run();
 
-    // Visit pieces to validate move
-    void ProcessMove(const King &king, const FromPosition &FromPosition);
-    void ProcessMove(const Queen &queen, const FromPosition &FromPosition);
-    void ProcessMove(const Rook &rook, const FromPosition &FromPosition);
-    void ProcessMove(const Bishop &bishop, const FromPosition &FromPosition);
-    void ProcessMove(const Knight &knight, const FromPosition &FromPosition);
-    void ProcessMove(const Pawn &pawn, const FromPosition &FromPosition);
-    void ProcessMove(const EmptyPiece &empty, const FromPosition &FromPosition);
-
     // Visit BasicMove
-
+    void ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
+    void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
     bool IsValidMove(const King &king, const ToPosition &toPosition);
     bool IsValidMove(const Queen &queen, const ToPosition &toPosition);
     bool IsValidMove(const Rook &rook, const ToPosition &toPosition);
@@ -35,10 +28,9 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
     bool IsValidMove(const Pawn &pawn, const ToPosition &toPosition);
     bool IsValidMove(const EmptyPiece &empty, const ToPosition &toPosition);
 
-    void ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
-    void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
-
     // Visit AttackMove
+    void ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
+    void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
     bool IsValidAttackMove(const King &king, const ToPosition &toPosition);
     bool IsValidAttackMove(const Queen &queen, const ToPosition &toPosition);
     bool IsValidAttackMove(const Rook &rook, const ToPosition &toPosition);
@@ -47,12 +39,13 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
     bool IsValidAttackMove(const Pawn &pawn, const ToPosition &toPosition);
     bool IsValidAttackMove(const EmptyPiece &empty, const ToPosition &toPosition);
 
-    void ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
-    void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
-
     void ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
                               const ToPosition &toPosition);
+
     const Pieces &GetPieces() const { return pieces_; }
+
+    void SetEnPassant(const std::optional<Position> &enPassant) { enPassant_ = enPassant; }
+    void ResetEnPassant() { enPassant_ = std::nullopt; }
 
   private:
     // TODO
@@ -64,6 +57,8 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
     Pieces pieces_;
     Position whiteKingPosition_;
     Position blackKingPosition_;
+
+    std::optional<Position> enPassant_;
 };
 
 } // namespace mlp_ha
