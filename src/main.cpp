@@ -1,17 +1,5 @@
-#include "pgn-parsing/include/BoardGame.hpp"
-#include "pgn-parsing/include/ParsingHelper.hpp"
+#include "game/include/BoardGame.hpp"
 #include <iostream>
-
-void printQueue(const std::queue<std::string> &q) {
-    std::queue<std::string> temp = q; // Make a copy of the original queue
-
-    // Print elements while the temporary queue is not empty
-    while (!temp.empty()) {
-        std::cout << temp.front() << std::endl;
-        temp.pop();
-    }
-    std::cout << std::endl;
-}
 
 int main(int argc, char *argv[]) {
     if (argc != 2) {
@@ -23,7 +11,6 @@ int main(int argc, char *argv[]) {
     game->LoadData();
     game->Draw();
     game->Run();
-    // auto q = mlp_ha::ParseFile(filePath);
-    // printQueue(q);
+
     return 0;
 }
