@@ -18,6 +18,9 @@ struct Position {
     int col;
     bool IsValid() const { return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS; }
 };
+bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3);
+
+bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2);
 
 enum class PieceType { King, Queen, Rook, Bishop, Knight, Pawn, Undefined };
 std::ostream &operator<<(std::ostream &os, const PieceType pieceType);

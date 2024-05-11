@@ -2,7 +2,7 @@
 #include "piece/include/Square.hpp"
 namespace mlp_ha {
 
-bool Bishop::IsValidBasicMove_(std::shared_ptr<Square> square, const Position &toPosition) const {
+bool Bishop::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const {
     auto canBishopMove = [&]() {
         // Calculate the absolute differences in row and column
         int dR = std::abs(GetPosition().row - toPosition.row);
@@ -13,17 +13,10 @@ bool Bishop::IsValidBasicMove_(std::shared_ptr<Square> square, const Position &t
         // there is only on bishop can move to that position, no need to check obstacle
         return (dR == dC);
     };
-    if (canBishopMove()) {
-        // TODO
-        // if (IsKingChedked()) {
-        //     return false;
-        // }
-        return true;
-    }
-    return false;
+    return canBishopMove();
 }
 
-bool Bishop::IsValidAttackMove_(std::shared_ptr<Square> square, const Position &toPosition) const {
+bool Bishop::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const {
     return IsValidBasicMove_(square, toPosition);
 }
 } // namespace mlp_ha

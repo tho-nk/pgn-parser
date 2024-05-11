@@ -60,7 +60,7 @@ void Square::Draw() {
 }
 
 PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                               const FromPosition &fromPosition) {
+                                               const FromPosition &fromPosition) const {
     PiecesReference subPieces;
     if (fromPosition.IsValid()) {
         subPieces.push_back(std::ref(GetPieces()[fromPosition.row][fromPosition.col]));
@@ -79,6 +79,11 @@ PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const
     return subPieces;
 }
 
+Position Square::GetKingPosition(const Color &color) const {
+    const auto kings = GetPieceOfTypeAndColor(PieceType::King, color, Position{});
+    return std::get<King>(kings.at(0).get()).GetPosition();
+}
+
 void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition,
                               FromPosition &fromPosition) {
     if (fromPosition.IsValid()) {
@@ -90,6 +95,19 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition
         std::visit(
             [&](auto &&piece) {
                 isValid = piece.IsValidBasicMove(shared_from_this(), toPosition); // IsValidMove(piece, toPosition);
+                // check king
+                if (isValid) {
+                    const auto &kingPosition = GetKingPosition(piece.GetColor());
+                    // TODO not only Collinear
+                    if (!AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition()) ||
+                        (AreOnFileOrRowOrDiagonal(kingPosition, toPosition))) {
+                        std::cout << "good to go" << std::endl;
+                    } else {
+                        if (VerifyIfKingBeingCheck(piece.GetPosition(), piece.GetColor(), kingPosition)) {
+                            isValid = false;
+                        }
+                    }
+                }
                 if (isValid) {
                     if ((fromPosition.row != -1 && fromPosition.row != piece.GetPosition().row) ||
                         (fromPosition.col != -1 && fromPosition.col != piece.GetPosition().col)) {
@@ -107,6 +125,56 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition
     if (!isValid) {
         std::cerr << "Square::ComputeFromPosition Error" << std::endl;
     }
+}
+
+bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor,
+                                    const Position &kingPosition) {
+    bool kingChecked = false;
+    constexpr int dr[] = {-1, 0, 1, 1, 1, 0, -1, -1};
+    constexpr int dc[] = {-1, -1, -1, 0, 1, 1, 1, 0};
+
+    int drow = piecePosition.row - kingPosition.row;
+    int dcol = piecePosition.col - kingPosition.col;
+
+    // Normalize the change in row and column to -1, 0, or 1
+    if (drow != 0) {
+        drow /= std::abs(drow);
+    }
+    if (dcol != 0) {
+        dcol /= std::abs(dcol);
+    }
+    // Search for the direction in the directional arrays
+    int index = 0;
+    for (; index < 8; ++index) {
+        if (dr[index] == drow && dc[index] == dcol) {
+            break;
+        }
+    }
+    // check index ok
+
+    Position p{piecePosition.row + dr[index], piecePosition.col + dc[index]};
+    while (p.IsValid()) {
+        if (!std::holds_alternative<EmptyPiece>(GetPieces()[p.row][p.col])) {
+            break;
+        }
+        p.row = p.row + dr[index];
+        p.col = p.col + dc[index];
+    }
+    if (p.IsValid()) {
+        // check if can move to king
+        std::visit(
+            [&](auto &&opponent) {
+                if (opponent.GetColor() == Color::Undefined) {
+                    return;
+                }
+                if (opponent.GetColor() == pieceColor) {
+                    return;
+                }
+                kingChecked = opponent.IsValidBasicMove(shared_from_this(), kingPosition);
+            },
+            GetPieces()[p.row][p.col]);
+    }
+    return kingChecked;
 }
 
 void Square::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
@@ -153,6 +221,19 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPositio
                 //     (fromPosition.col != -1 && piece.GetPosition().col == fromPosition.col)) {
 
                 isValid = piece.IsValidAttackMove(shared_from_this(), toPosition);
+                // check king
+                if (isValid) {
+                    const auto &kingPosition = GetKingPosition(piece.GetColor());
+                    // TODO not only Collinear
+                    if (!AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition()) ||
+                        (AreOnFileOrRowOrDiagonal(kingPosition, toPosition))) {
+                        std::cout << "good to go" << std::endl;
+                    } else {
+                        if (VerifyIfKingBeingCheck(piece.GetPosition(), piece.GetColor(), kingPosition)) {
+                            isValid = false;
+                        }
+                    }
+                }
                 if (isValid) {
                     if ((fromPosition.row != -1 && fromPosition.row != piece.GetPosition().row) ||
                         (fromPosition.col != -1 && fromPosition.col != piece.GetPosition().col)) {

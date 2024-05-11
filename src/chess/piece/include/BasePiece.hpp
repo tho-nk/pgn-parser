@@ -32,11 +32,11 @@ template <typename ConcretePiece> class BasePiece {
 
     const PieceType &GetType() const { return type_; }
 
-    bool IsValidBasicMove(std::shared_ptr<Square> square, const Position &toPosition) const {
+    bool IsValidBasicMove(const std::shared_ptr<Square> &square, const Position &toPosition) const {
         return self().IsValidBasicMove_(square, toPosition);
     }
 
-    bool IsValidAttackMove(std::shared_ptr<Square> square, const Position &toPosition) const {
+    bool IsValidAttackMove(const std::shared_ptr<Square> &square, const Position &toPosition) const {
         return self().IsValidAttackMove_(square, toPosition);
     }
 

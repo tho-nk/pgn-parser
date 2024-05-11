@@ -3,7 +3,7 @@
 #include "piece/include/Square.hpp"
 namespace mlp_ha {
 
-bool Rook::IsValidBasicMove_(std::shared_ptr<Square> square, const Position &toPosition) const {
+bool Rook::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const {
     auto canRookMove = [&]() {
         // Rook can move only along rows or columns
         if (GetPosition().row != toPosition.row && GetPosition().col != toPosition.col) {
@@ -29,17 +29,10 @@ bool Rook::IsValidBasicMove_(std::shared_ptr<Square> square, const Position &toP
         }
         return true; // No pieces obstruct movement
     };
-    if (canRookMove()) {
-        // TODO
-        // if (IsKingChedked()) {
-        //     return false;
-        // }
-        return true;
-    }
-    return false;
+    return canRookMove();
 }
 
-bool Rook::IsValidAttackMove_(std::shared_ptr<Square> square, const Position &toPosition) const {
+bool Rook::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const {
     return IsValidBasicMove_(square, toPosition);
 }
 } // namespace mlp_ha

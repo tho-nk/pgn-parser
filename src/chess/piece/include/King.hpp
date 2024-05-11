@@ -19,8 +19,8 @@ class King : public BasePiece<King> {
     King() = default;
 
     // private:
-    bool IsValidBasicMove_(std::shared_ptr<Square> square, const Position &toPosition) const;
-    bool IsValidAttackMove_(std::shared_ptr<Square> square, const Position &toPosition) const;
+    bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const;
+    bool IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const;
 };
 
 } // namespace mlp_ha

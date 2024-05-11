@@ -23,7 +23,8 @@ class Square : public std::enable_shared_from_this<Square> {
     void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
     PiecesReference GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                           const FromPosition &fromPosition);
+                                           const FromPosition &fromPosition) const;
+    Position GetKingPosition(const Color &color) const;
 
   public:
     // Visit AttackMove
@@ -42,26 +43,6 @@ class Square : public std::enable_shared_from_this<Square> {
     Position whiteKingPosition_;
     Position blackKingPosition_;
 
-    // void doSQuare(const PiecesReference &subPieces, const ToPosition &toPosition) {
-    //     for (auto &it : subPieces) {
-    //         std::visit(
-    //             [&](auto &&piece) {
-    //                 isValid = IsValidMove(piece, toPosition);
-    //                 square.doQuare();
-    //                 if (isValid) {
-    //                     if ((fromPosition.row != -1 && fromPosition.row != piece.GetPosition().row) ||
-    //                         (fromPosition.col != -1 && fromPosition.col != piece.GetPosition().col)) {
-    //                         isValid = false;
-    //                     } else {
-    //                         fromPosition.row = piece.GetPosition().row;
-    //                         fromPosition.col = piece.GetPosition().col;
-    //                     }
-    //                 }
-    //             },
-    //             it.get());
-    //         if (isValid)
-    //             break;
-    //     }
-    // }
+    bool VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor, const Position &kingPosition);
 };
 } // namespace mlp_ha
