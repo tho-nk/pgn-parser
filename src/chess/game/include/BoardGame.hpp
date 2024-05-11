@@ -39,7 +39,7 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
   private:
     std::filesystem::path filePath_;
     Rounds rounds_;
-    Square square_;
+    std::shared_ptr<Square> square_;
 };
 
 } // namespace mlp_ha

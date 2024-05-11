@@ -32,7 +32,13 @@ template <typename ConcretePiece> class BasePiece {
 
     const PieceType &GetType() const { return type_; }
 
-    bool IsValidBasicMove(const Position &position) const { return self().IsValidBasicMove_(position); }
+    bool IsValidBasicMove(std::shared_ptr<Square> square, const Position &toPosition) const {
+        return self().IsValidBasicMove_(square, toPosition);
+    }
+
+    bool IsValidAttackMove(std::shared_ptr<Square> square, const Position &toPosition) const {
+        return self().IsValidAttackMove_(square, toPosition);
+    }
 
   protected:
     friend ConcretePiece;
@@ -41,7 +47,6 @@ template <typename ConcretePiece> class BasePiece {
     PieceType type_;
     Color color_;
     Position position_;
-    Square *square;
 };
 
 } // namespace mlp_ha
