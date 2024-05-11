@@ -155,28 +155,46 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
     }
     // check index ok
 
-    Position p{piecePosition.row + dr[index], piecePosition.col + dc[index]};
-    while (p.IsValid()) {
-        if (!std::holds_alternative<EmptyPiece>(GetPieces()[p.row][p.col])) {
+    Position possibleOpponent{piecePosition.row + dr[index], piecePosition.col + dc[index]};
+    while (possibleOpponent.IsValid()) {
+        if (!std::holds_alternative<EmptyPiece>(GetPieces()[possibleOpponent.row][possibleOpponent.col])) {
             break;
         }
-        p.row = p.row + dr[index];
-        p.col = p.col + dc[index];
+        possibleOpponent.row = possibleOpponent.row + dr[index];
+        possibleOpponent.col = possibleOpponent.col + dc[index];
     }
-    if (p.IsValid()) {
-        // check if can move to king
-        std::visit(
-            [&](auto &&opponent) {
-                if (opponent.GetColor() == Color::Undefined) {
-                    return;
-                }
-                if (opponent.GetColor() == pieceColor) {
-                    return;
-                }
-                kingChecked = opponent.IsValidBasicMove(shared_from_this(), kingPosition);
-            },
-            GetPieces()[p.row][p.col]);
+
+    Position possibleObstacle{piecePosition.row - dr[index], piecePosition.col - dc[index]};
+    while (possibleObstacle.IsValid()) {
+        if (!std::holds_alternative<EmptyPiece>(GetPieces()[possibleObstacle.row][possibleObstacle.col])) {
+            break;
+        }
+        possibleObstacle.row = possibleObstacle.row - dr[index];
+        possibleObstacle.col = possibleObstacle.col - dc[index];
     }
+    if (possibleObstacle.IsValid()) {
+        // it is king ??
+        if (possibleObstacle.row == kingPosition.row && possibleObstacle.col == kingPosition.col) {
+            if (possibleOpponent.IsValid()) {
+                // check if can move to king
+                // tmp remove piece
+
+                std::visit(
+                    [&](auto &&opponent) {
+                        if (opponent.GetColor() == Color::Undefined) {
+                            return;
+                        }
+                        if (opponent.GetColor() == pieceColor) {
+                            return;
+                        }
+                        // TODO
+                        kingChecked = opponent.IsValidBasicMove(shared_from_this(), kingPosition);
+                    },
+                    GetPieces()[possibleOpponent.row][possibleOpponent.col]);
+            }
+        }
+    }
+
     return kingChecked;
 }
 
