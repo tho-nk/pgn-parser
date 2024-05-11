@@ -99,8 +99,11 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition
                 if (isValid) {
                     const auto &kingPosition = GetKingPosition(piece.GetColor());
                     // TODO not only Collinear
-                    if (!AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition()) ||
-                        (AreOnFileOrRowOrDiagonal(kingPosition, toPosition))) {
+                    if (!AreOnFileOrRowOrDiagonal(kingPosition,
+                                                  piece.GetPosition()) // initial position doesnt protect king
+                        || (AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition(),
+                                                     toPosition)) // new position still protect king
+                    ) {
                         std::cout << "good to go" << std::endl;
                     } else {
                         if (VerifyIfKingBeingCheck(piece.GetPosition(), piece.GetColor(), kingPosition)) {
@@ -225,8 +228,11 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPositio
                 if (isValid) {
                     const auto &kingPosition = GetKingPosition(piece.GetColor());
                     // TODO not only Collinear
-                    if (!AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition()) ||
-                        (AreOnFileOrRowOrDiagonal(kingPosition, toPosition))) {
+                    if (!AreOnFileOrRowOrDiagonal(kingPosition,
+                                                  piece.GetPosition()) // initial position doesnt protect king
+                        || (AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition(),
+                                                     toPosition)) // new position still protect king
+                    ) {
                         std::cout << "good to go" << std::endl;
                     } else {
                         if (VerifyIfKingBeingCheck(piece.GetPosition(), piece.GetColor(), kingPosition)) {
