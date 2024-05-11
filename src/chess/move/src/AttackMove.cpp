@@ -1,7 +1,6 @@
 #include "move/include/AttackMove.hpp"
 #include "common/include/ParsingHelper.hpp"
 #include "game/include/BoardGame.hpp"
-#include <ranges>
 
 namespace mlp_ha {
 
@@ -34,26 +33,7 @@ void AttackMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
     }
 
     auto type = StringToPieceType(pieceType);
-
-    PiecesReference subPieces;
-    if (fromPosition.IsValid()) {
-        subPieces.push_back(std::ref(boardGame->GetPieces()[fromPosition.row][fromPosition.col]));
-    } else {
-        auto begin = boardGame->GetPieces().front().begin();
-        auto end = boardGame->GetPieces().back().end();
-        auto arange =
-            std::ranges::subrange(boardGame->GetPieces().front().begin(), boardGame->GetPieces().back().end());
-        for (const auto &var : arange) {
-            std::visit(
-                [&](const auto &value) {
-                    if (value.GetType() == type && value.GetColor() == this->color_) {
-                        subPieces.push_back(
-                            std::ref(boardGame->GetPieces()[value.GetPosition().row][value.GetPosition().col]));
-                    }
-                },
-                var);
-        }
-    }
+    const auto subPieces = boardGame->GetPieceOfTypeAndColor(type, this->color_, fromPosition);
     boardGame->ProcessAttackMove(subPieces, toPosition, fromPosition);
     boardGame->AttackPiece(fromPosition, toPosition);
 }

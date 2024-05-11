@@ -1,5 +1,5 @@
 #include "piece/include/Bishop.hpp"
-
+#include "piece/include/Square.hpp"
 namespace mlp_ha {
 
 bool Bishop::IsValidBasicMove_(const Position &position) const { return true; }

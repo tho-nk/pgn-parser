@@ -5,7 +5,7 @@
 #include <sstream>
 
 namespace mlp_ha {
-// class BoardGame;
+class Square;
 
 template <typename ConcretePiece> class BasePiece {
   public:
@@ -41,6 +41,7 @@ template <typename ConcretePiece> class BasePiece {
     PieceType type_;
     Color color_;
     Position position_;
+    Square *square;
 };
 
 } // namespace mlp_ha
