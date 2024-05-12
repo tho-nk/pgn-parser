@@ -3,7 +3,7 @@
 #include <iostream>
 
 void signalHandler(int signal) {
-    std::clog << "[CALIB] Stop Calibration with signal:= " << signal << std::endl;
+    std::clog << "[THO][I] Stop Parsing PGN with signal:= " << signal << std::endl;
     exit(0);
 }
 

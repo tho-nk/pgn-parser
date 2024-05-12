@@ -17,12 +17,18 @@ void BoardGame::Draw() { std::cout << square_->GetCurrentState() << std::endl; }
 
 void BoardGame::LoadData() {
     auto parsingHelper = helper::ParseFile(filePath_);
+    int round = 1;
     while (!parsingHelper.roundQueue.empty()) {
         auto roundText = parsingHelper.roundQueue.front();
         parsingHelper.roundQueue.pop();
         rounds_.emplace_back(roundText);
+        round++;
     }
 
+    if (!helper::IsBalanced(parsingHelper.lastRun)) {
+        std::cerr << "[THO][E] File format error : " << parsingHelper.lastRun << "\n  Cannot process round := " << round
+                  << std::endl;
+    }
     auto found = parsingHelper.lastRun.find("1-0");
     if (found == std::string::npos) {
         found = parsingHelper.lastRun.find("0-1");
