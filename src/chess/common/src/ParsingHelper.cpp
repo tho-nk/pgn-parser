@@ -45,9 +45,9 @@ size_t GetNextSpace(std::string_view text, size_t index) {
 }
 
 void GetComment(std::string_view text, std::string &comment, size_t &index) {
-    // std::cout << "GetComment:=" << text << std::endl;
+    // std::clog << "GetComment:=" << text << std::endl;
     int firstNonSpace = GetNextNonSpace(text, index);
-    // std::cout << "GetComment:=" << firstNonSpace << std::endl;
+    // std::clog << "GetComment:=" << firstNonSpace << std::endl;
     int indexBegin = firstNonSpace;
     while (indexBegin < text.size()) {
         if (text[indexBegin] == '(' || text[indexBegin] == '{') {
@@ -98,7 +98,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
     while (std::getline(file, aline)) {
         if (!aline.empty()) {
             if (aline[0] == '[') {
-                // std::cout << "tag:=" << aline << std::endl;
+                // std::clog << "tag:=" << aline << std::endl;
                 continue;
             }
             auto line = remain + " " + aline;
@@ -119,8 +119,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
             remain = line;
         }
     }
-    // std::cout << "remain:=" << remain << std::endl;
-    // q.push(remain);
+    // std::clog << "remain:=" << remain << std::endl;
     return ParsingHelper{q, remain};
 }
 } // namespace helper

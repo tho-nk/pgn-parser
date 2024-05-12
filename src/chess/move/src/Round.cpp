@@ -56,18 +56,14 @@ void Round::ParseRoundText(const std::string &str) {
 }
 
 void Round::Run(const std::shared_ptr<BoardGame> &boardGame) const {
-    // std::cout << "round:=" << roundIndex_ << std::endl;
-    // std::cout << "White move:" << std::endl;
-    //  if (whiteMove_) {
+    // std::clog << "round:=" << roundIndex_ << std::endl;
+    // std::clog << "White move:" << std::endl;
     whiteMove_->ProcessMove(boardGame);
-    //}
     // boardGame->Draw();
-    // std::cout << std::endl;
-    // std::cout << "Black move" << std::endl;
-    // if (blackMove_) {
+    // std::clog << std::endl;
+    // std::clog << "Black move" << std::endl;
     blackMove_->ProcessMove(boardGame);
-    //}
     // boardGame->Draw();
-    // std::cout << "\n\n\n" << std::endl;
+    // std::clog << "\n\n\n" << std::endl;
 }
 } // namespace mlp_ha

@@ -9,9 +9,9 @@ BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string m
     : Move(moveType, color, moveText, comment) {}
 
 void BasicMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
-    //  std::cout << "BasicMove::ProcessMove" << std::endl;
+    // std::clog << "BasicMove::ProcessMove" << std::endl;
     auto str = moveText_;
-    // std::cout << moveText_ << std::endl;
+    // std::clog << moveText_ << std::endl;
     helper::removeUnwantedChars(str);
     std::string_view remain(str.data(), str.length() - 2);
     std::string_view dest(str.data() + str.length() - 2, 2);

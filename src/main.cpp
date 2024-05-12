@@ -11,6 +11,5 @@ int main(int argc, char *argv[]) {
     game->LoadData();
     game->Run();
     game->Draw();
-    // std::cout << "endgame" << std::endl;
     return 0;
 }

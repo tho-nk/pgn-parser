@@ -14,7 +14,7 @@ void BoardGame::Run() {
     // Draw();
 }
 
-void BoardGame::Draw() { square_->Draw(); }
+void BoardGame::Draw() { std::cout << square_->GetCurrentState() << std::endl; }
 
 void BoardGame::LoadData() {
     auto parsingHelper = helper::ParseFile(filePath_);
@@ -35,7 +35,7 @@ void BoardGame::LoadData() {
         // std::cerr << "Error result" << std::endl;
     }
     auto roundText = parsingHelper.lastRun.substr(0, found);
-    // std::cout << "roundText:=" << roundText << std::endl;
+    // std::clog << "roundText:=" << roundText << std::endl;
     rounds_.emplace_back(roundText);
 }
 

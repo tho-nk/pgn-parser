@@ -11,7 +11,7 @@ class Square : public std::enable_shared_from_this<Square> {
     ~Square();
 
     void InitSquare();
-    void Draw();
+    std::string GetCurrentState() const;
 
     const Pieces &GetPieces() const { return pieces_; }
 
@@ -44,7 +44,5 @@ class Square : public std::enable_shared_from_this<Square> {
     Position blackKingPosition_;
 
     bool VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor, const Position &kingPosition);
-
-    std::string GetDraw() const;
 };
 } // namespace mlp_ha

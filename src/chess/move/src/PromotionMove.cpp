@@ -8,9 +8,9 @@ PromotionMove::PromotionMove(const MoveType &moveType, const Color &color, std::
     : Move(moveType, color, moveText, comment) {}
 
 void PromotionMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
-    // std::cout << "PromotionMove::ProcessMove" << std::endl;
+    // std::clog << "PromotionMove::ProcessMove" << std::endl;
     auto str = moveText_;
-    //  std::cout << moveText_ << std::endl;
+    // std::clog << moveText_ << std::endl;
     helper::removeUnwantedChars(str);
 
     // get pawn square,

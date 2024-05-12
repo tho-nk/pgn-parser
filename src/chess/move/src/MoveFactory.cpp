@@ -26,7 +26,7 @@ std::shared_ptr<Move> CreateMove(const MoveType &moveType, const Color &color, s
         return std::make_shared<AttackMove>(moveType, color, moveText, comment);
         break;
     default:
-        std::cerr << "error type" << std::endl;
+        // std::clog << "error type" << std::endl;
         return std::make_shared<Move>(MoveType::Undefined, Color::Undefined, "", "");
         break;
     }
