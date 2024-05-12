@@ -14,7 +14,8 @@ test_cases = ["./checking/diagonal-prevent-check-down",
               "./general/Arnold_Nodirbek.2014.10.26",
               "./general/EnPassant",
               "./general/Fabiano-Hikaru_Round_1_April_4_2024",
-              "./general/Jumanov-Nodirbek_2014.03.02"]
+              "./general/Jumanov-Nodirbek_2014.03.02",
+              "./general/Complex_PGN_with_comments"]
 
 
 def run_mlp_ha_chess(arg):

@@ -1,4 +1,6 @@
 #include "piece/include/Square.hpp"
+#include "common/include/MlpException.hpp"
+
 #include <ranges>
 
 namespace mlp_ha {
@@ -126,7 +128,8 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition
             break;
     }
     if (!isValid) {
-        // std::cerr << "[THO][E] Square::ComputeFromPosition Error" << std::endl;
+        std::cerr << "[THO][E] Square::ProcessBasicMove Error" << std::endl;
+        throw MlpException("Square::ProcessBasicMove Error");
     }
 }
 
@@ -154,7 +157,7 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
         }
     }
     if (index >= 8) {
-        // std::cerr << "[THO][E] Cannot find direction" << std::endl;
+        std::cerr << "[THO][E] Cannot find direction" << std::endl;
     }
     Position possibleOpponent{piecePosition.row + dr[index], piecePosition.col + dc[index]};
     while (possibleOpponent.IsValid()) {
@@ -194,17 +197,23 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
 }
 
 void Square::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
-    if (!fromPosition.IsValid() || !toPosition.IsValid()) {
-        // std::cerr << "[THO][E] Invalid position" << std::endl;
+    try {
+        if (!fromPosition.IsValid() || !toPosition.IsValid()) {
+            std::cerr << "[THO][E] Invalid position" << std::endl;
+            throw MlpException("Error while moving");
+        }
+        auto tmpF = Position(fromPosition.row, fromPosition.col);
+        auto tmpT = Position(toPosition.row, toPosition.col);
+
+        pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
+
+        std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, pieces_[fromPosition.row][fromPosition.col]);
+
+        std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
+    } catch (const MlpException &e) {
+        throw;
+    } catch (...) {
     }
-    auto tmpF = Position(fromPosition.row, fromPosition.col);
-    auto tmpT = Position(toPosition.row, toPosition.col);
-
-    pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
-
-    std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, pieces_[fromPosition.row][fromPosition.col]);
-
-    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
 }
 
 void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition) {
@@ -263,7 +272,8 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPositio
             break;
     }
     if (!isValid) {
-        // std::cerr << "[THO][E] Square::ComputeFromPosition Error" << std::endl;
+        std::cerr << "[THO][E] Square::ProcessAttackMove Error" << std::endl;
+        throw MlpException("Square::ProcessAttackMove Error");
     }
 }
 
@@ -288,7 +298,7 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
         newPiece.emplace<Queen>(color, toPosition);
         break;
     default:
-        // std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
+        std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
         break;
     }
     pieces_[toPosition.row][toPosition.col].swap(newPiece);
