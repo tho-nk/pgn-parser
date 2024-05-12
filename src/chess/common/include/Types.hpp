@@ -32,6 +32,5 @@ std::ostream &operator<<(std::ostream &os, const MoveType moveType);
 using FromPosition = Position;
 using ToPosition = Position;
 using Positions = std::vector<Position>;
-// using PieceType = std::string;
 
 } // namespace mlp_ha

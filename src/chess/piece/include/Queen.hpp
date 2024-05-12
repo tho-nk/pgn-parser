@@ -18,7 +18,6 @@ class Queen : public BasePiece<Queen> {
 
     Queen() = default;
 
-    // private:
     bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
 

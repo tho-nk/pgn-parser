@@ -19,7 +19,6 @@ bool Knight::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Posi
                 return true;
             }
         }
-        // If none of the moves lead to toPosition
         return false;
     };
     return canKnightMove();

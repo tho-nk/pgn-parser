@@ -9,11 +9,10 @@ CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::st
     : Move(moveType, color, moveText, comment) {}
 
 void CastlingMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
-    // std::clog << "CastlingMove::ProcessMove" << std::endl;
+    // std::clog << "[THO][I] CastlingMove::ProcessMove" << std::endl;
     auto str = moveText_;
-    // std::clog << moveText_ << std::endl;
+    // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
     helper::removeUnwantedChars(str);
-    // O-O-O left
     if (str == "O-O-O") {
         ToPosition toPositionKing{0, 2};
         FromPosition fromKing{0, 4};

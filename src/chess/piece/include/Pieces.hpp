@@ -35,7 +35,7 @@ inline Piece CreatePiece(const std::string &pieceType, const Color &color, const
     case PieceType::Undefined:
         return EmptyPiece(color, position);
     default:
-        // std::cerr << "error type" << std::endl;
+        // std::cerr << "[THO][E] Unknown pieceTypee" << std::endl;
         break;
     }
 }

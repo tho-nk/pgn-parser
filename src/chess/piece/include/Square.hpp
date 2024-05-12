@@ -18,31 +18,27 @@ class Square : public std::enable_shared_from_this<Square> {
     void SetEnPassant(const std::optional<Position> &enPassant) { enPassant_ = enPassant; }
     void ResetEnPassant() { enPassant_ = std::nullopt; }
 
-    // Visit BasicMove
-    void ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
-    void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
-
     PiecesReference GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
                                            const FromPosition &fromPosition) const;
     Position GetKingPosition(const Color &color) const;
 
-  public:
-    // Visit AttackMove
+    // Process BasicMove
+    void ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
+    void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
+
+    // Process AttackMove
     void ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
     void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
-  public:
+    // Process PromotionMove
     void ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
                               const ToPosition &toPosition);
 
   private:
-    bool IsKingChedked() { return false; }
     std::optional<Position> enPassant_;
     Pieces pieces_;
 
-    Position whiteKingPosition_;
-    Position blackKingPosition_;
-
+  private:
     bool VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor, const Position &kingPosition);
 };
 } // namespace mlp_ha

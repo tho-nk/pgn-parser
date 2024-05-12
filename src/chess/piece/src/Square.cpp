@@ -3,7 +3,7 @@
 
 namespace mlp_ha {
 
-Square::Square() : whiteKingPosition_(0, 4), blackKingPosition_(7, 4), enPassant_(std::nullopt) {}
+Square::Square() : enPassant_(std::nullopt) {}
 Square::~Square() {}
 
 void Square::InitSquare() {
@@ -96,17 +96,15 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition
     for (auto &it : subPieces) {
         std::visit(
             [&](auto &&piece) {
-                isValid = piece.IsValidBasicMove(shared_from_this(), toPosition); // IsValidMove(piece, toPosition);
-                // check king
+                isValid = piece.IsValidBasicMove(shared_from_this(), toPosition);
                 if (isValid) {
                     const auto &kingPosition = GetKingPosition(piece.GetColor());
-                    // TODO not only Collinear
                     if (!AreOnFileOrRowOrDiagonal(kingPosition,
                                                   piece.GetPosition()) // initial position doesnt protect king
                         || (AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition(),
-                                                     toPosition)) // new position still protect king
+                                                     toPosition)) // new position will protect king
                     ) {
-                        // std::clog << "good to go" << std::endl;
+                        // std::clog << "[THO][I] Square::ProcessBasicMove good to go" << std::endl;
                     } else {
                         if (VerifyIfKingBeingCheck(piece.GetPosition(), piece.GetColor(), kingPosition)) {
                             isValid = false;
@@ -128,7 +126,7 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition
             break;
     }
     if (!isValid) {
-        // std::cerr << "Square::ComputeFromPosition Error" << std::endl;
+        // std::cerr << "[THO][E] Square::ComputeFromPosition Error" << std::endl;
     }
 }
 
@@ -155,8 +153,9 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
             break;
         }
     }
-    // check index ok
-
+    if (index >= 8) {
+        // std::cerr << "[THO][E] Cannot find direction" << std::endl;
+    }
     Position possibleOpponent{piecePosition.row + dr[index], piecePosition.col + dc[index]};
     while (possibleOpponent.IsValid()) {
         if (!std::holds_alternative<EmptyPiece>(GetPieces()[possibleOpponent.row][possibleOpponent.col])) {
@@ -175,12 +174,8 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
         possibleObstacle.col = possibleObstacle.col - dc[index];
     }
     if (possibleObstacle.IsValid()) {
-        // it is king ??
         if (possibleObstacle.row == kingPosition.row && possibleObstacle.col == kingPosition.col) {
             if (possibleOpponent.IsValid()) {
-                // check if can move to king
-                // tmp remove piece
-
                 std::visit(
                     [&](auto &&opponent) {
                         if (opponent.GetColor() == Color::Undefined) {
@@ -189,20 +184,18 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
                         if (opponent.GetColor() == pieceColor) {
                             return;
                         }
-                        // TODO
                         kingChecked = opponent.IsValidBasicMove(shared_from_this(), kingPosition, piecePosition);
                     },
                     GetPieces()[possibleOpponent.row][possibleOpponent.col]);
             }
         }
     }
-
     return kingChecked;
 }
 
 void Square::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
     if (!fromPosition.IsValid() || !toPosition.IsValid()) {
-        // std::cerr << "HELLO Invalid" << std::endl;
+        // std::cerr << "[THO][E] Invalid position" << std::endl;
     }
     auto tmpF = Position(fromPosition.row, fromPosition.col);
     auto tmpT = Position(toPosition.row, toPosition.col);
@@ -235,25 +228,20 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPositio
     if (fromPosition.IsValid()) {
         return;
     }
-
     bool isValid = false;
     for (auto &it : subPieces) {
         std::visit(
             [&](auto &&piece) {
-                // if ((fromPosition.row != -1 && piece.GetPosition().row == fromPosition.row) ||
-                //     (fromPosition.col != -1 && piece.GetPosition().col == fromPosition.col)) {
-
                 isValid = piece.IsValidAttackMove(shared_from_this(), toPosition);
-                // check king
+
                 if (isValid) {
                     const auto &kingPosition = GetKingPosition(piece.GetColor());
-                    // TODO not only Collinear
                     if (!AreOnFileOrRowOrDiagonal(kingPosition,
                                                   piece.GetPosition()) // initial position doesnt protect king
                         || (AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition(),
                                                      toPosition)) // new position still protect king
                     ) {
-                        // std::clog << "good to go" << std::endl;
+                        // std::clog << "[THO][I] Square::ProcessAttackMove good to go" << std::endl;
                     } else {
                         if (VerifyIfKingBeingCheck(piece.GetPosition(), piece.GetColor(), kingPosition)) {
                             isValid = false;
@@ -269,14 +257,13 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPositio
                         fromPosition.col = piece.GetPosition().col;
                     }
                 }
-                // }
             },
             it.get());
         if (isValid)
             break;
     }
     if (!isValid) {
-        // std::cerr << "Square::ComputeFromPosition Error" << std::endl;
+        // std::cerr << "[THO][E] Square::ComputeFromPosition Error" << std::endl;
     }
 }
 
@@ -285,8 +272,6 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
 
     Piece newPiece;
     switch (pieceType) {
-    // case PieceType::King:
-    //     break;
     case PieceType::Queen:
         newPiece.emplace<Queen>(color, toPosition);
         break;
@@ -302,9 +287,8 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
     case PieceType::Pawn:
         newPiece.emplace<Queen>(color, toPosition);
         break;
-    case PieceType::Undefined:
-        break;
     default:
+        // std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
         break;
     }
     pieces_[toPosition.row][toPosition.col].swap(newPiece);

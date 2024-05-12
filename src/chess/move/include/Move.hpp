@@ -21,7 +21,6 @@ class Move {
     Move &operator=(Move &&) = delete;
     virtual ~Move() = default;
 
-    std::pair<FromPosition, ToPosition> ExtractPosition();
     void SetMove(std::string move, std::string comment) {
         moveText_ = std::move(move);
         comment_ = std::move(comment);

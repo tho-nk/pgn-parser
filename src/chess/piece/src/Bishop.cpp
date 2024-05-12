@@ -5,7 +5,6 @@ namespace mlp_ha {
 bool Bishop::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
                                const std::optional<Position> &validateKingCheck) const {
     auto canBishopMove = [&]() {
-        // Calculate the absolute differences in row and column
         int dRow = toPosition.row - GetPosition().row;
         int dCol = toPosition.col - GetPosition().col;
 
@@ -26,12 +25,15 @@ bool Bishop::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Posi
         // Normalize the change in row and column to -1, 0, or 1
         dRow /= std::abs(dRow);
         dCol /= std::abs(dCol);
-        // Search for the direction in the directional arrays
+
         int index = 0;
         for (; index < 4; ++index) {
             if (dr[index] == dRow && dc[index] == dCol) {
                 break;
             }
+        }
+        if (index >= 4) {
+            // std::cerr << "[THO][E] Bishop::IsValidBasicMove_ Cannot find direction" << std::endl;
         }
 
         Position p{GetPosition().row + dr[index], GetPosition().col + dc[index]};

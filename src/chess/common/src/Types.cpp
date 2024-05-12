@@ -3,19 +3,7 @@
 namespace mlp_ha {
 
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3) {
-    int d = p1.col * (p2.row - p3.row) + p2.col * (p3.row - p1.row) + p3.col * (p1.row - p2.row);
-    if (d != 0) {
-        return false;
-    }
-    if (p1.row == p2.row && p2.row == p3.row) {
-        return true;
-    }
-    if (p1.col == p2.col && p2.col == p3.col) {
-        return true;
-    }
-    int dR = std::abs(p1.row - p2.row);
-    int dC = std::abs(p1.col - p2.col);
-    return dR == dC;
+    return AreOnFileOrRowOrDiagonal(p1, p2) && AreOnFileOrRowOrDiagonal(p2, p3);
 }
 
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2) {
@@ -36,7 +24,7 @@ std::ostream &operator<<(std::ostream &os, const Color color) {
         os << " ";
         break;
     default:
-        // std::cerr << "error type" << std::endl;
+        // std::cerr << "[THO][E] Error color type" << std::endl;
         break;
     }
     return os;
@@ -66,7 +54,7 @@ std::ostream &operator<<(std::ostream &os, const PieceType pieceType) {
         os << " ";
         break;
     default:
-        // std::cerr << "error type" << std::endl;
+        // std::cerr << "[THO][E] Error PieceType" << std::endl;
         break;
     }
     return os;
@@ -112,7 +100,7 @@ std::ostream &operator<<(std::ostream &os, const MoveType moveType) {
         os << "AttackMove";
         break;
     default:
-        // std::cerr << "error type" << std::endl;
+        // std::cerr << "[THO][E] Error Move" << std::endl;
         break;
     }
     return os;

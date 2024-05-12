@@ -45,9 +45,9 @@ size_t GetNextSpace(std::string_view text, size_t index) {
 }
 
 void GetComment(std::string_view text, std::string &comment, size_t &index) {
-    // std::clog << "GetComment:=" << text << std::endl;
+    // std::clog << "[THO][I] GetComment:=" << text << std::endl;
     int firstNonSpace = GetNextNonSpace(text, index);
-    // std::clog << "GetComment:=" << firstNonSpace << std::endl;
+    // std::clog << "[THO][I] GetComment:=" << firstNonSpace << std::endl;
     int indexBegin = firstNonSpace;
     while (indexBegin < text.size()) {
         if (text[indexBegin] == '(' || text[indexBegin] == '{') {
@@ -79,14 +79,11 @@ void Remove3Dot(std::string &str) {
     }
 }
 
-// TODO comment after ;
-// TODO remain without " " and next line doesn't start with " "
 ParsingHelper ParseFile(const std::filesystem::path &path) {
     std::ifstream file(path);
-
     std::queue<std::string> q;
     if (!file.is_open()) {
-        // std::cerr << "Error opening the file" << std::endl;
+        // std::cerr << "[THO][E] Error opening the file" << std::endl;
         return ParsingHelper{};
     }
 
@@ -98,7 +95,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
     while (std::getline(file, aline)) {
         if (!aline.empty()) {
             if (aline[0] == '[') {
-                // std::clog << "tag:=" << aline << std::endl;
+                // std::clog << "[THO][I] tag:=" << aline << std::endl;
                 continue;
             }
             auto line = remain + " " + aline;
@@ -119,7 +116,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
             remain = line;
         }
     }
-    // std::clog << "remain:=" << remain << std::endl;
+    // std::clog << "[THO][I] remain:=" << remain << std::endl;
     return ParsingHelper{q, remain};
 }
 } // namespace helper

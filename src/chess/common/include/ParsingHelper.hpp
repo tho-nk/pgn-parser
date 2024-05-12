@@ -40,7 +40,6 @@ inline void removeUnwantedChars(std::string &str) {
 void Remove3Dot(std::string &str);
 
 struct ParsingHelper {
-    // std::map<std::string, std::string> tagGame;
     std::queue<std::string> roundQueue;
     std::string lastRun;
 };

@@ -10,9 +10,11 @@ bool Pawn::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Positi
         if ((GetPosition().col != toPosition.col) || (GetPosition().row >= toPosition.row)) {
             return false;
         }
+        // one step move
         if (GetPosition().row == (toPosition.row - 1)) {
             return true;
         }
+        // has obstacle
         for (int r = GetPosition().row + 1; r < toPosition.row; ++r) {
             if (!std::holds_alternative<EmptyPiece>(square->GetPieces()[r][toPosition.col])) {
                 return false;
@@ -24,9 +26,11 @@ bool Pawn::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Positi
         if ((GetPosition().col != toPosition.col) || (GetPosition().row <= toPosition.row)) {
             return false;
         }
+        // on step move
         if (GetPosition().row == (toPosition.row + 1)) {
             return true;
         }
+        // has obstacle
         for (int r = GetPosition().row - 1; r > toPosition.row; --r) {
             if (!std::holds_alternative<EmptyPiece>(square->GetPieces()[r][toPosition.col])) {
                 return false;

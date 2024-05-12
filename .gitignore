@@ -1,2 +1,6 @@
 build/
 .vscode/
+
+pytest/.pytest_cache
+pytest/__pycache__
+pytest/mlp-ha
