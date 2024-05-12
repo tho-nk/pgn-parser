@@ -2,6 +2,7 @@
 
 #include "common/include/Types.hpp"
 #include <memory>
+#include <optional>
 #include <sstream>
 
 namespace mlp_ha {
@@ -32,12 +33,14 @@ template <typename ConcretePiece> class BasePiece {
 
     const PieceType &GetType() const { return type_; }
 
-    bool IsValidBasicMove(const std::shared_ptr<Square> &square, const Position &toPosition) const {
-        return self().IsValidBasicMove_(square, toPosition);
+    bool IsValidBasicMove(const std::shared_ptr<Square> &square, const Position &toPosition,
+                          const std::optional<Position> &validateKingCheck = std::nullopt) const {
+        return self().IsValidBasicMove_(square, toPosition, validateKingCheck);
     }
 
-    bool IsValidAttackMove(const std::shared_ptr<Square> &square, const Position &toPosition) const {
-        return self().IsValidAttackMove_(square, toPosition);
+    bool IsValidAttackMove(const std::shared_ptr<Square> &square, const Position &toPosition,
+                           const std::optional<Position> &validateKingCheck = std::nullopt) const {
+        return self().IsValidAttackMove_(square, toPosition, validateKingCheck);
     }
 
   protected:

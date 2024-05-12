@@ -3,36 +3,64 @@
 #include "piece/include/Square.hpp"
 namespace mlp_ha {
 
-bool Rook::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const {
+bool Rook::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                             const std::optional<Position> &validateKingCheck) const {
     auto canRookMove = [&]() {
-        // Rook can move only along rows or columns
-        if (GetPosition().row != toPosition.row && GetPosition().col != toPosition.col) {
-            return false; // Not moving along a row or column
+        int dRow = toPosition.row - GetPosition().row;
+        int dCol = toPosition.col - GetPosition().col;
+
+        if (dRow != 0 && dCol != 0) {
+            return false;
         }
 
-        if (GetPosition().row == toPosition.row) {
-            int start_col = std::min(GetPosition().col, toPosition.col);
-            int end_col = std::max(GetPosition().col, toPosition.col);
-            for (int c = start_col + 1; c < end_col; ++c) {
-                if (!std::holds_alternative<EmptyPiece>(square->GetPieces()[toPosition.row][c])) {
-                    return false;
-                }
-            }
-        } else {
-            int start_row = std::min(GetPosition().row, GetPosition().row);
-            int end_row = std::max(GetPosition().row, GetPosition().row);
-            for (int r = start_row + 1; r < end_row; ++r) {
-                if (!std::holds_alternative<EmptyPiece>(square->GetPieces()[r][toPosition.col])) {
-                    return false;
-                }
+        // clang-format off
+        constexpr int dr[] = {0,  1,  0,  -1, };
+        constexpr int dc[] = {-1, 0,  1,  0, };
+        // clang-format on
+
+        // Normalize the change in row and column to -1, 0, or 1
+        if (dRow != 0) {
+            dRow /= std::abs(dRow);
+        }
+        if (dCol != 0) {
+            dCol /= std::abs(dCol);
+        }
+        // Search for the direction in the directional arrays
+        int index = 0;
+        for (; index < 4; ++index) {
+            if (dr[index] == dRow && dc[index] == dCol) {
+                break;
             }
         }
-        return true; // No pieces obstruct movement
+
+        Position p{GetPosition().row + dr[index], GetPosition().col + dc[index]};
+        while (p.IsValid()) {
+            if (!std::holds_alternative<EmptyPiece>(square->GetPieces()[p.row][p.col])) {
+                if (validateKingCheck != std::nullopt) {
+                    if (!(validateKingCheck.value().row == p.row && validateKingCheck.value().col == p.col)) {
+                        break;
+                    }
+                } else {
+                    break;
+                }
+            }
+            if (p.row == toPosition.row && p.col == toPosition.col) {
+                break;
+            }
+            p.row = p.row + dr[index];
+            p.col = p.col + dc[index];
+        }
+        if (p.row != toPosition.row || p.col != toPosition.col) {
+            return false;
+        }
+        return true;
     };
+
     return canRookMove();
 }
 
-bool Rook::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const {
-    return IsValidBasicMove_(square, toPosition);
+bool Rook::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                              const std::optional<Position> &validateKingCheck) const {
+    return IsValidBasicMove_(square, toPosition, validateKingCheck);
 }
 } // namespace mlp_ha

@@ -3,7 +3,8 @@
 #include "piece/include/Square.hpp"
 namespace mlp_ha {
 
-bool Pawn::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const {
+bool Pawn::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                             const std::optional<Position> &validateKingCheck) const {
     if (GetColor() == Color::White) {
         // no need to check Check. there only one pawn can move
         if ((GetPosition().col != toPosition.col) || (GetPosition().row >= toPosition.row)) {
@@ -36,7 +37,8 @@ bool Pawn::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Positi
     return false;
 }
 
-bool Pawn::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const {
+bool Pawn::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                              const std::optional<Position> &validateKingCheck) const {
     if (GetColor() == Color::White) {
         // en passant
         if (std::holds_alternative<EmptyPiece>(square->GetPieces()[toPosition.row][toPosition.col])) {

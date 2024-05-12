@@ -19,9 +19,11 @@ class Pawn : public BasePiece<Pawn> {
     Pawn() = default;
 
     // private:
-    bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const;
+    bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                           const std::optional<Position> &validateKingCheck = std::nullopt) const;
 
-    bool IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition) const;
+    bool IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
 };
 
 } // namespace mlp_ha

@@ -188,7 +188,7 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
                             return;
                         }
                         // TODO
-                        kingChecked = opponent.IsValidBasicMove(shared_from_this(), kingPosition);
+                        kingChecked = opponent.IsValidBasicMove(shared_from_this(), kingPosition, piecePosition);
                     },
                     GetPieces()[possibleOpponent.row][possibleOpponent.col]);
             }
