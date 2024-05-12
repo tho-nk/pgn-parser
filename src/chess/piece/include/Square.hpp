@@ -44,5 +44,7 @@ class Square : public std::enable_shared_from_this<Square> {
     Position blackKingPosition_;
 
     bool VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor, const Position &kingPosition);
+
+    std::string GetDraw() const;
 };
 } // namespace mlp_ha

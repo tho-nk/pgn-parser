@@ -86,7 +86,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
 
     std::queue<std::string> q;
     if (!file.is_open()) {
-        std::cerr << "Error opening the file" << std::endl;
+        // std::cerr << "Error opening the file" << std::endl;
         return ParsingHelper{};
     }
 
@@ -98,7 +98,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
     while (std::getline(file, aline)) {
         if (!aline.empty()) {
             if (aline[0] == '[') {
-                std::cout << "tag:=" << aline << std::endl;
+                // std::cout << "tag:=" << aline << std::endl;
                 continue;
             }
             auto line = remain + " " + aline;
@@ -119,7 +119,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
             remain = line;
         }
     }
-    std::cout << "remain:=" << remain << std::endl;
+    // std::cout << "remain:=" << remain << std::endl;
     // q.push(remain);
     return ParsingHelper{q, remain};
 }

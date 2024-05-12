@@ -36,7 +36,7 @@ std::ostream &operator<<(std::ostream &os, const Color color) {
         os << " ";
         break;
     default:
-        std::cerr << "error type" << std::endl;
+        // std::cerr << "error type" << std::endl;
         break;
     }
     return os;
@@ -66,7 +66,7 @@ std::ostream &operator<<(std::ostream &os, const PieceType pieceType) {
         os << " ";
         break;
     default:
-        std::cerr << "error type" << std::endl;
+        // std::cerr << "error type" << std::endl;
         break;
     }
     return os;
@@ -112,7 +112,7 @@ std::ostream &operator<<(std::ostream &os, const MoveType moveType) {
         os << "AttackMove";
         break;
     default:
-        std::cerr << "error type" << std::endl;
+        // std::cerr << "error type" << std::endl;
         break;
     }
     return os;

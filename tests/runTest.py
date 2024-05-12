@@ -1,0 +1,36 @@
+import subprocess
+
+# Replace 'your_binary' with the path to your binary
+binary_path = "./mlp-ha"
+test_cases = ["./checking/diagonal-prevent-check-down",
+              "./checking/diagonal-prevent-check-down2",
+              "./checking/verify-horizonal-prevent-check-2",
+              "./checking/verify-horizonal-prevent-check",
+              "./checking/verify-Knight-prevent-check-2",
+              "./checking/verify-Knight-prevent-check",
+              "./checking/vertical-prevent-check-down",
+              "./checking/vertical-prevent-check-up",
+              "./general/Anastasia-Nodirbek.2014.10.24_promotion",
+              "./general/Arnold_Nodirbek.2014.10.26",
+              "./general/EnPassant",
+              "./general/Fabiano-Hikaru_Round_1_April_4_2024",
+              "./general/Jumanov-Nodirbek_2014.03.02"]
+
+
+def run_mlp_ha_chess(arg):
+    print("test:" + arg)
+    process = subprocess.Popen([binary_path, arg], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    stdout, stderr = process.communicate()
+    return stdout.decode('utf-8')
+
+
+def test_parsing_pgn():
+    for test in test_cases:
+        stdout_txt = run_mlp_ha_chess(test + ".pgn")
+        with open(test + ".txt", 'r') as file:
+            file_txt = file.read()
+        print("stdout:=")
+        print(stdout_txt)
+        # print("filetxt:=")
+        # print(file_txt)
+        assert(file_txt.rstrip("\n") == stdout_txt.rstrip("\n"))

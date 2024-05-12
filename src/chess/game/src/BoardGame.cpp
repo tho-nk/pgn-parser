@@ -11,7 +11,7 @@ void BoardGame::Run() {
     for (const auto &round : rounds_) {
         round.Run(shared_from_this());
     }
-    Draw();
+    // Draw();
 }
 
 void BoardGame::Draw() { square_->Draw(); }
@@ -32,10 +32,10 @@ void BoardGame::LoadData() {
         found = parsingHelper.lastRun.find("1/2-1/2");
     }
     if (found == std::string::npos) {
-        std::cerr << "Error result" << std::endl;
+        // std::cerr << "Error result" << std::endl;
     }
     auto roundText = parsingHelper.lastRun.substr(0, found);
-    std::cout << "roundText:=" << roundText << std::endl;
+    // std::cout << "roundText:=" << roundText << std::endl;
     rounds_.emplace_back(roundText);
 }
 

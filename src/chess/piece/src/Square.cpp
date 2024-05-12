@@ -44,19 +44,38 @@ void Square::InitSquare() {
     pieces_[7][4].emplace<King>(Color::Black, Position{7, 4});
 }
 
-void Square::Draw() {
+std::string Square::GetDraw() const {
+    std::ostringstream ss;
     for (int r = ROWS - 1; r >= 0; --r) {
         for (auto c = 0; c < COLUMNS - 1; ++c) {
             std::visit(
-                [](auto &&piece) {
-                    std::cout << piece.GetDraw();
-                    std::cout << "|";
+                [&](auto &&piece) {
+                    ss << piece.GetDraw();
+                    ss << "|";
                 },
                 pieces_[r][c]);
         }
-        std::visit([](auto &&piece) { std::cout << piece.GetDraw(); }, pieces_[r][COLUMNS - 1]);
-        std::cout << std::endl;
+        std::visit([&](auto &&piece) { ss << piece.GetDraw(); }, pieces_[r][COLUMNS - 1]);
+        ss << "\n";
     }
+    // ss << color_ << type_;
+    return ss.str();
+}
+
+void Square::Draw() {
+    std::cout << GetDraw() << std::endl;
+    // for (int r = ROWS - 1; r >= 0; --r) {
+    //     for (auto c = 0; c < COLUMNS - 1; ++c) {
+    //         std::visit(
+    //             [](auto &&piece) {
+    //                 std::cout << piece.GetDraw();
+    //                 std::cout << "|";
+    //             },
+    //             pieces_[r][c]);
+    //     }
+    //     std::visit([](auto &&piece) { std::cout << piece.GetDraw(); }, pieces_[r][COLUMNS - 1]);
+    //     std::cout << std::endl;
+    // }
 }
 
 PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
@@ -104,7 +123,7 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition
                         || (AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition(),
                                                      toPosition)) // new position still protect king
                     ) {
-                        std::cout << "good to go" << std::endl;
+                        // std::cout << "good to go" << std::endl;
                     } else {
                         if (VerifyIfKingBeingCheck(piece.GetPosition(), piece.GetColor(), kingPosition)) {
                             isValid = false;
@@ -126,7 +145,7 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition
             break;
     }
     if (!isValid) {
-        std::cerr << "Square::ComputeFromPosition Error" << std::endl;
+        // std::cerr << "Square::ComputeFromPosition Error" << std::endl;
     }
 }
 
@@ -200,7 +219,7 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
 
 void Square::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
     if (!fromPosition.IsValid() || !toPosition.IsValid()) {
-        std::cout << "HELLO Invalid" << std::endl;
+        // std::cout << "HELLO Invalid" << std::endl;
     }
     auto tmpF = Position(fromPosition.row, fromPosition.col);
     auto tmpT = Position(toPosition.row, toPosition.col);
@@ -251,7 +270,7 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPositio
                         || (AreOnFileOrRowOrDiagonal(kingPosition, piece.GetPosition(),
                                                      toPosition)) // new position still protect king
                     ) {
-                        std::cout << "good to go" << std::endl;
+                        // std::cout << "good to go" << std::endl;
                     } else {
                         if (VerifyIfKingBeingCheck(piece.GetPosition(), piece.GetColor(), kingPosition)) {
                             isValid = false;
@@ -274,7 +293,7 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPositio
             break;
     }
     if (!isValid) {
-        std::cerr << "Square::ComputeFromPosition Error" << std::endl;
+        // std::cerr << "Square::ComputeFromPosition Error" << std::endl;
     }
 }
 
