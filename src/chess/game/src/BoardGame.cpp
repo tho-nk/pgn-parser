@@ -17,6 +17,10 @@ void BoardGame::Draw() { std::cout << square_->GetCurrentState() << std::endl; }
 
 void BoardGame::LoadData() {
     auto parsingHelper = helper::ParseFile(filePath_);
+    if (parsingHelper.roundQueue.empty()) {
+        // std::clog << "[THO][I] start game" << std::endl;
+        return;
+    }
     int round = 1;
     while (!parsingHelper.roundQueue.empty()) {
         auto roundText = parsingHelper.roundQueue.front();
