@@ -1,7 +1,7 @@
 import subprocess
 
 # Replace 'your_binary' with the path to your binary
-binary_path = "./mlp-ha"
+binary_path = "./pgn_parser"
 test_cases = ["./checking/diagonal-prevent-check-down",
               "./checking/diagonal-prevent-check-down2",
               "./checking/verify-horizonal-prevent-check-2",

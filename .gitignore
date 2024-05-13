@@ -3,4 +3,4 @@ build/
 
 pytest/.pytest_cache
 pytest/__pycache__
-pytest/mlp-ha
+pytest/pgn_parser

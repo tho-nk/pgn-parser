@@ -9,6 +9,10 @@ namespace mlp_ha {
 class Round {
   public:
     Round(const std::string &str);
+    Round(const Round &) = delete;
+    Round &operator=(const Round &) = delete;
+    Round(Round &&) = default;
+    Round &operator=(Round &&) = default;
     ~Round() = default;
 
     int GetRoundIndex() const { return roundIndex_; }

@@ -7,8 +7,12 @@
 namespace mlp_ha {
 class Square : public std::enable_shared_from_this<Square> {
   public:
-    Square(/* args */);
-    ~Square();
+    Square() : enPassant_(std::nullopt){};
+    Square(const Square &) = delete;
+    Square &operator=(const Square &) = delete;
+    Square(Square &&) = default;
+    Square &operator=(Square &&) = default;
+    ~Square() = default;
 
     void InitSquare();
     std::string GetCurrentState() const;

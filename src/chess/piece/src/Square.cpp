@@ -5,9 +5,6 @@
 
 namespace mlp_ha {
 
-Square::Square() : enPassant_(std::nullopt) {}
-Square::~Square() {}
-
 void Square::InitSquare() {
     for (int r = 0; r < ROWS; ++r) {
         for (int c = 0; c < COLUMNS; ++c) {

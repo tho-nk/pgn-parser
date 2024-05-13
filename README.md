@@ -34,8 +34,9 @@ Enter the container:
 Scripts are available to build, test the project:
 
 - `./compile.sh`
-    - The executable mlp-ha is found in either ./build/ or ./pytest/ folder
-  
+    - The executable pgn_parser is found in either ./build/ or ./pytest/ folder
+    - `./pgn_paser <file_path>`
+
 - `./test.sh`
 
 # Features
@@ -76,10 +77,10 @@ wR|  |wB|wQ|  |wB|  |wR
 ```
 
 -   Runtime polymorphism in `class Move;`
--   Static polymorphism with `std::variant`, `std::visit` and `CRTP (Curiously Recurring Template Pattern)` in `class BasePiece;`
+-   Static polymorphism with `std::variant`, `std::visit` and `CRTP (Curiously Recurring Template Pattern)` in `template <typename ConcretePiece> class BasePiece;`
 
 # Notes
-I am still working on developing this parser.
+I am still working on developing this parser. Please feel free to provide any feedback or suggestions.
 
 -   Add Iterative mode
 -   Support Forward-Backward interaction
