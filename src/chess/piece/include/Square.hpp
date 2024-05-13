@@ -39,6 +39,8 @@ class Square : public std::enable_shared_from_this<Square> {
     Pieces pieces_;
 
   private:
+    void ValidateMove(const Position &piecePosition, const ToPosition &toPosition, const Color &pieceColor,
+                      bool &isValid, FromPosition &fromPosition);
     bool VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor, const Position &kingPosition);
 };
 } // namespace mlp_ha

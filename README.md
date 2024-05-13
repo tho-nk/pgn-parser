@@ -87,6 +87,9 @@ I am still working on developing this parser.
 -   Improve performace and readability
 -   Cover more file format error
 -   Improve test coverage
+-   Handle error
+-   overload piece swap
+
 
 
 

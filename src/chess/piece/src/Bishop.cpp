@@ -33,9 +33,11 @@ bool Bishop::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Posi
             }
         }
         if (index >= 4) {
-            // std::cerr << "[THO][E] Bishop::IsValidBasicMove_ Cannot find direction" << std::endl;
+            std::cerr << "[THO][E] Bishop::IsValidBasicMove_ Cannot find direction" << std::endl;
         }
 
+        // Iterate to the destination, and check if there is any obstacle
+        // support king check also
         Position p{GetPosition().row + dr[index], GetPosition().col + dc[index]};
         while (p.IsValid()) {
             if (!std::holds_alternative<EmptyPiece>(square->GetPieces()[p.row][p.col])) {

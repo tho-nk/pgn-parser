@@ -83,7 +83,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
     std::ifstream file(path);
     std::queue<std::string> q;
     if (!file.is_open()) {
-        // std::cerr << "[THO][E] Error opening the file" << std::endl;
+        std::cerr << "[THO][E] Error opening the file" << std::endl;
         return ParsingHelper{};
     }
 
