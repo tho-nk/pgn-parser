@@ -79,6 +79,27 @@ void Remove3Dot(std::string &str) {
     }
 }
 
+void ProcessGameComment(std::string &str) {
+    auto firstDot = str.find_first_of(".");
+    while (firstDot != std::string::npos) {
+        if (!IsBalanced(str.substr(0, firstDot))) {
+            firstDot = str.find_first_of(".", firstDot + 1);
+        } else {
+            int moveBack = firstDot;
+            do {
+                moveBack--;
+            } while (moveBack >= 0 && std::isdigit(str[moveBack]));
+            if (moveBack < 0) {
+                moveBack++;
+            }
+            // std::clog << "[THO][I] game comment :" << str.substr(0, moveBack) << std::endl;
+            str = str.substr(moveBack);
+            TrimSpace(str);
+            return;
+        }
+    }
+}
+
 ParsingHelper ParseFile(const std::filesystem::path &path) {
     std::ifstream file(path);
     std::queue<std::string> q;
@@ -92,6 +113,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
     size_t begin = 0;
     size_t end = 0;
     std::string remain = "";
+    bool gameCommentFound = false;
     while (std::getline(file, aline)) {
         if (!aline.empty()) {
             if (aline[0] == '[') {
@@ -103,7 +125,11 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
             size_t found = line.find(to_find);
             while (found != std::string::npos) {
                 auto sub = line.substr(begin, found - begin);
+                TrimSpace(sub);
                 if (IsBalanced(sub)) {
+                    if (round == 2) {
+                        ProcessGameComment(sub);
+                    }
                     q.push(sub);
                     line = line.substr(found);
                     ++round;

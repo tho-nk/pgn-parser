@@ -45,5 +45,7 @@ struct ParsingHelper {
 };
 
 ParsingHelper ParseFile(const std::filesystem::path &path);
+
+void ProcessGameComment(std::string &str);
 } // namespace helper
 } // namespace mlp_ha
