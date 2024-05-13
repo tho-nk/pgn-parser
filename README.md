@@ -6,19 +6,19 @@ It requires:
 
 - CMake 3.22
 - GCC 12.1 and C++20 standard
-- Ubuntu 22.04 or the Docker image `iainttho/ubuntu:millennium` based on Ubuntu 22.04.
+- Ubuntu 22.04 or the Docker image `iainttho/ubuntu:mlp` based on Ubuntu 22.04.
 
 # Build and Run
 
 **Running the Docker Container**
 
-The image `iainttho/ubuntu:millennium` comes with preinstalled required packages:
+The image `iainttho/ubuntu:mlp` comes with preinstalled required packages:
 - gdb, valgrind, pytest
 
 
 Start/Stop the Container:
 
-- `docker run -d --name mlp-ubuntu iainttho/ubuntu:millennium`
+- `docker run -d --name mlp-ubuntu iainttho/ubuntu:mlp`
 - `docker stop mlp-ubuntu`
 
 
