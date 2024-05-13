@@ -44,9 +44,9 @@ void BoardGame::LoadData() {
     rounds_.emplace_back(roundText);
 }
 
-void BoardGame::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition,
+void BoardGame::ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
                                  FromPosition &fromPosition) {
-    square_->ProcessBasicMove(subPieces, toPosition, fromPosition);
+    square_->ProcessBasicMove(subPieces, color, toPosition, fromPosition);
 }
 
 void BoardGame::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
@@ -57,9 +57,9 @@ void BoardGame::AttackPiece(const FromPosition &fromPosition, const ToPosition t
     square_->AttackPiece(fromPosition, toPosition);
 }
 
-void BoardGame::ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition,
+void BoardGame::ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
                                   FromPosition &fromPosition) {
-    square_->ProcessAttackMove(subPieces, toPosition, fromPosition);
+    square_->ProcessAttackMove(subPieces, color, toPosition, fromPosition);
 }
 
 void BoardGame::ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,

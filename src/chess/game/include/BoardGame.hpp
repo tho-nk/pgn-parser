@@ -19,11 +19,13 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
     void Run();
 
     // Process BasicMove
-    void ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
+    void ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
+                          FromPosition &fromPosition);
     void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
     // Process AttackMove
-    void ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
+    void ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
+                           FromPosition &fromPosition);
     void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
     // Process PromotionMove

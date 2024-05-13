@@ -88,18 +88,18 @@ Position Square::GetKingPosition(const Color &color) const {
     return std::get<King>(kings.at(0).get()).GetPosition();
 }
 
-void Square::ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition,
+void Square::ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
                               FromPosition &fromPosition) {
     if (fromPosition.IsValid()) {
         return;
     }
-
     bool isValid = false;
+    const auto &kingPosition = GetKingPosition(color);
     for (auto &it : subPieces) {
         std::visit(
             [&](auto &&piece) {
                 isValid = piece.IsValidBasicMove(shared_from_this(), toPosition);
-                ValidateMove(piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
+                ValidateMove(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
             },
             it.get());
         if (isValid)
@@ -220,18 +220,19 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPo
     }
 }
 
-void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition,
+void Square::ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
                                FromPosition &fromPosition) {
 
     if (fromPosition.IsValid()) {
         return;
     }
     bool isValid = false;
+    const auto &kingPosition = GetKingPosition(color);
     for (auto &it : subPieces) {
         std::visit(
             [&](auto &&piece) {
                 isValid = piece.IsValidAttackMove(shared_from_this(), toPosition);
-                ValidateMove(piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
+                ValidateMove(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
             },
             it.get());
         if (isValid)
@@ -243,10 +244,9 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const ToPositio
     }
 }
 
-void Square::ValidateMove(const Position &piecePosition, const ToPosition &toPosition, const Color &pieceColor,
-                          bool &isValid, FromPosition &fromPosition) {
+void Square::ValidateMove(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
+                          const Color &pieceColor, bool &isValid, FromPosition &fromPosition) {
     if (isValid) {
-        const auto &kingPosition = GetKingPosition(pieceColor);
         if (!(!AreOnFileOrRowOrDiagonal(kingPosition, piecePosition) ||
               (AreOnFileOrRowOrDiagonal(kingPosition, piecePosition, toPosition)))) {
             if (VerifyIfKingBeingCheck(piecePosition, pieceColor, kingPosition)) {

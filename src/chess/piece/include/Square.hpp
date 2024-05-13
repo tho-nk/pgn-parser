@@ -23,11 +23,13 @@ class Square : public std::enable_shared_from_this<Square> {
     Position GetKingPosition(const Color &color) const;
 
     // Process BasicMove
-    void ProcessBasicMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
+    void ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
+                          FromPosition &fromPosition);
     void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
     // Process AttackMove
-    void ProcessAttackMove(const PiecesReference &subPieces, const ToPosition &toPosition, FromPosition &fromPosition);
+    void ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
+                           FromPosition &fromPosition);
     void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
     // Process PromotionMove
@@ -39,8 +41,8 @@ class Square : public std::enable_shared_from_this<Square> {
     Pieces pieces_;
 
   private:
-    void ValidateMove(const Position &piecePosition, const ToPosition &toPosition, const Color &pieceColor,
-                      bool &isValid, FromPosition &fromPosition);
+    void ValidateMove(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
+                      const Color &pieceColor, bool &isValid, FromPosition &fromPosition);
     bool VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor, const Position &kingPosition);
 };
 } // namespace mlp_ha

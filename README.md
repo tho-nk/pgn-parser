@@ -83,12 +83,14 @@ I am still working on developing this parser.
 
 -   Add Iterative mode
 -   Support Forward-Backward interaction
--   Take in account tags and comment
+-   Process tags and comment
 -   Improve performace and readability
 -   Cover more file format error
 -   Improve test coverage
 -   Handle error
--   overload piece swap
+-   Overload piece swap
+-   Handle Color (White/Blacl) more elegant
+-   Pull Request!
 
 
 

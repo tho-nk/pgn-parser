@@ -36,7 +36,7 @@ void AttackMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
 
         auto type = StringToPieceType(pieceType);
         const auto subPieces = boardGame->GetPieceOfTypeAndColor(type, this->color_, fromPosition);
-        boardGame->ProcessAttackMove(subPieces, toPosition, fromPosition);
+        boardGame->ProcessAttackMove(subPieces, this->color_, toPosition, fromPosition);
         boardGame->AttackPiece(fromPosition, toPosition);
     } catch (const MlpException &e) {
         // std::cerr << "[THO][E] AttackMove::ProcessMove invalid move : " << moveText_ << std::endl;
