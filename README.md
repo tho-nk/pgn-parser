@@ -35,7 +35,8 @@ Scripts are available to build, test the project:
 
 - `./compile.sh`
     - The executable pgn_parser is found in either ./build/ or ./pytest/ folder
-    - `./pgn_paser <file_path>`
+    - `cd pytest`
+    - `./pgn_parser <file_path>`
 
 - `./test.sh`
 
