@@ -78,7 +78,7 @@ wR|  |wB|wQ|  |wB|  |wR
 ```
 
 -   Runtime polymorphism in `class Move;`
--   Static polymorphism with `std::variant`, `std::visit` and `CRTP (Curiously Recurring Template Pattern)` in `template <typename ConcretePiece> class BasePiece;`
+-   Dispatch using `std::variant`, `std::visit` and `CRTP (Curiously Recurring Template Pattern)` in `template <typename ConcretePiece> class BasePiece;`
 
 # Notes
 I am still working on developing this parser. Please feel free to provide any feedback or suggestions.

@@ -18,6 +18,8 @@ class Bishop : public BasePiece<Bishop> {
 
     Bishop() = default;
 
+  private:
+    friend class BasePiece<Bishop>;
     bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
 

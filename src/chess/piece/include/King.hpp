@@ -18,6 +18,8 @@ class King : public BasePiece<King> {
 
     King() = default;
 
+  private:
+    friend class BasePiece<King>;
     bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
     bool IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
