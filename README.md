@@ -41,7 +41,7 @@ Scripts are available to build, test the project:
 - `./test.sh`
 
 # Features
-This parser supports the PGN format based on : <br> http://www.saremba.de/chessgml/standards/pgn/pgn-complete.htm
+This parser supports the PGN format based on : <br> https://en.wikipedia.org/wiki/Portable_Game_Notation
 
 - The movetext is based on SAN (Standard Algebraic Notation)
 - Disambiguation is supported by checking `VerifyIfKingBeingCheck` before accepting a move
