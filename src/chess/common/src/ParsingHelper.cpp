@@ -25,7 +25,7 @@ bool IsBalanced(std::string_view str) {
 size_t GetNextNonSpace(std::string_view text, size_t index) {
     int firstNonSpace = index;
     while (firstNonSpace < text.size()) {
-        if (text[firstNonSpace] != ' ') {
+        if (!std::isspace(text[firstNonSpace])) {
             break;
         }
         ++firstNonSpace;
@@ -36,7 +36,7 @@ size_t GetNextNonSpace(std::string_view text, size_t index) {
 size_t GetNextSpace(std::string_view text, size_t index) {
     int firstNonSpace = index;
     while (firstNonSpace < text.size()) {
-        if (text[firstNonSpace] == ' ') {
+        if (std::isspace(text[firstNonSpace])) {
             break;
         }
         ++firstNonSpace;
