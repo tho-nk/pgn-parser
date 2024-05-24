@@ -3,77 +3,13 @@
 #include <algorithm>
 
 namespace mlp_ha {
-BoardGame::BoardGame(const std::filesystem::path &filePath) : filePath_(filePath), square_(std::make_shared<Square>()) {
+BoardGame::BoardGame(const std::filesystem::path &filePath) : square_(std::make_shared<Square>(filePath)) {
     square_->InitSquare();
+    square_->LoadData();
 }
 
-void BoardGame::Run() {
-    for (const auto &round : rounds_) {
-        round.Run(shared_from_this());
-    }
-}
+void BoardGame::Run() { square_->Run(); }
 
 void BoardGame::Draw() { std::cout << square_->GetCurrentState() << std::endl; }
 
-void BoardGame::LoadData() {
-    auto parsingHelper = helper::ParseFile(filePath_);
-    if (parsingHelper.roundQueue.empty()) {
-        // std::clog << "[THO][I] start game" << std::endl;
-        return;
-    }
-    int round = 1;
-    while (!parsingHelper.roundQueue.empty()) {
-        auto roundText = parsingHelper.roundQueue.front();
-        parsingHelper.roundQueue.pop();
-        rounds_.emplace_back(roundText);
-        round++;
-    }
-
-    if (!helper::IsBalanced(parsingHelper.lastRun)) {
-        std::cerr << "[THO][E] File format error : " << parsingHelper.lastRun << "\n  Cannot process round := " << round
-                  << std::endl;
-    }
-    auto found = parsingHelper.lastRun.find("1-0");
-    if (found == std::string::npos) {
-        found = parsingHelper.lastRun.find("0-1");
-    }
-    if (found == std::string::npos) {
-        found = parsingHelper.lastRun.find("1/2-1/2");
-    }
-    if (found == std::string::npos) {
-        // std::cerr << "[THO][E] Game result error" << std::endl;
-    }
-    auto roundText = parsingHelper.lastRun.substr(0, found);
-    // std::clog << "[THO][I] roundText:=" << roundText << std::endl;
-    rounds_.emplace_back(roundText);
-}
-
-void BoardGame::ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                                 FromPosition &fromPosition) {
-    square_->ProcessBasicMove(subPieces, color, toPosition, fromPosition);
-}
-
-void BoardGame::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
-    square_->MovePiece(fromPosition, toPosition);
-}
-
-void BoardGame::AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition) {
-    square_->AttackPiece(fromPosition, toPosition);
-}
-
-void BoardGame::ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                                  FromPosition &fromPosition) {
-    square_->ProcessAttackMove(subPieces, color, toPosition, fromPosition);
-}
-
-void BoardGame::ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
-                                     const ToPosition &toPosition) {
-
-    square_->ProcessPromotionMove(pieceType, color, fromPosition, toPosition);
-}
-
-PiecesReference BoardGame::GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                                  const FromPosition &fromPosition) {
-    return square_->GetPieceOfTypeAndColor(pieceType, color, fromPosition);
-}
 } // namespace mlp_ha

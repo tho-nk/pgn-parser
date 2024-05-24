@@ -8,7 +8,7 @@
 
 namespace mlp_ha {
 
-class BoardGame;
+class Square;
 
 class Move {
   public:
@@ -31,7 +31,7 @@ class Move {
     const std::string &GetComment() const { return comment_; }
     const MoveType &GetMoveType() const { return moveType_; }
 
-    virtual void ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {};
+    virtual void ProcessMove(const std::shared_ptr<Square> &square) {};
 
   protected:
     MoveType moveType_;

@@ -21,6 +21,9 @@ Start/Stop the Container:
 - `docker run -d --name mlp-ubuntu iainttho/ubuntu:mlp`
 - `docker stop mlp-ubuntu`
 
+or using docker compose to map current volume (no need to clone inside container)
+- `docker-compose up -d`
+- `docker-compose down --remove-orphans`
 
 **Building, Testing, and Running**
 

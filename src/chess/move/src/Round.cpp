@@ -1,8 +1,8 @@
 
 #include "move/include/Round.hpp"
 #include "common/include/ParsingHelper.hpp"
-#include "game/include/BoardGame.hpp"
 #include "move/include/MoveFactory.hpp"
+#include "piece/include/Square.hpp"
 
 namespace mlp_ha {
 
@@ -55,15 +55,15 @@ void Round::ParseRoundText(const std::string &str) {
     blackMove_ = move_factory::CreateMove(getMoveType(blackMove), Color::Black, blackMove, blackMoveComment);
 }
 
-void Round::Run(const std::shared_ptr<BoardGame> &boardGame) const {
+void Round::Run(const std::shared_ptr<Square> &square) const {
     // std::clog << "[THO][I] Round:=" << roundIndex_ << std::endl;
     // std::clog << "[THO][I] White move:" << std::endl;
-    whiteMove_->ProcessMove(boardGame);
-    // boardGame->Draw();
+    whiteMove_->ProcessMove(square);
+    // square->Draw();
     // std::clog << std::endl;
     // std::clog << "[THO][I] Black move" << std::endl;
-    blackMove_->ProcessMove(boardGame);
-    // boardGame->Draw();
+    blackMove_->ProcessMove(square);
+    // square->Draw();
     // std::clog << "\n\n\n" << std::endl;
 }
 } // namespace mlp_ha

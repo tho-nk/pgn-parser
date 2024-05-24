@@ -13,6 +13,6 @@ class CastlingMove : public Move {
     CastlingMove &operator=(CastlingMove &&) = delete;
     ~CastlingMove() = default;
 
-    virtual void ProcessMove(const std::shared_ptr<BoardGame> &boardGame) final;
+    virtual void ProcessMove(const std::shared_ptr<Square> &square) final;
 };
 } // namespace mlp_ha

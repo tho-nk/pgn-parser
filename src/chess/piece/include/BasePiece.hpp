@@ -33,14 +33,14 @@ template <typename ConcretePiece> class BasePiece {
 
     const PieceType &GetType() const { return type_; }
 
-    bool IsValidBasicMove(const std::shared_ptr<Square> &square, const Position &toPosition,
+    bool IsValidBasicMove(const Position &toPosition,
                           const std::optional<Position> &validateKingCheck = std::nullopt) const {
-        return self().IsValidBasicMove_(square, toPosition, validateKingCheck);
+        return self().IsValidBasicMove_(toPosition, validateKingCheck);
     }
 
-    bool IsValidAttackMove(const std::shared_ptr<Square> &square, const Position &toPosition,
+    bool IsValidAttackMove(const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const {
-        return self().IsValidAttackMove_(square, toPosition, validateKingCheck);
+        return self().IsValidAttackMove_(toPosition, validateKingCheck);
     }
 
   protected:
@@ -50,6 +50,8 @@ template <typename ConcretePiece> class BasePiece {
     PieceType type_;
     Color color_;
     Position position_;
+
+    std::shared_ptr<Square> square_;
 };
 
 } // namespace mlp_ha

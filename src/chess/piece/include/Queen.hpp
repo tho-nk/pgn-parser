@@ -4,14 +4,15 @@
 
 namespace mlp_ha {
 
-class BoardGame;
+class Square;
 
 class Queen : public BasePiece<Queen> {
   public:
-    Queen(const Color &color, const Position &position) {
+    Queen(const Color &color, const Position &position, const std::shared_ptr<Square> &square) {
         type_ = PieceType::Queen;
         color_ = color;
         position_ = position;
+        square_ = square;
     }
 
     Positions ComputeFromPositions(const std::string &) { return {}; }
@@ -20,10 +21,10 @@ class Queen : public BasePiece<Queen> {
 
   private:
     friend class BasePiece<Queen>;
-    bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+    bool IsValidBasicMove_(const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
 
-    bool IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+    bool IsValidAttackMove_(const Position &toPosition,
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
 };
 
