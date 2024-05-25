@@ -1,14 +1,16 @@
 #pragma once
 
-// #include "BoardGame.hpp"
 #include "move/include/Move.hpp"
 #include <memory>
 #include <vector>
 
 namespace mlp_ha {
+
+class Square;
+
 class Round {
   public:
-    Round(const std::string &str);
+    Round(const std::string &str, const std::shared_ptr<Square> &square);
     Round(const Round &) = delete;
     Round &operator=(const Round &) = delete;
     Round(Round &&) = default;
@@ -16,16 +18,16 @@ class Round {
     ~Round() = default;
 
     int GetRoundIndex() const { return roundIndex_; }
-    const std::shared_ptr<Move> GetWhiteMove() const { return whiteMove_; }
-    const std::shared_ptr<Move> GetBlackMove() const { return blackMove_; }
     const std::string &GetComment() const { return roundComment_; }
-    void Run(const std::shared_ptr<BoardGame> &boardGame) const;
+    void Run() const;
 
   private:
     int roundIndex_;
     std::string roundComment_;
-    std::shared_ptr<Move> whiteMove_;
-    std::shared_ptr<Move> blackMove_;
+    std::unique_ptr<Move> whiteMove_;
+    std::unique_ptr<Move> blackMove_;
+
+    std::weak_ptr<Square> square_;
 
   private:
     void ParseRoundText(const std::string &str);

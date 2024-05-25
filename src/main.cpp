@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     std::filesystem::path filePath = argv[1];
     try {
         auto game = std::make_shared<mlp_ha::BoardGame>(filePath);
-        game->LoadData();
+        // game->LoadData();
         game->Run();
         game->Draw();
     } catch (const std::exception &e) {

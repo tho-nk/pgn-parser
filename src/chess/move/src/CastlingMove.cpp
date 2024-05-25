@@ -2,14 +2,14 @@
 #include "move/include/CastlingMove.hpp"
 #include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
-#include "game/include/BoardGame.hpp"
+#include "piece/include/Square.hpp"
 
 namespace mlp_ha {
 
 CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
     : Move(moveType, color, moveText, comment) {}
 
-void CastlingMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
+void CastlingMove::ProcessMove(const std::shared_ptr<Square> &square) {
     try {
         // std::clog << "[THO][I] CastlingMove::ProcessMove" << std::endl;
         auto str = moveText_;
@@ -27,8 +27,8 @@ void CastlingMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
                 toPositionRook.row = 7;
                 fromRook.row = 7;
             }
-            boardGame->MovePiece(fromKing, toPositionKing);
-            boardGame->MovePiece(fromRook, toPositionRook);
+            square->MovePiece(fromKing, toPositionKing);
+            square->MovePiece(fromRook, toPositionRook);
 
         } else {
             ToPosition toPositionKing{0, 6};
@@ -43,8 +43,8 @@ void CastlingMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
                 fromRook.row = 7;
             }
 
-            boardGame->MovePiece(fromKing, toPositionKing);
-            boardGame->MovePiece(fromRook, toPositionRook);
+            square->MovePiece(fromKing, toPositionKing);
+            square->MovePiece(fromRook, toPositionRook);
         }
     } catch (const MlpException &e) {
         // std::cerr << "[THO][E] CastlingMove::ProcessMove invalid move : " << moveText_ << std::endl;

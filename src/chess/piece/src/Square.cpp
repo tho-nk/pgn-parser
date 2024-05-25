@@ -1,6 +1,7 @@
 #include "piece/include/Square.hpp"
 #include "common/include/MlpException.hpp"
-
+#include "common/include/ParsingHelper.hpp"
+#include "move/include/Round.hpp"
 #include <ranges>
 
 namespace mlp_ha {
@@ -41,6 +42,45 @@ void Square::InitSquare() {
     // Kings
     pieces_[0][4].emplace<King>(Color::White, Position{0, 4});
     pieces_[7][4].emplace<King>(Color::Black, Position{7, 4});
+}
+
+void Square::Run() {
+    for (const auto &round : rounds_) {
+        round.Run();
+    }
+}
+
+void Square::LoadData() {
+    auto parsingHelper = helper::ParseFile(filePath_);
+    if (parsingHelper.roundQueue.empty()) {
+        // std::clog << "[THO][I] start game" << std::endl;
+        return;
+    }
+    int round = 1;
+    while (!parsingHelper.roundQueue.empty()) {
+        auto roundText = parsingHelper.roundQueue.front();
+        parsingHelper.roundQueue.pop();
+        rounds_.emplace_back(roundText, shared_from_this());
+        round++;
+    }
+
+    if (!helper::IsBalanced(parsingHelper.lastRun)) {
+        std::cerr << "[THO][E] File format error : " << parsingHelper.lastRun << "\n  Cannot process round := " << round
+                  << std::endl;
+    }
+    auto found = parsingHelper.lastRun.find("1-0");
+    if (found == std::string::npos) {
+        found = parsingHelper.lastRun.find("0-1");
+    }
+    if (found == std::string::npos) {
+        found = parsingHelper.lastRun.find("1/2-1/2");
+    }
+    if (found == std::string::npos) {
+        // std::cerr << "[THO][E] Game result error" << std::endl;
+    }
+    auto roundText = parsingHelper.lastRun.substr(0, found);
+    // std::clog << "[THO][I] roundText:=" << roundText << std::endl;
+    rounds_.emplace_back(roundText, shared_from_this());
 }
 
 std::string Square::GetCurrentState() const {
@@ -190,6 +230,7 @@ void Square::MovePiece(const FromPosition &fromPosition, const ToPosition toPosi
     } catch (const MlpException &e) {
         throw;
     } catch (...) {
+        std::cerr << "[THO][E] Square::MovePiece unkown exception" << std::endl;
     }
 }
 
@@ -214,6 +255,7 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPo
     } catch (const MlpException &e) {
         throw;
     } catch (...) {
+        std::cerr << "[THO][E] Square::AttackPiece unkown exception" << std::endl;
     }
 }
 

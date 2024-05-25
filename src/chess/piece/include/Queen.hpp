@@ -4,7 +4,7 @@
 
 namespace mlp_ha {
 
-class BoardGame;
+class Square;
 
 class Queen : public BasePiece<Queen> {
   public:

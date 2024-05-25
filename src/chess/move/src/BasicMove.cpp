@@ -1,7 +1,8 @@
 #include "move/include/BasicMove.hpp"
 #include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
-#include "game/include/BoardGame.hpp"
+#include "piece/include/Square.hpp"
+
 #include <ranges>
 
 namespace mlp_ha {
@@ -9,7 +10,7 @@ namespace mlp_ha {
 BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
     : Move(moveType, color, moveText, comment) {}
 
-void BasicMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
+void BasicMove::ProcessMove(const std::shared_ptr<Square> &square) {
     try {
         // std::clog << "[THO][I] BasicMove::ProcessMove" << std::endl;
         auto str = moveText_;
@@ -34,9 +35,9 @@ void BasicMove::ProcessMove(const std::shared_ptr<BoardGame> &boardGame) {
         }
         auto type = StringToPieceType(pieceType);
 
-        const auto subPieces = boardGame->GetPieceOfTypeAndColor(type, this->color_, fromPosition);
-        boardGame->ProcessBasicMove(subPieces, this->color_, toPosition, fromPosition);
-        boardGame->MovePiece(fromPosition, toPosition);
+        const auto subPieces = square->GetPieceOfTypeAndColor(type, this->color_, fromPosition);
+        square->ProcessBasicMove(subPieces, this->color_, toPosition, fromPosition);
+        square->MovePiece(fromPosition, toPosition);
     } catch (const MlpException &e) {
         // std::cerr << "[THO][E] BasicMove::ProcessMove invalid move : " << moveText_ << std::endl;
         std::cerr << "[THO][E] BasicMove::ProcessMove MlpException " << e.what() << std::endl;
