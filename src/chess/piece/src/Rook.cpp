@@ -3,7 +3,8 @@
 #include "piece/include/Square.hpp"
 namespace mlp_ha {
 
-bool Rook::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
+bool Rook::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                             const std::optional<Position> &validateKingCheck) const {
     auto canRookMove = [&]() {
         int dRow = toPosition.row - GetPosition().row;
         int dCol = toPosition.col - GetPosition().col;
@@ -36,7 +37,7 @@ bool Rook::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
         // support king check also
         Position p{GetPosition().row + dr[index], GetPosition().col + dc[index]};
         while (p.IsValid()) {
-            if (!std::holds_alternative<EmptyPiece>(square_->GetPieces()[p.row][p.col])) {
+            if (!std::holds_alternative<EmptyPiece>(square->GetPieces()[p.row][p.col])) {
                 if (validateKingCheck != std::nullopt) {
                     if (!(validateKingCheck.value().row == p.row && validateKingCheck.value().col == p.col)) {
                         break;
@@ -60,7 +61,8 @@ bool Rook::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
     return canRookMove();
 }
 
-bool Rook::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
-    return IsValidBasicMove_(toPosition, validateKingCheck);
+bool Rook::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                              const std::optional<Position> &validateKingCheck) const {
+    return IsValidBasicMove_(square, toPosition, validateKingCheck);
 }
 } // namespace mlp_ha

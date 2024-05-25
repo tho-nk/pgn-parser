@@ -3,7 +3,8 @@
 #include "piece/include/Square.hpp"
 namespace mlp_ha {
 
-bool Knight::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
+bool Knight::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                               const std::optional<Position> &validateKingCheck) const {
     auto canKnightMove = [&]() {
         // Possible moves for a knight
         constexpr int dr[] = {-2, -1, 1, 2, 2, 1, -1, -2};
@@ -23,7 +24,8 @@ bool Knight::IsValidBasicMove_(const Position &toPosition, const std::optional<P
     return canKnightMove();
 }
 
-bool Knight::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
-    return IsValidBasicMove_(toPosition, validateKingCheck);
+bool Knight::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+                                const std::optional<Position> &validateKingCheck) const {
+    return IsValidBasicMove_(square, toPosition, validateKingCheck);
 }
 } // namespace mlp_ha

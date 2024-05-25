@@ -9,39 +9,39 @@ namespace mlp_ha {
 void Square::InitSquare() {
     for (int r = 0; r < ROWS; ++r) {
         for (int c = 0; c < COLUMNS; ++c) {
-            pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c}, shared_from_this());
+            pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c});
         }
     }
     // Pawns
     for (auto c = 0; c < COLUMNS; ++c) {
-        pieces_[1][c].emplace<Pawn>(Color::White, Position{1, c}, shared_from_this());
-        pieces_[6][c].emplace<Pawn>(Color::Black, Position{6, c}, shared_from_this());
+        pieces_[1][c].emplace<Pawn>(Color::White, Position{1, c});
+        pieces_[6][c].emplace<Pawn>(Color::Black, Position{6, c});
     }
     // Rooks
-    pieces_[0][0].emplace<Rook>(Color::White, Position{0, 0}, shared_from_this());
-    pieces_[0][7].emplace<Rook>(Color::White, Position{0, 7}, shared_from_this());
-    pieces_[7][0].emplace<Rook>(Color::Black, Position{7, 0}, shared_from_this());
-    pieces_[7][7].emplace<Rook>(Color::Black, Position{7, 7}, shared_from_this());
+    pieces_[0][0].emplace<Rook>(Color::White, Position{0, 0});
+    pieces_[0][7].emplace<Rook>(Color::White, Position{0, 7});
+    pieces_[7][0].emplace<Rook>(Color::Black, Position{7, 0});
+    pieces_[7][7].emplace<Rook>(Color::Black, Position{7, 7});
 
     // Knights
-    pieces_[0][1].emplace<Knight>(Color::White, Position{0, 1}, shared_from_this());
-    pieces_[0][6].emplace<Knight>(Color::White, Position{0, 6}, shared_from_this());
-    pieces_[7][1].emplace<Knight>(Color::Black, Position{7, 1}, shared_from_this());
-    pieces_[7][6].emplace<Knight>(Color::Black, Position{7, 6}, shared_from_this());
+    pieces_[0][1].emplace<Knight>(Color::White, Position{0, 1});
+    pieces_[0][6].emplace<Knight>(Color::White, Position{0, 6});
+    pieces_[7][1].emplace<Knight>(Color::Black, Position{7, 1});
+    pieces_[7][6].emplace<Knight>(Color::Black, Position{7, 6});
 
     // Bishops
-    pieces_[0][2].emplace<Bishop>(Color::White, Position{0, 2}, shared_from_this());
-    pieces_[0][5].emplace<Bishop>(Color::White, Position{0, 5}, shared_from_this());
-    pieces_[7][2].emplace<Bishop>(Color::Black, Position{7, 2}, shared_from_this());
-    pieces_[7][5].emplace<Bishop>(Color::Black, Position{7, 5}, shared_from_this());
+    pieces_[0][2].emplace<Bishop>(Color::White, Position{0, 2});
+    pieces_[0][5].emplace<Bishop>(Color::White, Position{0, 5});
+    pieces_[7][2].emplace<Bishop>(Color::Black, Position{7, 2});
+    pieces_[7][5].emplace<Bishop>(Color::Black, Position{7, 5});
 
     // Queens
-    pieces_[0][3].emplace<Queen>(Color::White, Position{0, 3}, shared_from_this());
-    pieces_[7][3].emplace<Queen>(Color::Black, Position{7, 3}, shared_from_this());
+    pieces_[0][3].emplace<Queen>(Color::White, Position{0, 3});
+    pieces_[7][3].emplace<Queen>(Color::Black, Position{7, 3});
 
     // Kings
-    pieces_[0][4].emplace<King>(Color::White, Position{0, 4}, shared_from_this());
-    pieces_[7][4].emplace<King>(Color::Black, Position{7, 4}, shared_from_this());
+    pieces_[0][4].emplace<King>(Color::White, Position{0, 4});
+    pieces_[7][4].emplace<King>(Color::Black, Position{7, 4});
 }
 
 void Square::Run() {
@@ -135,7 +135,7 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const Color &col
     for (auto &it : subPieces) {
         std::visit(
             [&](auto &&piece) {
-                isValid = piece.IsValidBasicMove(toPosition);
+                isValid = piece.IsValidBasicMove(shared_from_this(), toPosition);
                 ValidateMove(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
             },
             it.get());
@@ -202,7 +202,7 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
                         if (opponent.GetColor() == pieceColor) {
                             return;
                         }
-                        kingChecked = opponent.IsValidBasicMove(kingPosition, piecePosition);
+                        kingChecked = opponent.IsValidBasicMove(shared_from_this(), kingPosition, piecePosition);
                     },
                     GetPieces()[possibleOpponent.row][possibleOpponent.col]);
             }
@@ -244,12 +244,10 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPo
         pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
 
         std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
-        pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col},
-                                                                        shared_from_this());
+        pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col});
 
         if (enPassant_) {
-            pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value(),
-                                                                          shared_from_this());
+            pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value());
             enPassant_ = std::nullopt;
         }
         // Update King position here
@@ -270,7 +268,7 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, const Color &co
     for (auto &it : subPieces) {
         std::visit(
             [&](auto &&piece) {
-                isValid = piece.IsValidAttackMove(toPosition);
+                isValid = piece.IsValidAttackMove(shared_from_this(), toPosition);
                 ValidateMove(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
             },
             it.get());
@@ -310,19 +308,19 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
     Piece newPiece;
     switch (pieceType) {
     case PieceType::Queen:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Queen>(color, toPosition);
         break;
     case PieceType::Rook:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Queen>(color, toPosition);
         break;
     case PieceType::Bishop:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Queen>(color, toPosition);
         break;
     case PieceType::Knight:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Queen>(color, toPosition);
         break;
     case PieceType::Pawn:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Queen>(color, toPosition);
         break;
     default:
         std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
@@ -332,7 +330,7 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
     pieces_[toPosition.row][toPosition.col].swap(newPiece);
     std::visit([&](auto &&piece) { piece.SetPosition(Position{toPosition.row, toPosition.col}); },
                pieces_[toPosition.row][toPosition.col]);
-    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(
-        Color::Undefined, Position{fromPosition.row, fromPosition.col}, shared_from_this());
+    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined,
+                                                                    Position{fromPosition.row, fromPosition.col});
 }
 } // namespace mlp_ha
