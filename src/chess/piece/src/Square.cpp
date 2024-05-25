@@ -46,7 +46,7 @@ void Square::InitSquare() {
 
 void Square::Run() {
     for (const auto &round : rounds_) {
-        round.Run(shared_from_this());
+        round.Run();
     }
 }
 
@@ -60,7 +60,7 @@ void Square::LoadData() {
     while (!parsingHelper.roundQueue.empty()) {
         auto roundText = parsingHelper.roundQueue.front();
         parsingHelper.roundQueue.pop();
-        rounds_.emplace_back(roundText);
+        rounds_.emplace_back(roundText, shared_from_this());
         round++;
     }
 
@@ -80,7 +80,7 @@ void Square::LoadData() {
     }
     auto roundText = parsingHelper.lastRun.substr(0, found);
     // std::clog << "[THO][I] roundText:=" << roundText << std::endl;
-    rounds_.emplace_back(roundText);
+    rounds_.emplace_back(roundText, shared_from_this());
 }
 
 std::string Square::GetCurrentState() const {
@@ -230,6 +230,7 @@ void Square::MovePiece(const FromPosition &fromPosition, const ToPosition toPosi
     } catch (const MlpException &e) {
         throw;
     } catch (...) {
+        std::cerr << "[THO][E] Square::MovePiece unkown exception" << std::endl;
     }
 }
 
@@ -254,6 +255,7 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPo
     } catch (const MlpException &e) {
         throw;
     } catch (...) {
+        std::cerr << "[THO][E] Square::AttackPiece unkown exception" << std::endl;
     }
 }
 
