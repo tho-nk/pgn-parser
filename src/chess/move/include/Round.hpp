@@ -10,7 +10,7 @@ class Square;
 
 class Round {
   public:
-    Round(const std::string &str, const std::shared_ptr<Square> &square);
+    Round(const std::string &str, Square *square);
     Round(const Round &) = delete;
     Round &operator=(const Round &) = delete;
     Round(Round &&) = default;
@@ -27,7 +27,7 @@ class Round {
     std::unique_ptr<Move> whiteMove_;
     std::unique_ptr<Move> blackMove_;
 
-    std::weak_ptr<Square> square_;
+    Square *square_;
 
   private:
     void ParseRoundText(const std::string &str);

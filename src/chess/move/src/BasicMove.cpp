@@ -10,7 +10,7 @@ namespace mlp_ha {
 BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
     : Move(moveType, color, moveText, comment) {}
 
-void BasicMove::ProcessMove(const std::shared_ptr<Square> &square) {
+void BasicMove::ProcessMove(Square *square) {
     try {
         // std::clog << "[THO][I] BasicMove::ProcessMove" << std::endl;
         auto str = moveText_;
