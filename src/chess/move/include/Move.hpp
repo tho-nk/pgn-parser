@@ -31,7 +31,7 @@ class Move {
     const std::string &GetComment() const { return comment_; }
     const MoveType &GetMoveType() const { return moveType_; }
 
-    virtual void ProcessMove(const std::shared_ptr<Square> &square) {};
+    virtual void ProcessMove(Square *square) {};
 
   protected:
     MoveType moveType_;

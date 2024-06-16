@@ -2,8 +2,7 @@
 #include "piece/include/Square.hpp"
 namespace mlp_ha {
 
-bool Bishop::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
-                               const std::optional<Position> &validateKingCheck) const {
+bool Bishop::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     auto canBishopMove = [&]() {
         int dRow = toPosition.row - GetPosition().row;
         int dCol = toPosition.col - GetPosition().col;
@@ -40,7 +39,7 @@ bool Bishop::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Posi
         // support king check also
         Position p{GetPosition().row + dr[index], GetPosition().col + dc[index]};
         while (p.IsValid()) {
-            if (!std::holds_alternative<EmptyPiece>(square->GetPieces()[p.row][p.col])) {
+            if (!std::holds_alternative<EmptyPiece>(square_->GetPieces()[p.row][p.col])) {
                 if (validateKingCheck != std::nullopt) {
                     if (!(validateKingCheck.value().row == p.row && validateKingCheck.value().col == p.col)) {
                         break;
@@ -64,8 +63,7 @@ bool Bishop::IsValidBasicMove_(const std::shared_ptr<Square> &square, const Posi
     return canBishopMove();
 }
 
-bool Bishop::IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
-                                const std::optional<Position> &validateKingCheck) const {
-    return IsValidBasicMove_(square, toPosition, validateKingCheck);
+bool Bishop::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
+    return IsValidBasicMove_(toPosition, validateKingCheck);
 }
 } // namespace mlp_ha

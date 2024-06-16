@@ -8,7 +8,7 @@ class Square;
 
 class Pawn : public BasePiece<Pawn> {
   public:
-    Pawn(const Color &color, const Position &position) {
+    Pawn(const Color &color, const Position &position, Square *square = nullptr) : BasePiece(square) {
         type_ = PieceType::Pawn;
         color_ = color;
         position_ = position;
@@ -20,10 +20,10 @@ class Pawn : public BasePiece<Pawn> {
 
   private:
     friend class BasePiece<Pawn>;
-    bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+    bool IsValidBasicMove_(const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
 
-    bool IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+    bool IsValidAttackMove_(const Position &toPosition,
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
 };
 

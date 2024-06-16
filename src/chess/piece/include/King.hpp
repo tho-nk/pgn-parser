@@ -8,7 +8,7 @@ class Square;
 
 class King : public BasePiece<King> {
   public:
-    King(const Color &color, const Position &position) {
+    King(const Color &color, const Position &position, Square *square = nullptr) : BasePiece(square) {
         type_ = PieceType::King;
         color_ = color;
         position_ = position;
@@ -20,9 +20,9 @@ class King : public BasePiece<King> {
 
   private:
     friend class BasePiece<King>;
-    bool IsValidBasicMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+    bool IsValidBasicMove_(const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
-    bool IsValidAttackMove_(const std::shared_ptr<Square> &square, const Position &toPosition,
+    bool IsValidAttackMove_(const Position &toPosition,
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
 };
 
