@@ -8,7 +8,7 @@ namespace mlp_ha {
 AttackMove::AttackMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
     : Move(moveType, color, moveText, comment) {}
 
-void AttackMove::ProcessMove(Square *square) {
+void AttackMove::ProcessMove(const std::shared_ptr<Square> &square) {
     try {
         // std::clog << "[THO][I] AttackMove::ProcessMove" << std::endl;
         auto str = moveText_;

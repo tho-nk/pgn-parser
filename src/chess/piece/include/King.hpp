@@ -8,7 +8,8 @@ class Square;
 
 class King : public BasePiece<King> {
   public:
-    King(const Color &color, const Position &position, Square *square = nullptr) : BasePiece(square) {
+    King(const Color &color, const Position &position, const std::shared_ptr<Square> &square = nullptr)
+        : BasePiece(square) {
         type_ = PieceType::King;
         color_ = color;
         position_ = position;

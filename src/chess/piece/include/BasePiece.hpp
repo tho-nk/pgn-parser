@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common/include/Types.hpp"
+#include <iostream>
 #include <memory>
 #include <optional>
 #include <sstream>
@@ -14,7 +15,10 @@ template <typename ConcretePiece> class BasePiece {
     BasePiece &operator=(const BasePiece &) = delete;
     BasePiece(BasePiece &&) = default;
     BasePiece &operator=(BasePiece &&) = default;
-    ~BasePiece() = default;
+    ~BasePiece() {
+        std::clog << "Destroy BasePiece" << std::endl;
+        square_.reset();
+    }
 
     ConcretePiece &self() { return *static_cast<ConcretePiece *>(this); }
     ConcretePiece const &self() const { return *static_cast<ConcretePiece const *>(this); }
@@ -45,12 +49,15 @@ template <typename ConcretePiece> class BasePiece {
 
   protected:
     friend ConcretePiece;
-    BasePiece(Square *square = nullptr) : square_(square), type_(PieceType::Undefined), color_(Color::Undefined) {}
+    BasePiece(const std::shared_ptr<Square> &square = nullptr)
+        : square_(square), type_(PieceType::Undefined), color_(Color::Undefined) {
+        std::clog << "Create BasePiece" << std::endl;
+    }
 
     PieceType type_;
     Color color_;
     Position position_;
-    Square *square_;
+    std::shared_ptr<Square> square_;
 };
 
 } // namespace mlp_ha

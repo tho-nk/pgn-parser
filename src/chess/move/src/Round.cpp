@@ -6,7 +6,10 @@
 
 namespace mlp_ha {
 
-Round::Round(const std::string &str, Square *square) : roundIndex_(0), square_(square) { ParseRoundText(str); }
+Round::Round(const std::string &str, const std::shared_ptr<Square> &square) : roundIndex_(0), square_(square) {
+    std::clog << "Create Round" << std::endl;
+    ParseRoundText(str);
+}
 
 void Round::ParseRoundText(const std::string &str) {
     auto getMoveType = [&](std::string_view type) {
