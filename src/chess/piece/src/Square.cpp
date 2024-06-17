@@ -7,41 +7,61 @@
 namespace mlp_ha {
 
 void Square::InitSquare() {
-    for (int r = 0; r < ROWS; ++r) {
-        for (int c = 0; c < COLUMNS; ++c) {
-            pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c}, shared_from_this());
-        }
-    }
-    // Pawns
+    pieces_.reserve(ROWS);
+    std::vector<Piece> rowPiece;
+    rowPiece.reserve(COLUMNS);
+    // first row
+    rowPiece.emplace_back(std::in_place_type<Rook>, Color::White, Position{0, 0}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Knight>, Color::White, Position{0, 1}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::White, Position{0, 2}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Queen>, Color::White, Position{0, 3}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<King>, Color::White, Position{0, 4}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::White, Position{0, 5}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Knight>, Color::White, Position{0, 6}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Rook>, Color::White, Position{0, 7}, shared_from_this());
+    pieces_.push_back(std::move(rowPiece));
+
+    // second row
+    rowPiece.clear();
+    rowPiece.reserve(COLUMNS);
+
     for (auto c = 0; c < COLUMNS; ++c) {
-        pieces_[1][c].emplace<Pawn>(Color::White, Position{1, c}, shared_from_this());
-        pieces_[6][c].emplace<Pawn>(Color::Black, Position{6, c}, shared_from_this());
+        rowPiece.emplace_back(std::in_place_type<Pawn>, Color::White, Position{1, c}, shared_from_this());
     }
-    // Rooks
-    pieces_[0][0].emplace<Rook>(Color::White, Position{0, 0}, shared_from_this());
-    pieces_[0][7].emplace<Rook>(Color::White, Position{0, 7}, shared_from_this());
-    pieces_[7][0].emplace<Rook>(Color::Black, Position{7, 0}, shared_from_this());
-    pieces_[7][7].emplace<Rook>(Color::Black, Position{7, 7}, shared_from_this());
+    pieces_.push_back(std::move(rowPiece));
 
-    // Knights
-    pieces_[0][1].emplace<Knight>(Color::White, Position{0, 1}, shared_from_this());
-    pieces_[0][6].emplace<Knight>(Color::White, Position{0, 6}, shared_from_this());
-    pieces_[7][1].emplace<Knight>(Color::Black, Position{7, 1}, shared_from_this());
-    pieces_[7][6].emplace<Knight>(Color::Black, Position{7, 6}, shared_from_this());
+    for (int r = 2; r < ROWS - 2; ++r) {
+        rowPiece.clear();
+        rowPiece.reserve(COLUMNS);
 
-    // Bishops
-    pieces_[0][2].emplace<Bishop>(Color::White, Position{0, 2}, shared_from_this());
-    pieces_[0][5].emplace<Bishop>(Color::White, Position{0, 5}, shared_from_this());
-    pieces_[7][2].emplace<Bishop>(Color::Black, Position{7, 2}, shared_from_this());
-    pieces_[7][5].emplace<Bishop>(Color::Black, Position{7, 5}, shared_from_this());
+        for (int c = 0; c < COLUMNS; ++c) {
+            rowPiece.emplace_back(std::in_place_type<EmptyPiece>, Color::Undefined, Position{r, c}, shared_from_this());
+        }
+        pieces_.push_back(std::move(rowPiece));
+    }
 
-    // Queens
-    pieces_[0][3].emplace<Queen>(Color::White, Position{0, 3}, shared_from_this());
-    pieces_[7][3].emplace<Queen>(Color::Black, Position{7, 3}, shared_from_this());
+    // before last row
+    rowPiece.clear();
+    rowPiece.reserve(COLUMNS);
 
-    // Kings
-    pieces_[0][4].emplace<King>(Color::White, Position{0, 4}, shared_from_this());
-    pieces_[7][4].emplace<King>(Color::Black, Position{7, 4}, shared_from_this());
+    for (auto c = 0; c < COLUMNS; ++c) {
+        rowPiece.emplace_back(std::in_place_type<Pawn>, Color::Black, Position{6, c}, shared_from_this());
+    }
+    pieces_.push_back(std::move(rowPiece));
+
+    // last row
+    rowPiece.clear();
+    rowPiece.reserve(COLUMNS);
+
+    rowPiece.emplace_back(std::in_place_type<Rook>, Color::Black, Position{ROWS - 1, 0}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Knight>, Color::Black, Position{ROWS - 1, 1}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::Black, Position{ROWS - 1, 2}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Queen>, Color::Black, Position{ROWS - 1, 3}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<King>, Color::Black, Position{ROWS - 1, 4}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::Black, Position{ROWS - 1, 5}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Knight>, Color::Black, Position{ROWS - 1, 6}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Rook>, Color::Black, Position{ROWS - 1, 7}, shared_from_this());
+    pieces_.push_back(std::move(rowPiece));
 }
 
 void Square::Run() {
@@ -56,6 +76,7 @@ void Square::LoadData() {
         // std::clog << "[THO][I] start game" << std::endl;
         return;
     }
+    rounds_.reserve(parsingHelper.roundQueue.size() + 1);
     int round = 1;
     while (!parsingHelper.roundQueue.empty()) {
         auto roundText = parsingHelper.roundQueue.front();
@@ -106,15 +127,17 @@ PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const
     if (fromPosition.IsValid()) {
         subPieces.push_back(std::ref(GetPieces()[fromPosition.row][fromPosition.col]));
     } else {
-        auto arange = std::ranges::subrange(GetPieces().front().begin(), GetPieces().back().end());
-        for (const auto &var : arange) {
-            std::visit(
-                [&](const auto &value) {
-                    if (value.GetType() == pieceType && value.GetColor() == color) {
-                        subPieces.push_back(std::ref(GetPieces()[value.GetPosition().row][value.GetPosition().col]));
-                    }
-                },
-                var);
+        for (const auto &file : GetPieces()) {
+            for (const auto &var : file) {
+                std::visit(
+                    [&](const auto &value) {
+                        if (value.GetType() == pieceType && value.GetColor() == color) {
+                            subPieces.push_back(
+                                std::ref(GetPieces()[value.GetPosition().row][value.GetPosition().col]));
+                        }
+                    },
+                    var);
+            }
         }
     }
     return subPieces;

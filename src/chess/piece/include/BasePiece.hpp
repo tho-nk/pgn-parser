@@ -30,11 +30,15 @@ template <typename ConcretePiece> class BasePiece {
     }
 
     void SetPosition(const Position &position) { this->position_ = position; }
-
     const Position &GetPosition() const { return position_; }
 
+    void SetColor(const Color &color) { this->color_ = color; }
     const Color &GetColor() const { return color_; }
 
+    void SetSquare(const std::shared_ptr<Square> &square) { this->square_ = square; }
+    const std::shared_ptr<Square> &GetSquare() const { return square_; }
+
+    void SeType(const PieceType &type) { type_ = type; }
     const PieceType &GetType() const { return type_; }
 
     bool IsValidBasicMove(const Position &toPosition,
