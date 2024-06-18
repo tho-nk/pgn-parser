@@ -50,13 +50,12 @@ template <typename ConcretePiece> class BasePiece {
 
   protected:
     friend ConcretePiece;
-    BasePiece(const std::shared_ptr<Square> &square = nullptr)
-        : square_(square), type_(PieceType::Undefined), color_(Color::Undefined) {}
+    BasePiece(const std::shared_ptr<Square> &square = nullptr) : square_(square) {}
 
-    PieceType type_;
-    Color color_;
-    Position position_;
-    std::shared_ptr<Square> square_;
+    PieceType type_{PieceType::Undefined};
+    Color color_{Color::Undefined};
+    Position position_{-1, -1};
+    std::shared_ptr<Square> square_{nullptr};
 };
 
 } // namespace mlp_ha
