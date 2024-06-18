@@ -8,7 +8,7 @@ class Square;
 
 class Pawn : public BasePiece<Pawn> {
   public:
-    Pawn(const Color &color, const Position &position, Square *square = nullptr) : BasePiece(square) {
+    Pawn(const Color &color, const Position &position, const std::shared_ptr<Square> &square) : BasePiece(square) {
         type_ = PieceType::Pawn;
         color_ = color;
         position_ = position;

@@ -13,6 +13,6 @@ class BasicMove : public Move {
     BasicMove &operator=(BasicMove &&) = delete;
     ~BasicMove() = default;
 
-    virtual void ProcessMove(Square *square) final;
+    virtual void ProcessMove(const std::shared_ptr<Square> &square) final;
 };
 } // namespace mlp_ha

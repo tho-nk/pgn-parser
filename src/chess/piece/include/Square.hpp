@@ -7,7 +7,7 @@
 #include <optional>
 
 namespace mlp_ha {
-class Square {
+class Square : public std::enable_shared_from_this<Square> {
   public:
     Square(const std::filesystem::path &filePath) : filePath_(filePath), enPassant_(std::nullopt){};
     Square(const Square &) = delete;
@@ -44,6 +44,10 @@ class Square {
 
     void Run();
     void LoadData();
+    void Reset() {
+        pieces_.clear();
+        rounds_.clear();
+    }
 
   private:
     std::optional<Position> enPassant_;

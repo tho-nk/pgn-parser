@@ -1,0 +1,49 @@
+{
+    "version": "2.0.0",
+    "command": "sh",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cd build && cmake .. && make -j",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build TSAN",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cd build && cmake .. -DCMAKE_BUILD_TYPE=\"Debug\" -DCMAKE_C_FLAGS_DEBUG=\"${CMAKE_C_FLAGS_DEBUG} -fsanitize=thread\" -DCMAKE_CXX_FLAGS_DEBUG=\"${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=thread\" -DCMAKE_LINKER_FLAGS_DEBUG=\"${CMAKE_LINKER_FLAGS_DEBUG} -fsanitize=thread\" && make -j",
+            // cmake .. -DCMAKE_BUILD_TYPE="Debug" -DCMAKE_C_FLAGS_DEBUG="${CMAKE_C_FLAGS_DEBUG} -fsanitize=thread" -DCMAKE_CXX_FLAGS_DEBUG="${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=thread" -DCMAKE_LINKER_FLAGS_DEBUG="${CMAKE_LINKER_FLAGS_DEBUG} -fsanitize=thread" && make -j,
+            "problemMatcher": []
+        },
+        {
+            "label": "Build ASAN",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cd build && cmake .. -DCMAKE_BUILD_TYPE=\"Debug\" -DCMAKE_C_FLAGS_DEBUG=\"${CMAKE_C_FLAGS_DEBUG} -fsanitize=address\" -DCMAKE_CXX_FLAGS_DEBUG=\"${CMAKE_CXX_FLAGS_DEBUG} -fsanitize=address\" -DCMAKE_LINKER_FLAGS_DEBUG=\"${CMAKE_LINKER_FLAGS_DEBUG} -fsanitize=address\" && make -j",
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "cd build && rm -rf *",
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Test",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cd build && ./png_parser <file_path>",
+            "problemMatcher": []
+        }
+    ]
+}

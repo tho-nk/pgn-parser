@@ -1,6 +1,7 @@
 #pragma once
 
 #include "move/include/Move.hpp"
+#include <iostream>
 #include <memory>
 #include <vector>
 
@@ -10,12 +11,12 @@ class Square;
 
 class Round {
   public:
-    Round(const std::string &str, Square *square);
+    Round(const std::string &str, const std::shared_ptr<Square> &square);
     Round(const Round &) = delete;
     Round &operator=(const Round &) = delete;
     Round(Round &&) = default;
     Round &operator=(Round &&) = default;
-    ~Round() = default;
+    ~Round() { square_.reset(); }
 
     int GetRoundIndex() const { return roundIndex_; }
     const std::string &GetComment() const { return roundComment_; }
@@ -27,7 +28,7 @@ class Round {
     std::unique_ptr<Move> whiteMove_;
     std::unique_ptr<Move> blackMove_;
 
-    Square *square_;
+    std::shared_ptr<Square> square_;
 
   private:
     void ParseRoundText(const std::string &str);

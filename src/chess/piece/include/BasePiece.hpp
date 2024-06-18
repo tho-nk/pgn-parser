@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common/include/Types.hpp"
+#include <iostream>
 #include <memory>
 #include <optional>
 #include <sstream>
@@ -14,7 +15,7 @@ template <typename ConcretePiece> class BasePiece {
     BasePiece &operator=(const BasePiece &) = delete;
     BasePiece(BasePiece &&) = default;
     BasePiece &operator=(BasePiece &&) = default;
-    ~BasePiece() = default;
+    ~BasePiece() { square_.reset(); }
 
     ConcretePiece &self() { return *static_cast<ConcretePiece *>(this); }
     ConcretePiece const &self() const { return *static_cast<ConcretePiece const *>(this); }
@@ -26,11 +27,15 @@ template <typename ConcretePiece> class BasePiece {
     }
 
     void SetPosition(const Position &position) { this->position_ = position; }
-
     const Position &GetPosition() const { return position_; }
 
+    void SetColor(const Color &color) { this->color_ = color; }
     const Color &GetColor() const { return color_; }
 
+    void SetSquare(const std::shared_ptr<Square> &square) { this->square_ = square; }
+    const std::shared_ptr<Square> &GetSquare() const { return square_; }
+
+    void SeType(const PieceType &type) { type_ = type; }
     const PieceType &GetType() const { return type_; }
 
     bool IsValidBasicMove(const Position &toPosition,
@@ -45,12 +50,12 @@ template <typename ConcretePiece> class BasePiece {
 
   protected:
     friend ConcretePiece;
-    BasePiece(Square *square = nullptr) : square_(square), type_(PieceType::Undefined), color_(Color::Undefined) {}
+    BasePiece(const std::shared_ptr<Square> &square = nullptr) : square_(square) {}
 
-    PieceType type_;
-    Color color_;
-    Position position_;
-    Square *square_;
+    PieceType type_{PieceType::Undefined};
+    Color color_{Color::Undefined};
+    Position position_{-1, -1};
+    std::shared_ptr<Square> square_{nullptr};
 };
 
 } // namespace mlp_ha

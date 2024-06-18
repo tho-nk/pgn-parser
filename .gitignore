@@ -1,5 +1,5 @@
 build/
-.vscode/
+
 
 pytest/.pytest_cache
 pytest/__pycache__
