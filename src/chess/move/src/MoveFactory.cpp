@@ -1,6 +1,7 @@
 
 #include "move/include/MoveFactory.hpp"
 #include "move/include/AttackMove.hpp"
+#include "move/include/AttackPromotionMove.hpp"
 #include "move/include/BasicMove.hpp"
 #include "move/include/CastlingMove.hpp"
 #include "move/include/PromotionMove.hpp"
@@ -24,6 +25,9 @@ std::unique_ptr<Move> CreateMove(const MoveType &moveType, const Color &color, s
         break;
     case MoveType::AttackMove:
         return std::make_unique<AttackMove>(moveType, color, moveText, comment);
+        break;
+    case MoveType::AttackPromotionMove:
+        return std::make_unique<AttackPromotionMove>(moveType, color, moveText, comment);
         break;
     default:
         // std::clog << "[THO][I] Last move - result" << std::endl;

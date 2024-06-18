@@ -15,18 +15,26 @@ void Round::ParseRoundText(const std::string &str) {
         if (type.empty()) {
             return MoveType::Undefined;
         }
-        auto found = type.find("x");
-        if (found != std::string::npos) {
+
+        auto foundA = type.find("x");
+        auto foundP = type.find("=");
+        auto foundC = type.find("O");
+
+        if (foundA != std::string::npos && foundP != std::string::npos) { // attack and promotion
+            return MoveType::AttackPromotionMove;
+        }
+
+        if (foundA != std::string::npos) {
+            // auto
             return MoveType::AttackMove;
         }
-        found = type.find("O");
-        if (found != std::string::npos) {
+        if (foundC != std::string::npos) {
             return MoveType::CastlingMove;
         }
-        found = type.find("=");
-        if (found != std::string::npos) {
+        if (foundP != std::string::npos) {
             return MoveType::PromotionMove;
         }
+
         return MoveType::BasicMove;
     };
 
@@ -61,12 +69,12 @@ void Round::Run() const {
     // std::clog << "[THO][I] Round:=" << roundIndex_ << std::endl;
     // std::clog << "[THO][I] White move:" << std::endl;
     whiteMove_->ProcessMove(square_);
-    // square->Draw();
+    // std::clog << square_->GetCurrentState() << std::endl;
     // std::clog << std::endl;
     // std::clog << "[THO][I] Black move" << std::endl;
     blackMove_->ProcessMove(square_);
+    // std::clog << square_->GetCurrentState() << std::endl;
 
-    // square->Draw();
     // std::clog << "\n\n\n" << std::endl;
 }
 } // namespace mlp_ha

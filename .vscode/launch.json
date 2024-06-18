@@ -11,7 +11,7 @@
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/build/pgn_parser",
             "args": [
-                "${workspaceFolder}/pytest/general/EnPassant.pgn"
+                "${workspaceFolder}/pytest/general/Abdusattorov_Yakubboev.2015.05.14.attack_promotion.pgn"
             ],
             "stopAtEntry": false,
             "externalConsole": false,
