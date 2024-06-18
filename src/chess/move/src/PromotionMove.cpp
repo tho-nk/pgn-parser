@@ -17,7 +17,8 @@ void PromotionMove::ProcessMove(const std::shared_ptr<Square> &square) {
 
         std::string_view remain(str.data(), str.length() - 2);
         ToPosition toPosition{remain[1] - '1', remain[0] - 'a'};
-        FromPosition fromPosition{toPosition.row - 1, toPosition.col};
+        FromPosition fromPosition{this->color_ == Color::White ? toPosition.row - 1 : toPosition.row + 1,
+                                  toPosition.col};
         std::string pieceType(str.data() + str.length() - 1, 1);
         auto type = StringToPieceType(pieceType);
         square->ProcessPromotionMove(type, this->color_, fromPosition, toPosition);

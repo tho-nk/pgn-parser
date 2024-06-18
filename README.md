@@ -99,4 +99,6 @@ I am still working on developing this parser. Please feel free to provide any fe
 
 
 
-
+# Memory
+`valgrind --tool=massif ./build/pgn_parser ./pytest/general/Abdusattorov_Yakubboev.2015.05.14.attack_promotion.pgn`
+`ms_print massif.out.81912 > memory_report_Abdusattorov_Yakubboev.2015.05.14.attack_promotion_SharedPtr.txt`
