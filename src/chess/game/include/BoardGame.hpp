@@ -15,7 +15,7 @@ class BoardGame : public std::enable_shared_from_this<BoardGame> {
     BoardGame &operator=(const BoardGame &) = delete;
     BoardGame(BoardGame &&) = delete;
     BoardGame &operator=(BoardGame &&) = delete;
-    ~BoardGame() = default;
+    ~BoardGame() { square_->Reset(); }
 
     void Draw();
     void Run();

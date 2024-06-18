@@ -11,7 +11,7 @@
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/build/pgn_parser",
             "args": [
-                "${workspaceFolder}/pytest/checking/diagonal-prevent-check-down.pgn"
+                "${workspaceFolder}/pytest/general/EnPassant.pgn"
             ],
             "stopAtEntry": false,
             "externalConsole": false,

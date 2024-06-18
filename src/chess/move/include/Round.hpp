@@ -16,10 +16,7 @@ class Round {
     Round &operator=(const Round &) = delete;
     Round(Round &&) = default;
     Round &operator=(Round &&) = default;
-    ~Round() {
-        std::clog << "Destroy Round" << std::endl;
-        square_.reset();
-    }
+    ~Round() { square_.reset(); }
 
     int GetRoundIndex() const { return roundIndex_; }
     const std::string &GetComment() const { return roundComment_; }

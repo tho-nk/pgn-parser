@@ -44,6 +44,10 @@ class Square : public std::enable_shared_from_this<Square> {
 
     void Run();
     void LoadData();
+    void Reset() {
+        pieces_.clear();
+        rounds_.clear();
+    }
 
   private:
     std::optional<Position> enPassant_;

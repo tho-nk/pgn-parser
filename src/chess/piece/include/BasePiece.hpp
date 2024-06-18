@@ -15,10 +15,7 @@ template <typename ConcretePiece> class BasePiece {
     BasePiece &operator=(const BasePiece &) = delete;
     BasePiece(BasePiece &&) = default;
     BasePiece &operator=(BasePiece &&) = default;
-    ~BasePiece() {
-        std::clog << "Destroy BasePiece" << std::endl;
-        square_.reset();
-    }
+    ~BasePiece() { square_.reset(); }
 
     ConcretePiece &self() { return *static_cast<ConcretePiece *>(this); }
     ConcretePiece const &self() const { return *static_cast<ConcretePiece const *>(this); }
@@ -54,9 +51,7 @@ template <typename ConcretePiece> class BasePiece {
   protected:
     friend ConcretePiece;
     BasePiece(const std::shared_ptr<Square> &square = nullptr)
-        : square_(square), type_(PieceType::Undefined), color_(Color::Undefined) {
-        std::clog << "Create BasePiece" << std::endl;
-    }
+        : square_(square), type_(PieceType::Undefined), color_(Color::Undefined) {}
 
     PieceType type_;
     Color color_;

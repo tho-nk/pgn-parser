@@ -7,7 +7,6 @@
 namespace mlp_ha {
 
 Round::Round(const std::string &str, const std::shared_ptr<Square> &square) : roundIndex_(0), square_(square) {
-    std::clog << "Create Round" << std::endl;
     ParseRoundText(str);
 }
 
