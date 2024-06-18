@@ -26,7 +26,7 @@ enum class PieceType { King, Queen, Rook, Bishop, Knight, Pawn, Undefined };
 std::ostream &operator<<(std::ostream &os, const PieceType pieceType);
 PieceType StringToPieceType(std::string view);
 
-enum class MoveType { BasicMove, AttackMove, PromotionMove, CastlingMove, Undefined };
+enum class MoveType { BasicMove, AttackMove, PromotionMove, CastlingMove, AttackPromotionMove, Undefined };
 std::ostream &operator<<(std::ostream &os, const MoveType moveType);
 
 using FromPosition = Position;

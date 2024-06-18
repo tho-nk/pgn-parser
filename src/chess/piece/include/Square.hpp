@@ -42,6 +42,10 @@ class Square : public std::enable_shared_from_this<Square> {
     void ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
                               const ToPosition &toPosition);
 
+    // Process AttackPromotionMove Pawn only
+    void ProcessAttackPromotionMove(const PieceType &pieceType, const Color &color, FromPosition &fromPosition,
+                                    const ToPosition &toPosition);
+
     void Run();
     void LoadData();
     void Reset() {

@@ -339,17 +339,15 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
         newPiece.emplace<Queen>(color, toPosition, shared_from_this());
         break;
     case PieceType::Rook:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Rook>(color, toPosition, shared_from_this());
         break;
     case PieceType::Bishop:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Bishop>(color, toPosition, shared_from_this());
         break;
     case PieceType::Knight:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Knight>(color, toPosition, shared_from_this());
         break;
     case PieceType::Pawn:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
-        break;
     default:
         std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
         throw MlpException("Square::ProcessPromotionMove Cannot promote to undefined piece");
@@ -360,5 +358,38 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
                pieces_[toPosition.row][toPosition.col]);
     pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(
         Color::Undefined, Position{fromPosition.row, fromPosition.col}, shared_from_this());
+}
+
+// Process ProcessAttackPromotionMove Pawn only
+void Square::ProcessAttackPromotionMove(const PieceType &pieceType, const Color &color, FromPosition &fromPosition,
+                                        const ToPosition &toPosition) {
+    Piece newPiece;
+    switch (pieceType) {
+    case PieceType::Queen:
+        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        break;
+    case PieceType::Rook:
+        newPiece.emplace<Rook>(color, toPosition, shared_from_this());
+        break;
+    case PieceType::Bishop:
+        newPiece.emplace<Bishop>(color, toPosition, shared_from_this());
+        break;
+    case PieceType::Knight:
+        newPiece.emplace<Knight>(color, toPosition, shared_from_this());
+        break;
+    case PieceType::Pawn:
+    default:
+        std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
+        throw MlpException("Square::ProcessPromotionMove Cannot promote to undefined piece");
+        break;
+    }
+
+    const auto subPieces = GetPieceOfTypeAndColor(PieceType::Pawn, color, fromPosition);
+    ProcessAttackMove(subPieces, color, toPosition, fromPosition);
+    AttackPiece(fromPosition, toPosition);
+
+    pieces_[toPosition.row][toPosition.col].swap(newPiece);
+    std::visit([&](auto &&piece) { piece.SetPosition(Position{toPosition.row, toPosition.col}); },
+               pieces_[toPosition.row][toPosition.col]);
 }
 } // namespace mlp_ha
