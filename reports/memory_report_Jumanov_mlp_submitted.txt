@@ -1,0 +1,939 @@
+--------------------------------------------------------------------------------
+Command:            ./build/pgn_parser ./pytest/general/Jumanov-Nodirbek_2014.03.02.pgn
+Massif arguments:   (none)
+ms_print arguments: massif.out.28975
+--------------------------------------------------------------------------------
+
+
+    KB
+126.9^                      #                                                 
+     |                      #                                                 
+     |                      #::::::::::::::::@:::@::::@:::::::@:::@::::@::::@:
+     |                      #::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |                   :::#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |                 ::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |              :::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |         @:  ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |       ::@:::::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+     |      :: @:: ::::::: :#::::: : :::: :: @:::@::: @ ::::::@:::@::::@::::@:
+   0 +----------------------------------------------------------------------->Mi
+     0                                                                   23.13
+
+Number of snapshots: 72
+ Detailed snapshots: [3, 14 (peak), 28, 32, 36, 45, 49, 59, 69]
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  0              0                0                0             0            0
+  1      2,319,105           72,712           72,704             8            0
+  2      2,576,530           84,264           84,067           197            0
+  3      3,048,120           85,960           85,720           240            0
+99.72% (85,720B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->84.58% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->84.58% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->84.58% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->84.58% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->84.58% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->84.58% (72,704B) 0x1: ???
+|           ->84.58% (72,704B) 0x1FFF0007DA: ???
+|             ->84.58% (72,704B) 0x1FFF0007ED: ???
+|               
+->09.53% (8,192B) 0x496D023: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->09.53% (8,192B) 0x4971015: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+|   ->09.53% (8,192B) 0x4971E05: std::basic_ifstream<char, std::char_traits<char> >::basic_ifstream(char const*, std::_Ios_Openmode) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+|     ->09.53% (8,192B) 0x132FD9: std::basic_ifstream<char, std::char_traits<char> >::basic_ifstream<std::filesystem::__cxx11::path, std::filesystem::__cxx11::path>(std::filesystem::__cxx11::path const&, std::_Ios_Openmode) (fstream:586)
+|       ->09.53% (8,192B) 0x131EAB: mlp_ha::helper::ParseFile(std::filesystem::__cxx11::path const&) (ParsingHelper.cpp:104)
+|         ->09.53% (8,192B) 0x110448: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:19)
+|           ->09.53% (8,192B) 0x10D933: main (main.cpp:20)
+|             
+->02.38% (2,048B) 0x13545D: std::__new_allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->02.38% (2,048B) 0x1350DC: allocate (allocator.h:188)
+|   ->02.38% (2,048B) 0x1350DC: std::allocator_traits<std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::allocate(std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >&, unsigned long) (alloc_traits.h:464)
+|     ->02.38% (2,048B) 0x1348CB: std::_Deque_base<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_allocate_node() (stl_deque.h:583)
+|       ->01.79% (1,536B) 0x133E1D: void std::deque<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::_M_push_back_aux<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (deque.tcc:497)
+|       | ->01.79% (1,536B) 0x133794: std::deque<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >::push_back(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (stl_deque.h:1548)
+|       |   ->01.79% (1,536B) 0x1330AA: std::queue<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::deque<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > >::push(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (stl_queue.h:286)
+|       |     ->01.79% (1,536B) 0x132135: mlp_ha::helper::ParseFile(std::filesystem::__cxx11::path const&) (ParsingHelper.cpp:133)
+|       |       ->01.79% (1,536B) 0x110448: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:19)
+|       |         ->01.79% (1,536B) 0x10D933: main (main.cpp:20)
+|       |           
+|       ->00.60% (512B) in 1+ places, all below ms_print's threshold (01.00%)
+|       
+->01.68% (1,448B) in 6 places, all below massif's threshold (1.00%)
+| 
+->01.54% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+  ->01.54% (1,328B) 0x1136D3: allocate (allocator.h:188)
+    ->01.54% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+      ->01.54% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+        ->01.54% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+          ->01.54% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+            ->01.54% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+              ->01.54% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+                ->01.54% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+                  ->01.54% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+                    ->01.54% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+                      ->01.54% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+                        ->01.54% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+                          ->01.54% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+                            ->01.54% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+                              ->01.54% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+                                ->01.54% (1,328B) 0x10D91F: main (main.cpp:19)
+                                  
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  4      3,520,567           87,992           87,769           223            0
+  5      4,010,174           81,336           81,034           302            0
+  6      4,524,985           86,392           85,802           590            0
+  7      4,916,229           90,984           90,186           798            0
+  8      5,153,859           92,856           91,914           942            0
+  9      5,538,203           95,352           94,186         1,166            0
+ 10      5,963,251          102,248          100,874         1,374            0
+ 11      6,230,359          103,808          102,282         1,526            0
+ 12      6,577,498          105,992          104,266         1,726            0
+ 13      7,111,763          109,632          107,594         2,038            0
+ 14      7,546,612          129,944          127,722         2,222            0
+98.29% (127,722B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->55.95% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->55.95% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->55.95% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->55.95% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->55.95% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->55.95% (72,704B) 0x1: ???
+|           ->55.95% (72,704B) 0x1FFF0007DA: ???
+|             ->55.95% (72,704B) 0x1FFF0007ED: ???
+|               
+->21.28% (27,648B) 0x113943: std::__new_allocator<mlp_ha::Round>::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->21.28% (27,648B) 0x11325C: allocate (allocator.h:188)
+|   ->21.28% (27,648B) 0x11325C: std::allocator_traits<std::allocator<mlp_ha::Round> >::allocate(std::allocator<mlp_ha::Round>&, unsigned long) (alloc_traits.h:464)
+|     ->21.28% (27,648B) 0x112C9B: std::_Vector_base<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_allocate(unsigned long) (stl_vector.h:378)
+|       ->21.28% (27,648B) 0x112498: void std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(__gnu_cxx::__normal_iterator<mlp_ha::Round*, std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:453)
+|         ->21.28% (27,648B) 0x1118E5: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:123)
+|           ->21.28% (27,648B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|             ->21.28% (27,648B) 0x10D933: main (main.cpp:20)
+|               
+->16.92% (21,984B) 0x1198C6: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->16.92% (21,984B) 0x11843F: allocate (allocator.h:188)
+|   ->16.92% (21,984B) 0x11843F: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->16.92% (21,984B) 0x117A0F: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->16.92% (21,984B) 0x117108: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BasicMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::BasicMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->16.92% (21,984B) 0x116D61: std::__shared_ptr<mlp_ha::BasicMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->16.92% (21,984B) 0x116884: std::shared_ptr<mlp_ha::BasicMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->16.92% (21,984B) 0x116422: std::shared_ptr<mlp_ha::BasicMove> std::make_shared<mlp_ha::BasicMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->16.92% (21,984B) 0x116033: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:17)
+|                 ->08.50% (11,040B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                 | ->08.50% (11,040B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->08.50% (11,040B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->08.50% (11,040B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->07.83% (10,176B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |       | ->07.83% (10,176B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |       |   ->07.83% (10,176B) 0x10D933: main (main.cpp:20)
+|                 |       |     
+|                 |       ->00.66% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       
+|                 ->08.42% (10,944B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                   ->08.42% (10,944B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->08.42% (10,944B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->08.42% (10,944B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->07.76% (10,080B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                         | ->07.76% (10,080B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                         |   ->07.76% (10,080B) 0x10D933: main (main.cpp:20)
+|                         |     
+|                         ->00.66% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                         
+->01.99% (2,592B) 0x119EE4: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->01.99% (2,592B) 0x118AC3: allocate (allocator.h:188)
+|   ->01.99% (2,592B) 0x118AC3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->01.99% (2,592B) 0x118003: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->01.99% (2,592B) 0x11768A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::AttackMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::AttackMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->01.99% (2,592B) 0x116FA1: std::__shared_ptr<mlp_ha::AttackMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->01.99% (2,592B) 0x116B84: std::shared_ptr<mlp_ha::AttackMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->01.99% (2,592B) 0x1166D4: std::shared_ptr<mlp_ha::AttackMove> std::make_shared<mlp_ha::AttackMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->01.99% (2,592B) 0x1160F9: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:26)
+|                 ->01.03% (1,344B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->01.03% (1,344B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->01.03% (1,344B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->01.03% (1,344B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->01.03% (1,344B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |         ->01.03% (1,344B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |           ->01.03% (1,344B) 0x10D933: main (main.cpp:20)
+|                 |             
+|                 ->00.96% (1,248B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 
+->01.13% (1,466B) in 9 places, all below massif's threshold (1.00%)
+| 
+->01.02% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+  ->01.02% (1,328B) 0x1136D3: allocate (allocator.h:188)
+    ->01.02% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+      ->01.02% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+        ->01.02% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+          ->01.02% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+            ->01.02% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+              ->01.02% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+                ->01.02% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+                  ->01.02% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+                    ->01.02% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+                      ->01.02% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+                        ->01.02% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+                          ->01.02% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+                            ->01.02% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+                              ->01.02% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+                                ->01.02% (1,328B) 0x10D91F: main (main.cpp:19)
+                                  
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 15      7,895,161          122,424          120,034         2,390            0
+ 16      8,414,723          122,472          120,082         2,390            0
+ 17      8,656,812          122,424          120,034         2,390            0
+ 18      9,070,287          122,408          120,026         2,382            0
+ 19      9,334,676          122,448          120,042         2,406            0
+ 20      9,774,511          122,448          120,042         2,406            0
+ 21      9,975,441          122,496          120,090         2,406            0
+ 22     10,515,316          122,408          120,026         2,382            0
+ 23     10,881,387          122,408          120,026         2,382            0
+ 24     11,234,644          122,408          120,026         2,382            0
+ 25     11,745,838          122,424          120,034         2,390            0
+ 26     12,263,685          122,424          120,034         2,390            0
+ 27     12,800,924          122,408          120,026         2,382            0
+ 28     13,288,506          122,448          120,034         2,414            0
+98.03% (120,034B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->59.38% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->59.38% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->59.38% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->59.38% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->59.38% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->59.38% (72,704B) 0x1: ???
+|           ->59.38% (72,704B) 0x1FFF0007DA: ???
+|             ->59.38% (72,704B) 0x1FFF0007ED: ???
+|               
+->19.60% (24,000B) 0x1198C6: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->19.60% (24,000B) 0x11843F: allocate (allocator.h:188)
+|   ->19.60% (24,000B) 0x11843F: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->19.60% (24,000B) 0x117A0F: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->19.60% (24,000B) 0x117108: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BasicMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::BasicMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->19.60% (24,000B) 0x116D61: std::__shared_ptr<mlp_ha::BasicMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->19.60% (24,000B) 0x116884: std::shared_ptr<mlp_ha::BasicMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->19.60% (24,000B) 0x116422: std::shared_ptr<mlp_ha::BasicMove> std::make_shared<mlp_ha::BasicMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->19.60% (24,000B) 0x116033: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:17)
+|                 ->09.80% (12,000B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->09.09% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |       | ->09.02% (11,040B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |       | | ->09.02% (11,040B) 0x10D933: main (main.cpp:20)
+|                 |       | |   
+|                 |       | ->00.08% (96B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       | 
+|                 |       ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       
+|                 ->09.80% (12,000B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->09.09% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                         | ->09.09% (11,136B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                         |   ->09.09% (11,136B) 0x10D933: main (main.cpp:20)
+|                         |     
+|                         ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                         
+->15.05% (18,432B) 0x113943: std::__new_allocator<mlp_ha::Round>::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->15.05% (18,432B) 0x11325C: allocate (allocator.h:188)
+|   ->15.05% (18,432B) 0x11325C: std::allocator_traits<std::allocator<mlp_ha::Round> >::allocate(std::allocator<mlp_ha::Round>&, unsigned long) (alloc_traits.h:464)
+|     ->15.05% (18,432B) 0x112C9B: std::_Vector_base<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_allocate(unsigned long) (stl_vector.h:378)
+|       ->15.05% (18,432B) 0x112498: void std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(__gnu_cxx::__normal_iterator<mlp_ha::Round*, std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:453)
+|         ->15.05% (18,432B) 0x1118E5: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:123)
+|           ->15.05% (18,432B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|             ->15.05% (18,432B) 0x10D933: main (main.cpp:20)
+|               
+->02.12% (2,592B) 0x119EE4: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->02.12% (2,592B) 0x118AC3: allocate (allocator.h:188)
+|   ->02.12% (2,592B) 0x118AC3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->02.12% (2,592B) 0x118003: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->02.12% (2,592B) 0x11768A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::AttackMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::AttackMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->02.12% (2,592B) 0x116FA1: std::__shared_ptr<mlp_ha::AttackMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->02.12% (2,592B) 0x116B84: std::shared_ptr<mlp_ha::AttackMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->02.12% (2,592B) 0x1166D4: std::shared_ptr<mlp_ha::AttackMove> std::make_shared<mlp_ha::AttackMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->02.12% (2,592B) 0x1160F9: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:26)
+|                 ->01.10% (1,344B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->01.10% (1,344B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->01.10% (1,344B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->01.10% (1,344B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->01.10% (1,344B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |         ->01.10% (1,344B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |           ->01.10% (1,344B) 0x10D933: main (main.cpp:20)
+|                 |             
+|                 ->01.02% (1,248B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->01.02% (1,248B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->01.02% (1,248B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->01.02% (1,248B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->01.02% (1,248B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                           ->01.02% (1,248B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                             ->01.02% (1,248B) 0x10D933: main (main.cpp:20)
+|                               
+->01.08% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->01.08% (1,328B) 0x1136D3: allocate (allocator.h:188)
+|   ->01.08% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->01.08% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->01.08% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+|         ->01.08% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+|           ->01.08% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+|             ->01.08% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+|               ->01.08% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+|                 ->01.08% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+|                   ->01.08% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+|                     ->01.08% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+|                       ->01.08% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+|                         ->01.08% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+|                           ->01.08% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+|                             ->01.08% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+|                               ->01.08% (1,328B) 0x10D91F: main (main.cpp:19)
+|                                 
+->00.80% (978B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 29     13,708,601          122,408          120,026         2,382            0
+ 30     13,995,251          122,408          120,026         2,382            0
+ 31     14,420,049          122,448          120,034         2,414            0
+ 32     14,706,387          122,448          120,034         2,414            0
+98.03% (120,034B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->59.38% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->59.38% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->59.38% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->59.38% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->59.38% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->59.38% (72,704B) 0x1: ???
+|           ->59.38% (72,704B) 0x1FFF0007DA: ???
+|             ->59.38% (72,704B) 0x1FFF0007ED: ???
+|               
+->19.60% (24,000B) 0x1198C6: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->19.60% (24,000B) 0x11843F: allocate (allocator.h:188)
+|   ->19.60% (24,000B) 0x11843F: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->19.60% (24,000B) 0x117A0F: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->19.60% (24,000B) 0x117108: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BasicMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::BasicMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->19.60% (24,000B) 0x116D61: std::__shared_ptr<mlp_ha::BasicMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->19.60% (24,000B) 0x116884: std::shared_ptr<mlp_ha::BasicMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->19.60% (24,000B) 0x116422: std::shared_ptr<mlp_ha::BasicMove> std::make_shared<mlp_ha::BasicMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->19.60% (24,000B) 0x116033: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:17)
+|                 ->09.80% (12,000B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->09.09% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |       | ->09.02% (11,040B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |       | | ->09.02% (11,040B) 0x10D933: main (main.cpp:20)
+|                 |       | |   
+|                 |       | ->00.08% (96B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       | 
+|                 |       ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       
+|                 ->09.80% (12,000B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->09.09% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                         | ->09.09% (11,136B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                         |   ->09.09% (11,136B) 0x10D933: main (main.cpp:20)
+|                         |     
+|                         ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                         
+->15.05% (18,432B) 0x113943: std::__new_allocator<mlp_ha::Round>::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->15.05% (18,432B) 0x11325C: allocate (allocator.h:188)
+|   ->15.05% (18,432B) 0x11325C: std::allocator_traits<std::allocator<mlp_ha::Round> >::allocate(std::allocator<mlp_ha::Round>&, unsigned long) (alloc_traits.h:464)
+|     ->15.05% (18,432B) 0x112C9B: std::_Vector_base<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_allocate(unsigned long) (stl_vector.h:378)
+|       ->15.05% (18,432B) 0x112498: void std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(__gnu_cxx::__normal_iterator<mlp_ha::Round*, std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:453)
+|         ->15.05% (18,432B) 0x1118E5: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:123)
+|           ->15.05% (18,432B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|             ->15.05% (18,432B) 0x10D933: main (main.cpp:20)
+|               
+->02.12% (2,592B) 0x119EE4: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->02.12% (2,592B) 0x118AC3: allocate (allocator.h:188)
+|   ->02.12% (2,592B) 0x118AC3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->02.12% (2,592B) 0x118003: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->02.12% (2,592B) 0x11768A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::AttackMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::AttackMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->02.12% (2,592B) 0x116FA1: std::__shared_ptr<mlp_ha::AttackMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->02.12% (2,592B) 0x116B84: std::shared_ptr<mlp_ha::AttackMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->02.12% (2,592B) 0x1166D4: std::shared_ptr<mlp_ha::AttackMove> std::make_shared<mlp_ha::AttackMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->02.12% (2,592B) 0x1160F9: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:26)
+|                 ->01.10% (1,344B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->01.10% (1,344B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->01.10% (1,344B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->01.10% (1,344B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->01.10% (1,344B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |         ->01.10% (1,344B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |           ->01.10% (1,344B) 0x10D933: main (main.cpp:20)
+|                 |             
+|                 ->01.02% (1,248B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->01.02% (1,248B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->01.02% (1,248B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->01.02% (1,248B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->01.02% (1,248B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                           ->01.02% (1,248B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                             ->01.02% (1,248B) 0x10D933: main (main.cpp:20)
+|                               
+->01.08% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->01.08% (1,328B) 0x1136D3: allocate (allocator.h:188)
+|   ->01.08% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->01.08% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->01.08% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+|         ->01.08% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+|           ->01.08% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+|             ->01.08% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+|               ->01.08% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+|                 ->01.08% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+|                   ->01.08% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+|                     ->01.08% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+|                       ->01.08% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+|                         ->01.08% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+|                           ->01.08% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+|                             ->01.08% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+|                               ->01.08% (1,328B) 0x10D91F: main (main.cpp:19)
+|                                 
+->00.80% (978B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 33     14,987,823          122,448          120,034         2,414            0
+ 34     15,288,142          122,408          120,026         2,382            0
+ 35     15,743,409          122,408          120,026         2,382            0
+ 36     16,199,906          122,408          120,026         2,382            0
+98.05% (120,026B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->59.39% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->59.39% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->59.39% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->59.39% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->59.39% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->59.39% (72,704B) 0x1: ???
+|           ->59.39% (72,704B) 0x1FFF0007DA: ???
+|             ->59.39% (72,704B) 0x1FFF0007ED: ???
+|               
+->19.61% (24,000B) 0x1198C6: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->19.61% (24,000B) 0x11843F: allocate (allocator.h:188)
+|   ->19.61% (24,000B) 0x11843F: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->19.61% (24,000B) 0x117A0F: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->19.61% (24,000B) 0x117108: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BasicMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::BasicMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->19.61% (24,000B) 0x116D61: std::__shared_ptr<mlp_ha::BasicMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->19.61% (24,000B) 0x116884: std::shared_ptr<mlp_ha::BasicMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->19.61% (24,000B) 0x116422: std::shared_ptr<mlp_ha::BasicMove> std::make_shared<mlp_ha::BasicMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->19.61% (24,000B) 0x116033: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:17)
+|                 ->09.80% (12,000B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->09.10% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |       | ->09.02% (11,040B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |       | | ->09.02% (11,040B) 0x10D933: main (main.cpp:20)
+|                 |       | |   
+|                 |       | ->00.08% (96B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       | 
+|                 |       ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       
+|                 ->09.80% (12,000B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->09.10% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                         | ->09.10% (11,136B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                         |   ->09.10% (11,136B) 0x10D933: main (main.cpp:20)
+|                         |     
+|                         ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                         
+->15.06% (18,432B) 0x113943: std::__new_allocator<mlp_ha::Round>::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->15.06% (18,432B) 0x11325C: allocate (allocator.h:188)
+|   ->15.06% (18,432B) 0x11325C: std::allocator_traits<std::allocator<mlp_ha::Round> >::allocate(std::allocator<mlp_ha::Round>&, unsigned long) (alloc_traits.h:464)
+|     ->15.06% (18,432B) 0x112C9B: std::_Vector_base<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_allocate(unsigned long) (stl_vector.h:378)
+|       ->15.06% (18,432B) 0x112498: void std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(__gnu_cxx::__normal_iterator<mlp_ha::Round*, std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:453)
+|         ->15.06% (18,432B) 0x1118E5: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:123)
+|           ->15.06% (18,432B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|             ->15.06% (18,432B) 0x10D933: main (main.cpp:20)
+|               
+->02.12% (2,592B) 0x119EE4: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->02.12% (2,592B) 0x118AC3: allocate (allocator.h:188)
+|   ->02.12% (2,592B) 0x118AC3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->02.12% (2,592B) 0x118003: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->02.12% (2,592B) 0x11768A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::AttackMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::AttackMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->02.12% (2,592B) 0x116FA1: std::__shared_ptr<mlp_ha::AttackMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->02.12% (2,592B) 0x116B84: std::shared_ptr<mlp_ha::AttackMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->02.12% (2,592B) 0x1166D4: std::shared_ptr<mlp_ha::AttackMove> std::make_shared<mlp_ha::AttackMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->02.12% (2,592B) 0x1160F9: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:26)
+|                 ->01.10% (1,344B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->01.10% (1,344B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->01.10% (1,344B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->01.10% (1,344B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->01.10% (1,344B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |         ->01.10% (1,344B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |           ->01.10% (1,344B) 0x10D933: main (main.cpp:20)
+|                 |             
+|                 ->01.02% (1,248B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->01.02% (1,248B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->01.02% (1,248B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->01.02% (1,248B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->01.02% (1,248B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                           ->01.02% (1,248B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                             ->01.02% (1,248B) 0x10D933: main (main.cpp:20)
+|                               
+->01.08% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->01.08% (1,328B) 0x1136D3: allocate (allocator.h:188)
+|   ->01.08% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->01.08% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->01.08% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+|         ->01.08% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+|           ->01.08% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+|             ->01.08% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+|               ->01.08% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+|                 ->01.08% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+|                   ->01.08% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+|                     ->01.08% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+|                       ->01.08% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+|                         ->01.08% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+|                           ->01.08% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+|                             ->01.08% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+|                               ->01.08% (1,328B) 0x10D91F: main (main.cpp:19)
+|                                 
+->00.79% (970B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 37     16,473,804          122,448          120,034         2,414            0
+ 38     16,891,494          122,408          120,026         2,382            0
+ 39     17,046,368          122,448          120,034         2,414            0
+ 40     17,478,002          122,408          120,026         2,382            0
+ 41     17,757,605          122,408          120,026         2,382            0
+ 42     18,034,736          122,408          120,026         2,382            0
+ 43     18,352,817          122,448          120,034         2,414            0
+ 44     18,645,464          122,448          120,034         2,414            0
+ 45     19,077,099          122,408          120,026         2,382            0
+98.05% (120,026B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->59.39% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->59.39% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->59.39% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->59.39% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->59.39% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->59.39% (72,704B) 0x1: ???
+|           ->59.39% (72,704B) 0x1FFF0007DA: ???
+|             ->59.39% (72,704B) 0x1FFF0007ED: ???
+|               
+->19.61% (24,000B) 0x1198C6: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->19.61% (24,000B) 0x11843F: allocate (allocator.h:188)
+|   ->19.61% (24,000B) 0x11843F: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->19.61% (24,000B) 0x117A0F: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->19.61% (24,000B) 0x117108: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BasicMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::BasicMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->19.61% (24,000B) 0x116D61: std::__shared_ptr<mlp_ha::BasicMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->19.61% (24,000B) 0x116884: std::shared_ptr<mlp_ha::BasicMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->19.61% (24,000B) 0x116422: std::shared_ptr<mlp_ha::BasicMove> std::make_shared<mlp_ha::BasicMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->19.61% (24,000B) 0x116033: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:17)
+|                 ->09.80% (12,000B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->09.10% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |       | ->09.02% (11,040B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |       | | ->09.02% (11,040B) 0x10D933: main (main.cpp:20)
+|                 |       | |   
+|                 |       | ->00.08% (96B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       | 
+|                 |       ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       
+|                 ->09.80% (12,000B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->09.10% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                         | ->09.10% (11,136B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                         |   ->09.10% (11,136B) 0x10D933: main (main.cpp:20)
+|                         |     
+|                         ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                         
+->15.06% (18,432B) 0x113943: std::__new_allocator<mlp_ha::Round>::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->15.06% (18,432B) 0x11325C: allocate (allocator.h:188)
+|   ->15.06% (18,432B) 0x11325C: std::allocator_traits<std::allocator<mlp_ha::Round> >::allocate(std::allocator<mlp_ha::Round>&, unsigned long) (alloc_traits.h:464)
+|     ->15.06% (18,432B) 0x112C9B: std::_Vector_base<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_allocate(unsigned long) (stl_vector.h:378)
+|       ->15.06% (18,432B) 0x112498: void std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(__gnu_cxx::__normal_iterator<mlp_ha::Round*, std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:453)
+|         ->15.06% (18,432B) 0x1118E5: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:123)
+|           ->15.06% (18,432B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|             ->15.06% (18,432B) 0x10D933: main (main.cpp:20)
+|               
+->02.12% (2,592B) 0x119EE4: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->02.12% (2,592B) 0x118AC3: allocate (allocator.h:188)
+|   ->02.12% (2,592B) 0x118AC3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->02.12% (2,592B) 0x118003: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->02.12% (2,592B) 0x11768A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::AttackMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::AttackMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->02.12% (2,592B) 0x116FA1: std::__shared_ptr<mlp_ha::AttackMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->02.12% (2,592B) 0x116B84: std::shared_ptr<mlp_ha::AttackMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->02.12% (2,592B) 0x1166D4: std::shared_ptr<mlp_ha::AttackMove> std::make_shared<mlp_ha::AttackMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->02.12% (2,592B) 0x1160F9: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:26)
+|                 ->01.10% (1,344B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->01.10% (1,344B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->01.10% (1,344B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->01.10% (1,344B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->01.10% (1,344B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |         ->01.10% (1,344B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |           ->01.10% (1,344B) 0x10D933: main (main.cpp:20)
+|                 |             
+|                 ->01.02% (1,248B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->01.02% (1,248B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->01.02% (1,248B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->01.02% (1,248B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->01.02% (1,248B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                           ->01.02% (1,248B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                             ->01.02% (1,248B) 0x10D933: main (main.cpp:20)
+|                               
+->01.08% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->01.08% (1,328B) 0x1136D3: allocate (allocator.h:188)
+|   ->01.08% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->01.08% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->01.08% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+|         ->01.08% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+|           ->01.08% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+|             ->01.08% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+|               ->01.08% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+|                 ->01.08% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+|                   ->01.08% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+|                     ->01.08% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+|                       ->01.08% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+|                         ->01.08% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+|                           ->01.08% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+|                             ->01.08% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+|                               ->01.08% (1,328B) 0x10D91F: main (main.cpp:19)
+|                                 
+->00.79% (970B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 46     19,361,120          122,408          120,026         2,382            0
+ 47     19,786,046          122,448          120,034         2,414            0
+ 48     20,064,044          122,448          120,034         2,414            0
+ 49     20,500,901          122,408          120,026         2,382            0
+98.05% (120,026B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->59.39% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->59.39% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->59.39% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->59.39% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->59.39% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->59.39% (72,704B) 0x1: ???
+|           ->59.39% (72,704B) 0x1FFF0007DA: ???
+|             ->59.39% (72,704B) 0x1FFF0007ED: ???
+|               
+->19.61% (24,000B) 0x1198C6: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->19.61% (24,000B) 0x11843F: allocate (allocator.h:188)
+|   ->19.61% (24,000B) 0x11843F: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->19.61% (24,000B) 0x117A0F: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->19.61% (24,000B) 0x117108: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BasicMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::BasicMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->19.61% (24,000B) 0x116D61: std::__shared_ptr<mlp_ha::BasicMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->19.61% (24,000B) 0x116884: std::shared_ptr<mlp_ha::BasicMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->19.61% (24,000B) 0x116422: std::shared_ptr<mlp_ha::BasicMove> std::make_shared<mlp_ha::BasicMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->19.61% (24,000B) 0x116033: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:17)
+|                 ->09.80% (12,000B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->09.10% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |       | ->09.02% (11,040B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |       | | ->09.02% (11,040B) 0x10D933: main (main.cpp:20)
+|                 |       | |   
+|                 |       | ->00.08% (96B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       | 
+|                 |       ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       
+|                 ->09.80% (12,000B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->09.10% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                         | ->09.10% (11,136B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                         |   ->09.10% (11,136B) 0x10D933: main (main.cpp:20)
+|                         |     
+|                         ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                         
+->15.06% (18,432B) 0x113943: std::__new_allocator<mlp_ha::Round>::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->15.06% (18,432B) 0x11325C: allocate (allocator.h:188)
+|   ->15.06% (18,432B) 0x11325C: std::allocator_traits<std::allocator<mlp_ha::Round> >::allocate(std::allocator<mlp_ha::Round>&, unsigned long) (alloc_traits.h:464)
+|     ->15.06% (18,432B) 0x112C9B: std::_Vector_base<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_allocate(unsigned long) (stl_vector.h:378)
+|       ->15.06% (18,432B) 0x112498: void std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(__gnu_cxx::__normal_iterator<mlp_ha::Round*, std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:453)
+|         ->15.06% (18,432B) 0x1118E5: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:123)
+|           ->15.06% (18,432B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|             ->15.06% (18,432B) 0x10D933: main (main.cpp:20)
+|               
+->02.12% (2,592B) 0x119EE4: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->02.12% (2,592B) 0x118AC3: allocate (allocator.h:188)
+|   ->02.12% (2,592B) 0x118AC3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->02.12% (2,592B) 0x118003: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->02.12% (2,592B) 0x11768A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::AttackMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::AttackMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->02.12% (2,592B) 0x116FA1: std::__shared_ptr<mlp_ha::AttackMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->02.12% (2,592B) 0x116B84: std::shared_ptr<mlp_ha::AttackMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->02.12% (2,592B) 0x1166D4: std::shared_ptr<mlp_ha::AttackMove> std::make_shared<mlp_ha::AttackMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->02.12% (2,592B) 0x1160F9: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:26)
+|                 ->01.10% (1,344B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->01.10% (1,344B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->01.10% (1,344B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->01.10% (1,344B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->01.10% (1,344B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |         ->01.10% (1,344B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |           ->01.10% (1,344B) 0x10D933: main (main.cpp:20)
+|                 |             
+|                 ->01.02% (1,248B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->01.02% (1,248B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->01.02% (1,248B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->01.02% (1,248B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->01.02% (1,248B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                           ->01.02% (1,248B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                             ->01.02% (1,248B) 0x10D933: main (main.cpp:20)
+|                               
+->01.08% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->01.08% (1,328B) 0x1136D3: allocate (allocator.h:188)
+|   ->01.08% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->01.08% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->01.08% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+|         ->01.08% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+|           ->01.08% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+|             ->01.08% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+|               ->01.08% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+|                 ->01.08% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+|                   ->01.08% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+|                     ->01.08% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+|                       ->01.08% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+|                         ->01.08% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+|                           ->01.08% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+|                             ->01.08% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+|                               ->01.08% (1,328B) 0x10D91F: main (main.cpp:19)
+|                                 
+->00.79% (970B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 50     20,664,551          122,408          120,026         2,382            0
+ 51     20,832,478          122,408          120,026         2,382            0
+ 52     20,987,415          122,384          120,018         2,366            0
+ 53     21,144,751          122,448          120,034         2,414            0
+ 54     21,315,737          122,448          120,034         2,414            0
+ 55     21,484,255          122,448          120,034         2,414            0
+ 56     21,639,876          122,408          120,026         2,382            0
+ 57     21,822,475          122,448          120,034         2,414            0
+ 58     21,996,824          122,448          120,034         2,414            0
+ 59     22,165,417          122,448          120,034         2,414            0
+98.03% (120,034B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->59.38% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->59.38% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->59.38% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->59.38% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->59.38% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->59.38% (72,704B) 0x1: ???
+|           ->59.38% (72,704B) 0x1FFF0007DA: ???
+|             ->59.38% (72,704B) 0x1FFF0007ED: ???
+|               
+->19.60% (24,000B) 0x1198C6: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->19.60% (24,000B) 0x11843F: allocate (allocator.h:188)
+|   ->19.60% (24,000B) 0x11843F: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->19.60% (24,000B) 0x117A0F: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->19.60% (24,000B) 0x117108: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BasicMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::BasicMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->19.60% (24,000B) 0x116D61: std::__shared_ptr<mlp_ha::BasicMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->19.60% (24,000B) 0x116884: std::shared_ptr<mlp_ha::BasicMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->19.60% (24,000B) 0x116422: std::shared_ptr<mlp_ha::BasicMove> std::make_shared<mlp_ha::BasicMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->19.60% (24,000B) 0x116033: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:17)
+|                 ->09.80% (12,000B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->09.09% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |       | ->09.02% (11,040B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |       | | ->09.02% (11,040B) 0x10D933: main (main.cpp:20)
+|                 |       | |   
+|                 |       | ->00.08% (96B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       | 
+|                 |       ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       
+|                 ->09.80% (12,000B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->09.09% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                         | ->09.09% (11,136B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                         |   ->09.09% (11,136B) 0x10D933: main (main.cpp:20)
+|                         |     
+|                         ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                         
+->15.05% (18,432B) 0x113943: std::__new_allocator<mlp_ha::Round>::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->15.05% (18,432B) 0x11325C: allocate (allocator.h:188)
+|   ->15.05% (18,432B) 0x11325C: std::allocator_traits<std::allocator<mlp_ha::Round> >::allocate(std::allocator<mlp_ha::Round>&, unsigned long) (alloc_traits.h:464)
+|     ->15.05% (18,432B) 0x112C9B: std::_Vector_base<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_allocate(unsigned long) (stl_vector.h:378)
+|       ->15.05% (18,432B) 0x112498: void std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(__gnu_cxx::__normal_iterator<mlp_ha::Round*, std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:453)
+|         ->15.05% (18,432B) 0x1118E5: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:123)
+|           ->15.05% (18,432B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|             ->15.05% (18,432B) 0x10D933: main (main.cpp:20)
+|               
+->02.12% (2,592B) 0x119EE4: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->02.12% (2,592B) 0x118AC3: allocate (allocator.h:188)
+|   ->02.12% (2,592B) 0x118AC3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->02.12% (2,592B) 0x118003: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->02.12% (2,592B) 0x11768A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::AttackMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::AttackMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->02.12% (2,592B) 0x116FA1: std::__shared_ptr<mlp_ha::AttackMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->02.12% (2,592B) 0x116B84: std::shared_ptr<mlp_ha::AttackMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->02.12% (2,592B) 0x1166D4: std::shared_ptr<mlp_ha::AttackMove> std::make_shared<mlp_ha::AttackMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->02.12% (2,592B) 0x1160F9: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:26)
+|                 ->01.10% (1,344B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->01.10% (1,344B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->01.10% (1,344B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->01.10% (1,344B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->01.10% (1,344B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |         ->01.10% (1,344B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |           ->01.10% (1,344B) 0x10D933: main (main.cpp:20)
+|                 |             
+|                 ->01.02% (1,248B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->01.02% (1,248B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->01.02% (1,248B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->01.02% (1,248B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->01.02% (1,248B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                           ->01.02% (1,248B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                             ->01.02% (1,248B) 0x10D933: main (main.cpp:20)
+|                               
+->01.08% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->01.08% (1,328B) 0x1136D3: allocate (allocator.h:188)
+|   ->01.08% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->01.08% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->01.08% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+|         ->01.08% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+|           ->01.08% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+|             ->01.08% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+|               ->01.08% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+|                 ->01.08% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+|                   ->01.08% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+|                     ->01.08% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+|                       ->01.08% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+|                         ->01.08% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+|                           ->01.08% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+|                             ->01.08% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+|                               ->01.08% (1,328B) 0x10D91F: main (main.cpp:19)
+|                                 
+->00.80% (978B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 60     22,335,945          122,448          120,034         2,414            0
+ 61     22,504,038          122,448          120,034         2,414            0
+ 62     22,680,752          122,448          120,034         2,414            0
+ 63     22,848,087          122,448          120,034         2,414            0
+ 64     23,025,438          122,448          120,034         2,414            0
+ 65     23,192,157          122,448          120,034         2,414            0
+ 66     23,363,107          122,448          120,034         2,414            0
+ 67     23,527,146          122,448          120,034         2,414            0
+ 68     23,684,294          122,408          120,026         2,382            0
+ 69     23,848,352          122,408          120,026         2,382            0
+98.05% (120,026B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->59.39% (72,704B) 0x4902939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+| ->59.39% (72,704B) 0x400647D: call_init.part.0 (dl-init.c:70)
+|   ->59.39% (72,704B) 0x4006567: call_init (dl-init.c:33)
+|     ->59.39% (72,704B) 0x4006567: _dl_init (dl-init.c:117)
+|       ->59.39% (72,704B) 0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)
+|         ->59.39% (72,704B) 0x1: ???
+|           ->59.39% (72,704B) 0x1FFF0007DA: ???
+|             ->59.39% (72,704B) 0x1FFF0007ED: ???
+|               
+->19.61% (24,000B) 0x1198C6: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->19.61% (24,000B) 0x11843F: allocate (allocator.h:188)
+|   ->19.61% (24,000B) 0x11843F: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->19.61% (24,000B) 0x117A0F: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::BasicMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->19.61% (24,000B) 0x117108: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BasicMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::BasicMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->19.61% (24,000B) 0x116D61: std::__shared_ptr<mlp_ha::BasicMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->19.61% (24,000B) 0x116884: std::shared_ptr<mlp_ha::BasicMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->19.61% (24,000B) 0x116422: std::shared_ptr<mlp_ha::BasicMove> std::make_shared<mlp_ha::BasicMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->19.61% (24,000B) 0x116033: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:17)
+|                 ->09.80% (12,000B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->09.10% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |       | ->09.02% (11,040B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |       | | ->09.02% (11,040B) 0x10D933: main (main.cpp:20)
+|                 |       | |   
+|                 |       | ->00.08% (96B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       | 
+|                 |       ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                 |       
+|                 ->09.80% (12,000B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->09.80% (12,000B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->09.80% (12,000B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->09.80% (12,000B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->09.10% (11,136B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                         | ->09.10% (11,136B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                         |   ->09.10% (11,136B) 0x10D933: main (main.cpp:20)
+|                         |     
+|                         ->00.71% (864B) in 1+ places, all below ms_print's threshold (01.00%)
+|                         
+->15.06% (18,432B) 0x113943: std::__new_allocator<mlp_ha::Round>::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->15.06% (18,432B) 0x11325C: allocate (allocator.h:188)
+|   ->15.06% (18,432B) 0x11325C: std::allocator_traits<std::allocator<mlp_ha::Round> >::allocate(std::allocator<mlp_ha::Round>&, unsigned long) (alloc_traits.h:464)
+|     ->15.06% (18,432B) 0x112C9B: std::_Vector_base<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_allocate(unsigned long) (stl_vector.h:378)
+|       ->15.06% (18,432B) 0x112498: void std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::_M_realloc_insert<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(__gnu_cxx::__normal_iterator<mlp_ha::Round*, std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> > >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:453)
+|         ->15.06% (18,432B) 0x1118E5: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:123)
+|           ->15.06% (18,432B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|             ->15.06% (18,432B) 0x10D933: main (main.cpp:20)
+|               
+->02.12% (2,592B) 0x119EE4: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->02.12% (2,592B) 0x118AC3: allocate (allocator.h:188)
+|   ->02.12% (2,592B) 0x118AC3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->02.12% (2,592B) 0x118003: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::AttackMove, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->02.12% (2,592B) 0x11768A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::AttackMove, std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::AttackMove*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:969)
+|         ->02.12% (2,592B) 0x116FA1: std::__shared_ptr<mlp_ha::AttackMove, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr_base.h:1712)
+|           ->02.12% (2,592B) 0x116B84: std::shared_ptr<mlp_ha::AttackMove>::shared_ptr<std::allocator<void>, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:464)
+|             ->02.12% (2,592B) 0x1166D4: std::shared_ptr<mlp_ha::AttackMove> std::make_shared<mlp_ha::AttackMove, mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (shared_ptr.h:1010)
+|               ->02.12% (2,592B) 0x1160F9: mlp_ha::move_factory::CreateMove(mlp_ha::MoveType const&, mlp_ha::Color const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (MoveFactory.cpp:26)
+|                 ->01.10% (1,344B) 0x1143C0: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:45)
+|                 | ->01.10% (1,344B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                 |   ->01.10% (1,344B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                 |     ->01.10% (1,344B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                 |       ->01.10% (1,344B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                 |         ->01.10% (1,344B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                 |           ->01.10% (1,344B) 0x10D933: main (main.cpp:20)
+|                 |             
+|                 ->01.02% (1,248B) 0x11455D: mlp_ha::Round::ParseRoundText(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:55)
+|                   ->01.02% (1,248B) 0x114051: mlp_ha::Round::Round(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) (Round.cpp:9)
+|                     ->01.02% (1,248B) 0x112C12: decltype (::new ((void*)(0)) mlp_ha::Round((declval<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>)())) std::construct_at<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (stl_construct.h:97)
+|                       ->01.02% (1,248B) 0x11225D: void std::allocator_traits<std::allocator<mlp_ha::Round> >::construct<mlp_ha::Round, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::allocator<mlp_ha::Round>&, mlp_ha::Round*, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (alloc_traits.h:518)
+|                         ->01.02% (1,248B) 0x11189F: mlp_ha::Round& std::vector<mlp_ha::Round, std::allocator<mlp_ha::Round> >::emplace_back<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (vector.tcc:117)
+|                           ->01.02% (1,248B) 0x1104C1: mlp_ha::BoardGame::LoadData() (BoardGame.cpp:28)
+|                             ->01.02% (1,248B) 0x10D933: main (main.cpp:20)
+|                               
+->01.08% (1,328B) 0x113B86: std::__new_allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) (new_allocator.h:137)
+| ->01.08% (1,328B) 0x1136D3: allocate (allocator.h:188)
+|   ->01.08% (1,328B) 0x1136D3: std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) (alloc_traits.h:464)
+|     ->01.08% (1,328B) 0x113333: std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<mlp_ha::Square, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) (allocated_ptr.h:98)
+|       ->01.08% (1,328B) 0x112E0D: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::Square, std::allocator<void>>(mlp_ha::Square*&, std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:969)
+|         ->01.08% (1,328B) 0x112835: std::__shared_ptr<mlp_ha::Square, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr_base.h:1712)
+|           ->01.08% (1,328B) 0x111EB2: std::shared_ptr<mlp_ha::Square>::shared_ptr<std::allocator<void>>(std::_Sp_alloc_shared_tag<std::allocator<void> >) (shared_ptr.h:464)
+|             ->01.08% (1,328B) 0x1115CD: std::shared_ptr<mlp_ha::Square> std::make_shared<mlp_ha::Square>() (shared_ptr.h:1010)
+|               ->01.08% (1,328B) 0x1101CE: mlp_ha::BoardGame::BoardGame(std::filesystem::__cxx11::path const&) (BoardGame.cpp:6)
+|                 ->01.08% (1,328B) 0x10F897: void std::_Construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (stl_construct.h:119)
+|                   ->01.08% (1,328B) 0x10F787: void std::allocator_traits<std::allocator<void> >::construct<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::allocator<void>&, mlp_ha::BoardGame*, std::filesystem::__cxx11::path&) (alloc_traits.h:635)
+|                     ->01.08% (1,328B) 0x10F494: std::_Sp_counted_ptr_inplace<mlp_ha::BoardGame, std::allocator<void>, (__gnu_cxx::_Lock_policy)2>::_Sp_counted_ptr_inplace<std::filesystem::__cxx11::path&>(std::allocator<void>, std::filesystem::__cxx11::path&) (shared_ptr_base.h:604)
+|                       ->01.08% (1,328B) 0x10F14A: std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<mlp_ha::BoardGame, std::allocator<void>, std::filesystem::__cxx11::path&>(mlp_ha::BoardGame*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:971)
+|                         ->01.08% (1,328B) 0x10EFAF: std::__shared_ptr<mlp_ha::BoardGame, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr_base.h:1712)
+|                           ->01.08% (1,328B) 0x10EB32: std::shared_ptr<mlp_ha::BoardGame>::shared_ptr<std::allocator<void>, std::filesystem::__cxx11::path&>(std::_Sp_alloc_shared_tag<std::allocator<void> >, std::filesystem::__cxx11::path&) (shared_ptr.h:464)
+|                             ->01.08% (1,328B) 0x10E413: std::shared_ptr<mlp_ha::BoardGame> std::make_shared<mlp_ha::BoardGame, std::filesystem::__cxx11::path&>(std::filesystem::__cxx11::path&) (shared_ptr.h:1010)
+|                               ->01.08% (1,328B) 0x10D91F: main (main.cpp:19)
+|                                 
+->00.79% (970B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 70     24,099,038          123,136          120,724         2,412            0
+ 71     24,254,686          103,256          102,338           918            0
