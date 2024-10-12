@@ -17,6 +17,9 @@ struct Position {
     int row;
     int col;
     bool IsValid() const { return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS; }
+
+    bool operator==(const Position &other) const { return row == other.row && col == other.col; }
+    bool operator!=(const Position &other) const { return !(*this == other); }
 };
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3);
 
