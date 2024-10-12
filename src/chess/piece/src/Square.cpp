@@ -6,19 +6,19 @@
 
 namespace mlp_ha {
 
-void Square::InitSquare() {
+void Square::Init() {
     pieces_.reserve(ROWS);
     std::vector<Piece> rowPiece;
     rowPiece.reserve(COLUMNS);
     // first row
-    rowPiece.emplace_back(std::in_place_type<Rook>, Color::White, Position{0, 0}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Knight>, Color::White, Position{0, 1}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::White, Position{0, 2}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Queen>, Color::White, Position{0, 3}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<King>, Color::White, Position{0, 4}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::White, Position{0, 5}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Knight>, Color::White, Position{0, 6}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Rook>, Color::White, Position{0, 7}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Rook>, Color::White, Position{0, 0}, this);
+    rowPiece.emplace_back(std::in_place_type<Knight>, Color::White, Position{0, 1}, this);
+    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::White, Position{0, 2}, this);
+    rowPiece.emplace_back(std::in_place_type<Queen>, Color::White, Position{0, 3}, this);
+    rowPiece.emplace_back(std::in_place_type<King>, Color::White, Position{0, 4}, this);
+    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::White, Position{0, 5}, this);
+    rowPiece.emplace_back(std::in_place_type<Knight>, Color::White, Position{0, 6}, this);
+    rowPiece.emplace_back(std::in_place_type<Rook>, Color::White, Position{0, 7}, this);
     pieces_.push_back(std::move(rowPiece));
 
     // second row
@@ -26,7 +26,7 @@ void Square::InitSquare() {
     rowPiece.reserve(COLUMNS);
 
     for (auto c = 0; c < COLUMNS; ++c) {
-        rowPiece.emplace_back(std::in_place_type<Pawn>, Color::White, Position{1, c}, shared_from_this());
+        rowPiece.emplace_back(std::in_place_type<Pawn>, Color::White, Position{1, c}, this);
     }
     pieces_.push_back(std::move(rowPiece));
 
@@ -35,7 +35,7 @@ void Square::InitSquare() {
         rowPiece.reserve(COLUMNS);
 
         for (int c = 0; c < COLUMNS; ++c) {
-            rowPiece.emplace_back(std::in_place_type<EmptyPiece>, Color::Undefined, Position{r, c}, shared_from_this());
+            rowPiece.emplace_back(std::in_place_type<EmptyPiece>, Color::Undefined, Position{r, c}, this);
         }
         pieces_.push_back(std::move(rowPiece));
     }
@@ -45,7 +45,7 @@ void Square::InitSquare() {
     rowPiece.reserve(COLUMNS);
 
     for (auto c = 0; c < COLUMNS; ++c) {
-        rowPiece.emplace_back(std::in_place_type<Pawn>, Color::Black, Position{6, c}, shared_from_this());
+        rowPiece.emplace_back(std::in_place_type<Pawn>, Color::Black, Position{6, c}, this);
     }
     pieces_.push_back(std::move(rowPiece));
 
@@ -53,14 +53,14 @@ void Square::InitSquare() {
     rowPiece.clear();
     rowPiece.reserve(COLUMNS);
 
-    rowPiece.emplace_back(std::in_place_type<Rook>, Color::Black, Position{ROWS - 1, 0}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Knight>, Color::Black, Position{ROWS - 1, 1}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::Black, Position{ROWS - 1, 2}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Queen>, Color::Black, Position{ROWS - 1, 3}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<King>, Color::Black, Position{ROWS - 1, 4}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::Black, Position{ROWS - 1, 5}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Knight>, Color::Black, Position{ROWS - 1, 6}, shared_from_this());
-    rowPiece.emplace_back(std::in_place_type<Rook>, Color::Black, Position{ROWS - 1, 7}, shared_from_this());
+    rowPiece.emplace_back(std::in_place_type<Rook>, Color::Black, Position{ROWS - 1, 0}, this);
+    rowPiece.emplace_back(std::in_place_type<Knight>, Color::Black, Position{ROWS - 1, 1}, this);
+    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::Black, Position{ROWS - 1, 2}, this);
+    rowPiece.emplace_back(std::in_place_type<Queen>, Color::Black, Position{ROWS - 1, 3}, this);
+    rowPiece.emplace_back(std::in_place_type<King>, Color::Black, Position{ROWS - 1, 4}, this);
+    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::Black, Position{ROWS - 1, 5}, this);
+    rowPiece.emplace_back(std::in_place_type<Knight>, Color::Black, Position{ROWS - 1, 6}, this);
+    rowPiece.emplace_back(std::in_place_type<Rook>, Color::Black, Position{ROWS - 1, 7}, this);
     pieces_.push_back(std::move(rowPiece));
 }
 
@@ -70,7 +70,7 @@ void Square::Run() {
     }
 }
 
-void Square::LoadData() {
+void Square::LoadPGN() {
     auto parsingHelper = helper::ParseFile(filePath_);
     if (parsingHelper.roundQueue.empty()) {
         // std::clog << "[THO][I] start game" << std::endl;
@@ -81,7 +81,7 @@ void Square::LoadData() {
     while (!parsingHelper.roundQueue.empty()) {
         auto roundText = parsingHelper.roundQueue.front();
         parsingHelper.roundQueue.pop();
-        rounds_.emplace_back(roundText, shared_from_this());
+        rounds_.emplace_back(roundText, this);
         round++;
     }
 
@@ -101,7 +101,7 @@ void Square::LoadData() {
     }
     auto roundText = parsingHelper.lastRun.substr(0, found);
     // std::clog << "[THO][I] roundText:=" << roundText << std::endl;
-    rounds_.emplace_back(roundText, shared_from_this());
+    rounds_.emplace_back(roundText, this);
 }
 
 std::string Square::GetCurrentState() const {
@@ -270,11 +270,10 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPo
         std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
 
         pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col},
-                                                                        shared_from_this());
+                                                                        this);
 
         if (enPassant_) {
-            pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value(),
-                                                                          shared_from_this());
+            pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value(), this);
             enPassant_ = std::nullopt;
         }
         // Update King position here
@@ -336,16 +335,16 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
     Piece newPiece;
     switch (pieceType) {
     case PieceType::Queen:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Queen>(color, toPosition, this);
         break;
     case PieceType::Rook:
-        newPiece.emplace<Rook>(color, toPosition, shared_from_this());
+        newPiece.emplace<Rook>(color, toPosition, this);
         break;
     case PieceType::Bishop:
-        newPiece.emplace<Bishop>(color, toPosition, shared_from_this());
+        newPiece.emplace<Bishop>(color, toPosition, this);
         break;
     case PieceType::Knight:
-        newPiece.emplace<Knight>(color, toPosition, shared_from_this());
+        newPiece.emplace<Knight>(color, toPosition, this);
         break;
     case PieceType::Pawn:
     default:
@@ -356,8 +355,8 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
     pieces_[toPosition.row][toPosition.col].swap(newPiece);
     std::visit([&](auto &&piece) { piece.SetPosition(Position{toPosition.row, toPosition.col}); },
                pieces_[toPosition.row][toPosition.col]);
-    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(
-        Color::Undefined, Position{fromPosition.row, fromPosition.col}, shared_from_this());
+    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined,
+                                                                    Position{fromPosition.row, fromPosition.col}, this);
 }
 
 // Process ProcessAttackPromotionMove Pawn only
@@ -366,16 +365,16 @@ void Square::ProcessAttackPromotionMove(const PieceType &pieceType, const Color 
     Piece newPiece;
     switch (pieceType) {
     case PieceType::Queen:
-        newPiece.emplace<Queen>(color, toPosition, shared_from_this());
+        newPiece.emplace<Queen>(color, toPosition, this);
         break;
     case PieceType::Rook:
-        newPiece.emplace<Rook>(color, toPosition, shared_from_this());
+        newPiece.emplace<Rook>(color, toPosition, this);
         break;
     case PieceType::Bishop:
-        newPiece.emplace<Bishop>(color, toPosition, shared_from_this());
+        newPiece.emplace<Bishop>(color, toPosition, this);
         break;
     case PieceType::Knight:
-        newPiece.emplace<Knight>(color, toPosition, shared_from_this());
+        newPiece.emplace<Knight>(color, toPosition, this);
         break;
     case PieceType::Pawn:
     default:

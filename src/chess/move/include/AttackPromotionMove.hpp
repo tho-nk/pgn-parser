@@ -14,6 +14,6 @@ class AttackPromotionMove : public Move {
     AttackPromotionMove &operator=(AttackPromotionMove &&) = delete;
     ~AttackPromotionMove() = default;
 
-    virtual void ProcessMove(const std::shared_ptr<Square> &square) final;
+    virtual void ProcessMove(Square *square) final;
 };
 } // namespace mlp_ha

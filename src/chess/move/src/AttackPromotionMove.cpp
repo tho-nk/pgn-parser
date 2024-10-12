@@ -10,7 +10,7 @@ AttackPromotionMove::AttackPromotionMove(const MoveType &moveType, const Color &
     : Move(moveType, color, moveText, comment) {}
 
 // exf8=R+
-void AttackPromotionMove::ProcessMove(const std::shared_ptr<Square> &square) {
+void AttackPromotionMove::ProcessMove(Square *square) {
     try {
         // std::clog << "[THO][I] AttackPromotionMove::ProcessMove" << std::endl;
         auto str = moveText_;

@@ -16,12 +16,11 @@ int main(int argc, char *argv[]) {
     signal(SIGINT, signalHandler);
     std::filesystem::path filePath = argv[1];
     try {
-        auto game = std::make_shared<mlp_ha::Square>(filePath);
-        game->InitSquare();
-        game->LoadData();
-        game->Run();
-        std::cout << game->GetCurrentState() << std::endl;
-        game->Reset();
+        auto square = mlp_ha::Square(filePath);
+        square.Init();
+        square.LoadPGN();
+        square.Run();
+        std::cout << square.GetCurrentState() << std::endl;
     } catch (const std::exception &e) {
         std::cerr << "[THO][E] Error while parsing PGN : " << e.what() << std::endl;
     }
