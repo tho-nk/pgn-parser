@@ -94,9 +94,9 @@ std::string Square::GetCurrentState() const {
                     ss << piece.GetDraw();
                     ss << "|";
                 },
-                pieces_[r][c]);
+                GetPieces()[r][c]);
         }
-        std::visit([&](auto &&piece) { ss << piece.GetDraw(); }, pieces_[r][COLUMNS - 1]);
+        std::visit([&](auto &&piece) { ss << piece.GetDraw(); }, GetPieces()[r][COLUMNS - 1]);
         ss << "\n";
     }
     return ss.str();
@@ -108,17 +108,15 @@ PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const
     if (fromPosition.IsValid()) {
         subPieces.push_back(std::ref(GetPieces()[fromPosition.row][fromPosition.col]));
     } else {
-        for (const auto &file : GetPieces()) {
-            for (const auto &var : file) {
-                std::visit(
-                    [&](const auto &value) {
-                        if (value.GetType() == pieceType && value.GetColor() == color) {
-                            subPieces.push_back(
-                                std::ref(GetPieces()[value.GetPosition().row][value.GetPosition().col]));
-                        }
-                    },
-                    var);
-            }
+        auto arange = std::ranges::subrange(GetPieces().front().begin(), GetPieces().back().end());
+        for (const auto &var : arange) {
+            std::visit(
+                [&](const auto &value) {
+                    if (value.GetType() == pieceType && value.GetColor() == color) {
+                        subPieces.push_back(std::ref(GetPieces()[value.GetPosition().row][value.GetPosition().col]));
+                    }
+                },
+                var);
         }
     }
     return subPieces;
