@@ -9,7 +9,7 @@
 namespace mlp_ha {
 class Square {
   public:
-    Square(const std::filesystem::path &filePath) : filePath_(filePath), enPassant_(std::nullopt){};
+    Square(const std::filesystem::path &filePath) : filePath_(filePath), enPassant_(std::nullopt) { Init(); };
     Square(const Square &) = delete;
     Square &operator=(const Square &) = delete;
     Square(Square &&) = default;

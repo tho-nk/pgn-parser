@@ -7,61 +7,42 @@
 namespace mlp_ha {
 
 void Square::Init() {
-    pieces_.reserve(ROWS);
-    std::vector<Piece> rowPiece;
-    rowPiece.reserve(COLUMNS);
-    // first row
-    rowPiece.emplace_back(std::in_place_type<Rook>, Color::White, Position{0, 0}, this);
-    rowPiece.emplace_back(std::in_place_type<Knight>, Color::White, Position{0, 1}, this);
-    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::White, Position{0, 2}, this);
-    rowPiece.emplace_back(std::in_place_type<Queen>, Color::White, Position{0, 3}, this);
-    rowPiece.emplace_back(std::in_place_type<King>, Color::White, Position{0, 4}, this);
-    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::White, Position{0, 5}, this);
-    rowPiece.emplace_back(std::in_place_type<Knight>, Color::White, Position{0, 6}, this);
-    rowPiece.emplace_back(std::in_place_type<Rook>, Color::White, Position{0, 7}, this);
-    pieces_.push_back(std::move(rowPiece));
-
-    // second row
-    rowPiece.clear();
-    rowPiece.reserve(COLUMNS);
-
-    for (auto c = 0; c < COLUMNS; ++c) {
-        rowPiece.emplace_back(std::in_place_type<Pawn>, Color::White, Position{1, c}, this);
-    }
-    pieces_.push_back(std::move(rowPiece));
-
     for (int r = 2; r < ROWS - 2; ++r) {
-        rowPiece.clear();
-        rowPiece.reserve(COLUMNS);
-
         for (int c = 0; c < COLUMNS; ++c) {
-            rowPiece.emplace_back(std::in_place_type<EmptyPiece>, Color::Undefined, Position{r, c}, this);
+            pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c}, this);
         }
-        pieces_.push_back(std::move(rowPiece));
     }
 
-    // before last row
-    rowPiece.clear();
-    rowPiece.reserve(COLUMNS);
-
+    // Pawns
     for (auto c = 0; c < COLUMNS; ++c) {
-        rowPiece.emplace_back(std::in_place_type<Pawn>, Color::Black, Position{6, c}, this);
+        pieces_[1][c].emplace<Pawn>(Color::White, Position{1, c}, this);
+        pieces_[6][c].emplace<Pawn>(Color::Black, Position{6, c}, this);
     }
-    pieces_.push_back(std::move(rowPiece));
+    // Rooks
+    pieces_[0][0].emplace<Rook>(Color::White, Position{0, 0}, this);
+    pieces_[0][7].emplace<Rook>(Color::White, Position{0, 7}, this);
+    pieces_[7][0].emplace<Rook>(Color::Black, Position{7, 0}, this);
+    pieces_[7][7].emplace<Rook>(Color::Black, Position{7, 7}, this);
 
-    // last row
-    rowPiece.clear();
-    rowPiece.reserve(COLUMNS);
+    // Knights
+    pieces_[0][1].emplace<Knight>(Color::White, Position{0, 1}, this);
+    pieces_[0][6].emplace<Knight>(Color::White, Position{0, 6}, this);
+    pieces_[7][1].emplace<Knight>(Color::Black, Position{7, 1}, this);
+    pieces_[7][6].emplace<Knight>(Color::Black, Position{7, 6}, this);
 
-    rowPiece.emplace_back(std::in_place_type<Rook>, Color::Black, Position{ROWS - 1, 0}, this);
-    rowPiece.emplace_back(std::in_place_type<Knight>, Color::Black, Position{ROWS - 1, 1}, this);
-    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::Black, Position{ROWS - 1, 2}, this);
-    rowPiece.emplace_back(std::in_place_type<Queen>, Color::Black, Position{ROWS - 1, 3}, this);
-    rowPiece.emplace_back(std::in_place_type<King>, Color::Black, Position{ROWS - 1, 4}, this);
-    rowPiece.emplace_back(std::in_place_type<Bishop>, Color::Black, Position{ROWS - 1, 5}, this);
-    rowPiece.emplace_back(std::in_place_type<Knight>, Color::Black, Position{ROWS - 1, 6}, this);
-    rowPiece.emplace_back(std::in_place_type<Rook>, Color::Black, Position{ROWS - 1, 7}, this);
-    pieces_.push_back(std::move(rowPiece));
+    // Bishops
+    pieces_[0][2].emplace<Bishop>(Color::White, Position{0, 2}, this);
+    pieces_[0][5].emplace<Bishop>(Color::White, Position{0, 5}, this);
+    pieces_[7][2].emplace<Bishop>(Color::Black, Position{7, 2}, this);
+    pieces_[7][5].emplace<Bishop>(Color::Black, Position{7, 5}, this);
+
+    // Queens
+    pieces_[0][3].emplace<Queen>(Color::White, Position{0, 3}, this);
+    pieces_[7][3].emplace<Queen>(Color::Black, Position{7, 3}, this);
+
+    // Kings
+    pieces_[0][4].emplace<King>(Color::White, Position{0, 4}, this);
+    pieces_[7][4].emplace<King>(Color::Black, Position{7, 4}, this);
 }
 
 void Square::Run() {
