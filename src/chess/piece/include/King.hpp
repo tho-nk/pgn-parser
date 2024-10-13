@@ -24,6 +24,8 @@ class King : public BasePiece<King> {
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
     bool IsValidAttackMove_(const Position &toPosition,
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
+
+    bool IsValidMove_(const Position &toPosition) const;
 };
 
 } // namespace mlp_ha

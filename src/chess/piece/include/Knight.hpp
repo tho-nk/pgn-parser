@@ -25,6 +25,8 @@ class Knight : public BasePiece<Knight> {
 
     bool IsValidAttackMove_(const Position &toPosition,
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
+
+    bool IsValidMove_(const Position &toPosition) const;
 };
 
 } // namespace mlp_ha

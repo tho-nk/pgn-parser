@@ -25,6 +25,8 @@ class Queen : public BasePiece<Queen> {
 
     bool IsValidAttackMove_(const Position &toPosition,
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
+
+    bool IsValidMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const;
 };
 
 } // namespace mlp_ha

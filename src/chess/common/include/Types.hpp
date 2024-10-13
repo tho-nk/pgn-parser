@@ -20,6 +20,18 @@ struct Position {
 
     bool operator==(const Position &other) const { return row == other.row && col == other.col; }
     bool operator!=(const Position &other) const { return !(*this == other); }
+    Position &operator+=(const Position &other) {
+        row += other.row;
+        col += other.col;
+        return *this;
+    }
+    Position operator+(const Position &other) const { return Position(row + other.row, col + other.col); }
+
+    Position &Shift(int dr, int dc) {
+        row += dr;
+        col += dc;
+        return *this;
+    }
 };
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3);
 

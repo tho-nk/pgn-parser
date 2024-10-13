@@ -25,6 +25,8 @@ class Rook : public BasePiece<Rook> {
 
     bool IsValidAttackMove_(const Position &toPosition,
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
+
+    bool IsValidMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const;
 };
 
 } // namespace mlp_ha

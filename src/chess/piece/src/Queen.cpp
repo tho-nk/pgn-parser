@@ -2,68 +2,48 @@
 
 #include "piece/include/Square.hpp"
 namespace mlp_ha {
+bool Queen::IsValidMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
+    int dRow = toPosition.row - GetPosition().row;
+    int dCol = toPosition.col - GetPosition().col;
 
-bool Queen::IsValidBasicMove_(const Position &toPosition,
-                              const std::optional<Position> &validateKingCheck)
-    const { // basiclly there is only one queen, no need to check but for security
-    auto canQueenMove = [&]() {
-        int dRow = toPosition.row - GetPosition().row;
-        int dCol = toPosition.col - GetPosition().col;
+    // A queen can move only horizontally, vertically, or diagonally
+    if ((dRow != 0 && dCol != 0) && (std::abs(dRow) != std::abs(dCol))) {
+        return false;
+    }
 
-        if ((dRow != 0 && dCol != 0) && (std::abs(dRow) != std::abs(dCol))) {
-            return false;
+    // Normalize the change in row and column to -1, 0, or 1
+    if (dRow != 0) {
+        dRow /= std::abs(dRow);
+    }
+    if (dCol != 0) {
+        dCol /= std::abs(dCol);
+    }
+
+    // Iterate to the destination, and check if there is any obstacle
+    Position p{GetPosition().row + dRow, GetPosition().col + dCol};
+    while (p.IsValid()) {
+        if (p == toPosition) {
+            return true;
         }
-
-        constexpr int dr[] = {-1, 0, 1, 1, 1, 0, -1, -1};
-        constexpr int dc[] = {-1, -1, -1, 0, 1, 1, 1, 0};
-
-        if (dRow != 0) {
-            dRow /= std::abs(dRow);
-        }
-        if (dCol != 0) {
-            dCol /= std::abs(dCol);
-        }
-
-        // Search for the direction in the directional arrays
-        int index = 0;
-        for (; index < 8; ++index) {
-            if (dr[index] == dRow && dc[index] == dCol) {
-                break;
-            }
-        }
-
-        if (index >= 8) {
-            std::cerr << "[THO][E] Queen::IsValidBasicMove_ Cannot find direction" << std::endl;
-        }
-        // Iterate to the destination, and check if there is any obstacle
-        // support king check also
-        Position p{GetPosition().row + dr[index], GetPosition().col + dc[index]};
-        while (p.IsValid()) {
-            if (!std::holds_alternative<EmptyPiece>(square_->GetPieces()[p.row][p.col])) {
-                if (validateKingCheck != std::nullopt) {
-                    if (!(validateKingCheck.value().row == p.row && validateKingCheck.value().col == p.col)) {
-                        break;
-                    }
-                } else {
-                    break;
+        if (!std::holds_alternative<EmptyPiece>(square_->GetPieces()[p.row][p.col])) {
+            if (validateKingCheck != std::nullopt) {
+                if (!(validateKingCheck.value() == p)) {
+                    return false;
                 }
+            } else {
+                return false;
             }
-            if (p.row == toPosition.row && p.col == toPosition.col) {
-                break;
-            }
-            p.row = p.row + dr[index];
-            p.col = p.col + dc[index];
         }
-        if (p.row != toPosition.row || p.col != toPosition.col) {
-            return false;
-        }
-        return true;
-    };
+        p.Shift(dRow, dCol);
+    }
+    return false;
+}
 
-    return canQueenMove();
+bool Queen::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
+    return IsValidMove_(toPosition, validateKingCheck);
 }
 
 bool Queen::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
-    return IsValidBasicMove_(toPosition, validateKingCheck);
+    return IsValidMove_(toPosition, validateKingCheck);
 }
 } // namespace mlp_ha
