@@ -17,10 +17,10 @@ class Square {
     ~Square() = default;
 
     void Init();
-    std::string GetCurrentState() const;
+    std::string GetCurrentState() const noexcept;
 
     const Pieces &GetPieces() const { return pieces_; }
-    bool IsEmpty(const Position &position) const {
+    bool IsEmptyAt(const Position &position) const {
         return std::holds_alternative<EmptyPiece>(pieces_[position.row][position.col]);
     }
 
@@ -28,7 +28,7 @@ class Square {
     void ResetEnPassant() { enPassant_ = std::nullopt; }
 
     PiecesReference GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                           const FromPosition &fromPosition) const;
+                                           const FromPosition &fromPosition) const noexcept;
     Position GetKingPosition(const Color &color) const;
 
     // Process BasicMove

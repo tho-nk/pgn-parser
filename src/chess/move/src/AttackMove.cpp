@@ -39,8 +39,8 @@ void AttackMove::ComputeMoveData() {
 }
 
 void AttackMove::ProcessMove(Square *square) {
-    const auto subPieces = square->GetPieceOfTypeAndColor(moveData_.pieceType, this->color_, moveData_.fromPosition);
-    square->ProcessAttackMove(subPieces, this->color_, moveData_.toPosition, moveData_.fromPosition);
+    const auto subPieces = square->GetPieceOfTypeAndColor(moveData_.pieceType, moveData_.color, moveData_.fromPosition);
+    square->ProcessAttackMove(subPieces, moveData_.color, moveData_.toPosition, moveData_.fromPosition);
     square->AttackPiece(moveData_.fromPosition, moveData_.toPosition);
 }
 

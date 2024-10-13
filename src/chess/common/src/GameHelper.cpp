@@ -20,7 +20,7 @@ bool ValidateMove(int dRow, int dCol, const Position &toPosition, const std::opt
         if (p == toPosition) {
             return true;
         }
-        if (!square->IsEmpty({p.row, p.col})) {
+        if (!square->IsEmptyAt(p)) {
             if (!validateKingCheck || validateKingCheck.value() != p) {
                 return false;
             }

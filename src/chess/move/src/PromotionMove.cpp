@@ -19,14 +19,15 @@ void PromotionMove::ComputeMoveData() {
     std::string_view remain(str.data(), str.length() - 2);
     moveData_.toPosition = Position{remain[1] - '1', remain[0] - 'a'};
     moveData_.fromPosition =
-        Position{this->color_ == Color::White ? moveData_.toPosition.row - 1 : moveData_.toPosition.row + 1,
+        Position{moveData_.color == Color::White ? moveData_.toPosition.row - 1 : moveData_.toPosition.row + 1,
                  moveData_.toPosition.col};
     std::string promotionType(str.data() + str.length() - 1, 1);
     moveData_.promotionType = StringToPieceType(promotionType);
 }
 
 void PromotionMove::ProcessMove(Square *square) {
-    square->ProcessPromotionMove(moveData_.promotionType, this->color_, moveData_.fromPosition, moveData_.toPosition);
+    square->ProcessPromotionMove(moveData_.promotionType, moveData_.color, moveData_.fromPosition,
+                                 moveData_.toPosition);
 }
 
 } // namespace mlp_ha

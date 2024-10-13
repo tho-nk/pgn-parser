@@ -37,8 +37,8 @@ void BasicMove::ComputeMoveData() {
 }
 
 void BasicMove::ProcessMove(Square *square) {
-    const auto subPieces = square->GetPieceOfTypeAndColor(moveData_.pieceType, this->color_, moveData_.fromPosition);
-    square->ProcessBasicMove(subPieces, this->color_, moveData_.toPosition, moveData_.fromPosition);
+    const auto subPieces = square->GetPieceOfTypeAndColor(moveData_.pieceType, moveData_.color, moveData_.fromPosition);
+    square->ProcessBasicMove(subPieces, moveData_.color, moveData_.toPosition, moveData_.fromPosition);
     square->MovePiece(moveData_.fromPosition, moveData_.toPosition);
 }
 

@@ -85,7 +85,7 @@ void Square::LoadPGN() {
     rounds_.emplace_back(roundText, this);
 }
 
-std::string Square::GetCurrentState() const {
+std::string Square::GetCurrentState() const noexcept {
     std::ostringstream ss;
     for (int r = ROWS - 1; r >= 0; --r) {
         for (auto c = 0; c < COLUMNS - 1; ++c) {
@@ -103,7 +103,7 @@ std::string Square::GetCurrentState() const {
 }
 
 PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                               const FromPosition &fromPosition) const {
+                                               const FromPosition &fromPosition) const noexcept {
     PiecesReference subPieces;
     if (fromPosition.IsValid()) {
         subPieces.push_back(std::ref(GetPieces()[fromPosition.row][fromPosition.col]));
@@ -174,13 +174,13 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
     }
     if (index >= 8) {
         std::cerr << "[THO][E] Cannot find direction" << std::endl;
-        return false;
+        throw MlpException("Square::VerifyIfKingBeingCheck Error");
     }
 
     auto FindNextNonEmpty = [this](const Position &start, int dr, int dc) {
         Position pos = {start.row + dr, start.col + dc};
         while (pos.IsValid()) {
-            if (!std::holds_alternative<EmptyPiece>(GetPieces()[pos.row][pos.col])) {
+            if (!IsEmptyAt({pos.row, pos.col})) {
                 break;
             }
             pos.row += dr;

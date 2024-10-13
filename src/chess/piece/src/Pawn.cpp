@@ -15,7 +15,7 @@ bool Pawn::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
         }
         // has obstacle
         for (int r = GetPosition().row + 1; r < toPosition.row; ++r) {
-            if (!std::holds_alternative<EmptyPiece>(square_->GetPieces()[r][toPosition.col])) {
+            if (!square_->IsEmptyAt({r, toPosition.col})) {
                 return false;
             }
         }
@@ -31,7 +31,7 @@ bool Pawn::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
         }
         // has obstacle
         for (int r = GetPosition().row - 1; r > toPosition.row; --r) {
-            if (!std::holds_alternative<EmptyPiece>(square_->GetPieces()[r][toPosition.col])) {
+            if (!square_->IsEmptyAt({r, toPosition.col})) {
                 return false;
             }
         }
@@ -43,7 +43,7 @@ bool Pawn::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
 bool Pawn::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     if (GetColor() == Color::White) {
         // en passant
-        if (std::holds_alternative<EmptyPiece>(square_->GetPieces()[toPosition.row][toPosition.col])) {
+        if (square_->IsEmptyAt(toPosition)) {
             square_->SetEnPassant(Position{toPosition.row - 1, toPosition.col});
         }
         // no need to check Check. there only one pawn can move
@@ -55,7 +55,7 @@ bool Pawn::IsValidAttackMove_(const Position &toPosition, const std::optional<Po
         }
         return true;
     } else if (GetColor() == Color::Black) {
-        if (std::holds_alternative<EmptyPiece>(square_->GetPieces()[toPosition.row][toPosition.col])) {
+        if (square_->IsEmptyAt(toPosition)) {
             square_->SetEnPassant(Position{toPosition.row + 1, toPosition.col});
         }
         // no need to check Check. there only one pawn can move

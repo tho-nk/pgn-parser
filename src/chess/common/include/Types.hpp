@@ -49,9 +49,11 @@ using ToPosition = Position;
 using Positions = std::vector<Position>;
 
 struct MoveData {
+    Color color;
     Position fromPosition;
     Position toPosition;
     PieceType pieceType = PieceType::Undefined;
     PieceType promotionType = PieceType::Undefined;
+    MoveData(const Color &color) : color(color) {}
 };
 } // namespace mlp_ha

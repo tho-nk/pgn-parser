@@ -20,7 +20,7 @@ void CastlingMove::ProcessMove(Square *square) {
         ToPosition toPositionRook{0, 3};
         FromPosition fromRook{0, 0};
 
-        if (this->color_ == Color::Black) {
+        if (moveData_.color == Color::Black) {
             toPositionKing.row = 7;
             fromKing.row = 7;
             toPositionRook.row = 7;
@@ -35,7 +35,7 @@ void CastlingMove::ProcessMove(Square *square) {
         ToPosition toPositionRook{0, 5};
         FromPosition fromRook{0, 7};
 
-        if (this->color_ == Color::Black) {
+        if (moveData_.color == Color::Black) {
             toPositionKing.row = 7;
             fromKing.row = 7;
             toPositionRook.row = 7;
