@@ -6,7 +6,9 @@
 namespace mlp_ha {
 
 AttackMove::AttackMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {}
+    : Move(moveType, color, moveText, comment) {
+    ComputeMoveData();
+}
 
 void AttackMove::ComputeMoveData() {
     // std::clog << "[THO][I] AttackMove::ProcessMove" << std::endl;
@@ -38,7 +40,6 @@ void AttackMove::ComputeMoveData() {
 
 void AttackMove::ProcessMove(Square *square) {
     try {
-        ComputeMoveData();
         const auto subPieces =
             square->GetPieceOfTypeAndColor(moveData_.pieceType, this->color_, moveData_.fromPosition);
         square->ProcessAttackMove(subPieces, this->color_, moveData_.toPosition, moveData_.fromPosition);

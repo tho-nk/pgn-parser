@@ -300,10 +300,10 @@ void Square::ValidateMove(const Position &kingPosition, const Position &piecePos
     }
 }
 
-void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
+void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
                                   const ToPosition &toPosition) {
 
-    switch (pieceType) {
+    switch (promotionType) {
     case PieceType::Queen:
         pieces_[toPosition.row][toPosition.col].emplace<Queen>(color, toPosition, this);
         break;
@@ -326,32 +326,4 @@ void Square::ProcessPromotionMove(const PieceType &pieceType, const Color &color
                                                                     Position{fromPosition.row, fromPosition.col}, this);
 }
 
-// Process ProcessAttackPromotionMove Pawn only
-void Square::ProcessAttackPromotionMove(const PieceType &pieceType, const Color &color, FromPosition &fromPosition,
-                                        const ToPosition &toPosition) {
-
-    const auto subPieces = GetPieceOfTypeAndColor(PieceType::Pawn, color, fromPosition);
-    ProcessAttackMove(subPieces, color, toPosition, fromPosition);
-    AttackPiece(fromPosition, toPosition);
-
-    switch (pieceType) {
-    case PieceType::Queen:
-        pieces_[toPosition.row][toPosition.col].emplace<Queen>(color, toPosition, this);
-        break;
-    case PieceType::Rook:
-        pieces_[toPosition.row][toPosition.col].emplace<Rook>(color, toPosition, this);
-        break;
-    case PieceType::Bishop:
-        pieces_[toPosition.row][toPosition.col].emplace<Bishop>(color, toPosition, this);
-        break;
-    case PieceType::Knight:
-        pieces_[toPosition.row][toPosition.col].emplace<Knight>(color, toPosition, this);
-        break;
-    case PieceType::Pawn:
-    default:
-        std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
-        throw MlpException("Square::ProcessPromotionMove Cannot promote to undefined piece");
-        break;
-    }
-}
 } // namespace mlp_ha

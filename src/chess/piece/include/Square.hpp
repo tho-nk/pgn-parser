@@ -42,12 +42,8 @@ class Square {
     void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
     // Process PromotionMove
-    void ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
+    void ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
                               const ToPosition &toPosition);
-
-    // Process AttackPromotionMove Pawn only
-    void ProcessAttackPromotionMove(const PieceType &pieceType, const Color &color, FromPosition &fromPosition,
-                                    const ToPosition &toPosition);
 
     void Run();
     void LoadPGN();

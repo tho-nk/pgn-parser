@@ -52,5 +52,6 @@ struct MoveData {
     Position fromPosition;
     Position toPosition;
     PieceType pieceType = PieceType::Undefined;
+    PieceType promotionType = PieceType::Undefined;
 };
 } // namespace mlp_ha

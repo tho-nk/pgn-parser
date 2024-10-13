@@ -8,7 +8,9 @@
 namespace mlp_ha {
 
 BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {}
+    : Move(moveType, color, moveText, comment) {
+    ComputeMoveData();
+}
 
 void BasicMove::ComputeMoveData() {
     // std::clog << "[THO][I] BasicMove::ProcessMove" << std::endl;
@@ -36,7 +38,6 @@ void BasicMove::ComputeMoveData() {
 
 void BasicMove::ProcessMove(Square *square) {
     try {
-        ComputeMoveData();
         const auto subPieces =
             square->GetPieceOfTypeAndColor(moveData_.pieceType, this->color_, moveData_.fromPosition);
         square->ProcessBasicMove(subPieces, this->color_, moveData_.toPosition, moveData_.fromPosition);

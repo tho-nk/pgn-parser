@@ -6,7 +6,9 @@
 namespace mlp_ha {
 
 PromotionMove::PromotionMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {}
+    : Move(moveType, color, moveText, comment) {
+    ComputeMoveData();
+}
 
 void PromotionMove::ComputeMoveData() {
     // std::clog << "[THO][I] PromotionMove::ProcessMove" << std::endl;
@@ -19,14 +21,14 @@ void PromotionMove::ComputeMoveData() {
     moveData_.fromPosition =
         Position{this->color_ == Color::White ? moveData_.toPosition.row - 1 : moveData_.toPosition.row + 1,
                  moveData_.toPosition.col};
-    std::string pieceType(str.data() + str.length() - 1, 1);
-    moveData_.pieceType = StringToPieceType(pieceType);
+    std::string promotionType(str.data() + str.length() - 1, 1);
+    moveData_.promotionType = StringToPieceType(promotionType);
 }
 
 void PromotionMove::ProcessMove(Square *square) {
     try {
-        ComputeMoveData();
-        square->ProcessPromotionMove(moveData_.pieceType, this->color_, moveData_.fromPosition, moveData_.toPosition);
+        square->ProcessPromotionMove(moveData_.promotionType, this->color_, moveData_.fromPosition,
+                                     moveData_.toPosition);
     } catch (const MlpException &e) {
         std::cerr << "[THO][E] PromotionMove::ProcessMove invalid move : " << moveText_ << std::endl;
         std::string message = "PromotionMove::ProcessMove invalid move : " + moveText_ + ", " + e.what();

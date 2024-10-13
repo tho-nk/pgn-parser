@@ -7,7 +7,9 @@ namespace mlp_ha {
 
 AttackPromotionMove::AttackPromotionMove(const MoveType &moveType, const Color &color, std::string moveText,
                                          std::string comment)
-    : Move(moveType, color, moveText, comment) {}
+    : AttackMove(), PromotionMove(), Move(moveType, color, moveText, comment) {
+    ComputeMoveData();
+}
 
 void AttackPromotionMove::ComputeMoveData() {
     // std::clog << "[THO][I] AttackPromotionMove::ProcessMove" << std::endl;
@@ -20,7 +22,7 @@ void AttackPromotionMove::ComputeMoveData() {
     // foundA + 3 == foundP
     std::string from = str.substr(0, foundA); // exclude 'x'
     std::string dest = str.substr(foundA + 1, foundP - foundA - 1);
-    std::string promo = str.substr(foundP + 1);
+    std::string promotionType = str.substr(foundP + 1);
 
     moveData_.toPosition = Position{dest[1] - '1', dest[0] - 'a'};
     std::string pieceType = "P"; // only for Pawn
@@ -39,14 +41,14 @@ void AttackPromotionMove::ComputeMoveData() {
         moveData_.fromPosition.col = from[0] - 'a';
     }
 
-    moveData_.pieceType = StringToPieceType(promo);
+    moveData_.promotionType = StringToPieceType(promotionType);
+    moveData_.pieceType = StringToPieceType(pieceType);
 }
 // exf8=R+
 void AttackPromotionMove::ProcessMove(Square *square) {
     try {
-        ComputeMoveData();
-        square->ProcessAttackPromotionMove(moveData_.pieceType, this->color_, moveData_.fromPosition,
-                                           moveData_.toPosition);
+        AttackMove::ProcessMove(square);
+        PromotionMove::ProcessMove(square);
     } catch (const MlpException &e) {
         // std::cerr << "[THO][E] AttackPromotionMove::ProcessMove invalid move : " << moveText_ << std::endl;
         std::cerr << "[THO][E] AttackPromotionMove::ProcessMove MlpException " << e.what() << std::endl;
