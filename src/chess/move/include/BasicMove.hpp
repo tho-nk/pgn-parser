@@ -14,5 +14,8 @@ class BasicMove : public Move {
     ~BasicMove() = default;
 
     virtual void ProcessMove(Square *square) final;
+
+  private:
+    void ComputeMoveData();
 };
 } // namespace mlp_ha

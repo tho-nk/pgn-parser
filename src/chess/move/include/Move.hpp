@@ -38,5 +38,7 @@ class Move {
     Color color_;
     std::string moveText_;
     std::string comment_;
+
+    MoveData moveData_;
 };
 } // namespace mlp_ha

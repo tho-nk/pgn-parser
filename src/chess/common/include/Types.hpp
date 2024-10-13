@@ -48,4 +48,9 @@ using FromPosition = Position;
 using ToPosition = Position;
 using Positions = std::vector<Position>;
 
+struct MoveData {
+    Position fromPosition;
+    Position toPosition;
+    PieceType pieceType = PieceType::Undefined;
+};
 } // namespace mlp_ha

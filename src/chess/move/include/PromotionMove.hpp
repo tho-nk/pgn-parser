@@ -4,7 +4,7 @@
 
 namespace mlp_ha {
 
-class PromotionMove : public Move {
+class PromotionMove : public virtual Move {
   public:
     PromotionMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment);
     PromotionMove(const PromotionMove &) = delete;
@@ -14,5 +14,8 @@ class PromotionMove : public Move {
     ~PromotionMove() = default;
 
     virtual void ProcessMove(Square *square) final;
+
+  private:
+    void ComputeMoveData();
 };
 } // namespace mlp_ha

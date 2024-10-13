@@ -15,5 +15,8 @@ class AttackPromotionMove : public Move {
     ~AttackPromotionMove() = default;
 
     virtual void ProcessMove(Square *square) final;
+
+  private:
+    void ComputeMoveData();
 };
 } // namespace mlp_ha

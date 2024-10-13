@@ -4,7 +4,7 @@
 
 namespace mlp_ha {
 
-class AttackMove : public Move {
+class AttackMove : public virtual Move {
 
   public:
     AttackMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment);
@@ -15,5 +15,8 @@ class AttackMove : public Move {
     ~AttackMove() = default;
 
     virtual void ProcessMove(Square *square) final;
+
+  private:
+    void ComputeMoveData();
 };
 } // namespace mlp_ha

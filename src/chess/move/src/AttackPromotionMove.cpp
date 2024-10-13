@@ -9,41 +9,44 @@ AttackPromotionMove::AttackPromotionMove(const MoveType &moveType, const Color &
                                          std::string comment)
     : Move(moveType, color, moveText, comment) {}
 
+void AttackPromotionMove::ComputeMoveData() {
+    // std::clog << "[THO][I] AttackPromotionMove::ProcessMove" << std::endl;
+    auto str = moveText_;
+    // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
+    helper::removeUnwantedChars(str);
+
+    auto foundA = str.find("x");
+    auto foundP = str.find("=");
+    // foundA + 3 == foundP
+    std::string from = str.substr(0, foundA); // exclude 'x'
+    std::string dest = str.substr(foundA + 1, foundP - foundA - 1);
+    std::string promo = str.substr(foundP + 1);
+
+    moveData_.toPosition = Position{dest[1] - '1', dest[0] - 'a'};
+    std::string pieceType = "P"; // only for Pawn
+    if (std::isupper(from[0])) {
+        pieceType = from.at(0); // should be Pawn
+        int index = 1;
+        while (index < from.length()) {
+            if (std::isdigit(from[index])) {
+                moveData_.fromPosition.row = from[index] - '1';
+            } else {
+                moveData_.fromPosition.col = from[index] - 'a';
+            }
+            index++;
+        }
+    } else {
+        moveData_.fromPosition.col = from[0] - 'a';
+    }
+
+    moveData_.pieceType = StringToPieceType(promo);
+}
 // exf8=R+
 void AttackPromotionMove::ProcessMove(Square *square) {
     try {
-        // std::clog << "[THO][I] AttackPromotionMove::ProcessMove" << std::endl;
-        auto str = moveText_;
-        // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
-        helper::removeUnwantedChars(str);
-
-        auto foundA = str.find("x");
-        auto foundP = str.find("=");
-        // foundA + 3 == foundP
-        std::string from = str.substr(0, foundA); // exclude 'x'
-        std::string dest = str.substr(foundA + 1, foundP - foundA - 1);
-        std::string promo = str.substr(foundP + 1);
-
-        ToPosition toPosition{dest[1] - '1', dest[0] - 'a'};
-        FromPosition fromPosition{-1, -1};
-        std::string pieceType = "P"; // only for Pawn
-        if (std::isupper(from[0])) {
-            pieceType = from.at(0); // should be Pawn
-            int index = 1;
-            while (index < from.length()) {
-                if (std::isdigit(from[index])) {
-                    fromPosition.row = from[index] - '1';
-                } else {
-                    fromPosition.col = from[index] - 'a';
-                }
-                index++;
-            }
-        } else {
-            fromPosition.col = from[0] - 'a';
-        }
-
-        auto promoType = StringToPieceType(promo);
-        square->ProcessAttackPromotionMove(promoType, this->color_, fromPosition, toPosition);
+        ComputeMoveData();
+        square->ProcessAttackPromotionMove(moveData_.pieceType, this->color_, moveData_.fromPosition,
+                                           moveData_.toPosition);
     } catch (const MlpException &e) {
         // std::cerr << "[THO][E] AttackPromotionMove::ProcessMove invalid move : " << moveText_ << std::endl;
         std::cerr << "[THO][E] AttackPromotionMove::ProcessMove MlpException " << e.what() << std::endl;
