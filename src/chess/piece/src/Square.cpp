@@ -207,51 +207,37 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
 }
 
 void Square::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
-    try {
-        if (!fromPosition.IsValid() || !toPosition.IsValid()) {
-            std::cerr << "[THO][E] Invalid position" << std::endl;
-            throw MlpException("Error while moving : Invalid position");
-        }
-        auto tmpF = Position(fromPosition.row, fromPosition.col);
-        auto tmpT = Position(toPosition.row, toPosition.col);
-
-        pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
-
-        std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, pieces_[fromPosition.row][fromPosition.col]);
-
-        std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
-
-    } catch (const MlpException &e) {
-        throw;
-    } catch (...) {
-        std::cerr << "[THO][E] Square::MovePiece unkown exception" << std::endl;
+    if (!fromPosition.IsValid() || !toPosition.IsValid()) {
+        std::cerr << "[THO][E] Invalid position" << std::endl;
+        throw MlpException("Error while moving : Invalid position");
     }
+    auto tmpF = Position(fromPosition.row, fromPosition.col);
+    auto tmpT = Position(toPosition.row, toPosition.col);
+
+    pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
+
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, pieces_[fromPosition.row][fromPosition.col]);
+
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
 }
 
 void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition) {
-    try {
-        if (!fromPosition.IsValid() || !toPosition.IsValid()) {
-            std::cerr << "[THO][E] Invalid position" << std::endl;
-            throw MlpException("Error while attacking : Invalid position");
-        }
-        auto tmpF = Position(fromPosition.row, fromPosition.col);
-        auto tmpT = Position(toPosition.row, toPosition.col);
-        pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
+    if (!fromPosition.IsValid() || !toPosition.IsValid()) {
+        std::cerr << "[THO][E] Invalid position" << std::endl;
+        throw MlpException("Error while attacking : Invalid position");
+    }
+    auto tmpF = Position(fromPosition.row, fromPosition.col);
+    auto tmpT = Position(toPosition.row, toPosition.col);
+    pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
 
-        std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
 
-        pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col},
-                                                                        this);
+    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col},
+                                                                    this);
 
-        if (enPassant_) {
-            pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value(), this);
-            enPassant_ = std::nullopt;
-        }
-
-    } catch (const MlpException &e) {
-        throw;
-    } catch (...) {
-        std::cerr << "[THO][E] Square::AttackPiece unkown exception" << std::endl;
+    if (enPassant_) {
+        pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value(), this);
+        enPassant_ = std::nullopt;
     }
 }
 

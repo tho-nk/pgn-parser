@@ -10,49 +10,40 @@ CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::st
     : Move(moveType, color, moveText, comment) {}
 
 void CastlingMove::ProcessMove(Square *square) {
-    try {
-        // std::clog << "[THO][I] CastlingMove::ProcessMove" << std::endl;
-        auto str = moveText_;
-        // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
-        helper::removeUnwantedChars(str);
-        if (str == "O-O-O") {
-            ToPosition toPositionKing{0, 2};
-            FromPosition fromKing{0, 4};
-            ToPosition toPositionRook{0, 3};
-            FromPosition fromRook{0, 0};
+    // std::clog << "[THO][I] CastlingMove::ProcessMove" << std::endl;
+    auto str = moveText_;
+    // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
+    helper::removeUnwantedChars(str);
+    if (str == "O-O-O") {
+        ToPosition toPositionKing{0, 2};
+        FromPosition fromKing{0, 4};
+        ToPosition toPositionRook{0, 3};
+        FromPosition fromRook{0, 0};
 
-            if (this->color_ == Color::Black) {
-                toPositionKing.row = 7;
-                fromKing.row = 7;
-                toPositionRook.row = 7;
-                fromRook.row = 7;
-            }
-            square->MovePiece(fromKing, toPositionKing);
-            square->MovePiece(fromRook, toPositionRook);
-
-        } else {
-            ToPosition toPositionKing{0, 6};
-            FromPosition fromKing{0, 4};
-            ToPosition toPositionRook{0, 5};
-            FromPosition fromRook{0, 7};
-
-            if (this->color_ == Color::Black) {
-                toPositionKing.row = 7;
-                fromKing.row = 7;
-                toPositionRook.row = 7;
-                fromRook.row = 7;
-            }
-
-            square->MovePiece(fromKing, toPositionKing);
-            square->MovePiece(fromRook, toPositionRook);
+        if (this->color_ == Color::Black) {
+            toPositionKing.row = 7;
+            fromKing.row = 7;
+            toPositionRook.row = 7;
+            fromRook.row = 7;
         }
-    } catch (const MlpException &e) {
-        // std::cerr << "[THO][E] CastlingMove::ProcessMove invalid move : " << moveText_ << std::endl;
-        std::cerr << "[THO][E] CastlingMove::ProcessMove MlpException " << e.what() << std::endl;
-        std::string message = "CastlingMove::ProcessMove invalid move : " + moveText_ + ", " + e.what();
-        throw MlpException(message.c_str());
-    } catch (...) {
-        std::cerr << "[THO][E] CastlingMove::ProcessMove unkown exception" << std::endl;
+        square->MovePiece(fromKing, toPositionKing);
+        square->MovePiece(fromRook, toPositionRook);
+
+    } else {
+        ToPosition toPositionKing{0, 6};
+        FromPosition fromKing{0, 4};
+        ToPosition toPositionRook{0, 5};
+        FromPosition fromRook{0, 7};
+
+        if (this->color_ == Color::Black) {
+            toPositionKing.row = 7;
+            fromKing.row = 7;
+            toPositionRook.row = 7;
+            fromRook.row = 7;
+        }
+
+        square->MovePiece(fromKing, toPositionKing);
+        square->MovePiece(fromRook, toPositionRook);
     }
 }
 

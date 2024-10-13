@@ -37,19 +37,9 @@ void BasicMove::ComputeMoveData() {
 }
 
 void BasicMove::ProcessMove(Square *square) {
-    try {
-        const auto subPieces =
-            square->GetPieceOfTypeAndColor(moveData_.pieceType, this->color_, moveData_.fromPosition);
-        square->ProcessBasicMove(subPieces, this->color_, moveData_.toPosition, moveData_.fromPosition);
-        square->MovePiece(moveData_.fromPosition, moveData_.toPosition);
-    } catch (const MlpException &e) {
-        // std::cerr << "[THO][E] BasicMove::ProcessMove invalid move : " << moveText_ << std::endl;
-        std::cerr << "[THO][E] BasicMove::ProcessMove MlpException " << e.what() << std::endl;
-        std::string message = "BasicMove::ProcessMove invalid move : " + moveText_ + ", " + e.what();
-        throw MlpException(message.c_str());
-    } catch (...) {
-        std::cerr << "[THO][E] BasicMove::ProcessMove unkown exception" << std::endl;
-    }
+    const auto subPieces = square->GetPieceOfTypeAndColor(moveData_.pieceType, this->color_, moveData_.fromPosition);
+    square->ProcessBasicMove(subPieces, this->color_, moveData_.toPosition, moveData_.fromPosition);
+    square->MovePiece(moveData_.fromPosition, moveData_.toPosition);
 }
 
 } // namespace mlp_ha

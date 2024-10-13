@@ -7,7 +7,7 @@ namespace mlp_ha {
 
 AttackPromotionMove::AttackPromotionMove(const MoveType &moveType, const Color &color, std::string moveText,
                                          std::string comment)
-    : AttackMove(), PromotionMove(), Move(moveType, color, moveText, comment) {
+    : Move(moveType, color, moveText, comment) {
     ComputeMoveData();
 }
 
@@ -46,17 +46,8 @@ void AttackPromotionMove::ComputeMoveData() {
 }
 // exf8=R+
 void AttackPromotionMove::ProcessMove(Square *square) {
-    try {
-        AttackMove::ProcessMove(square);
-        PromotionMove::ProcessMove(square);
-    } catch (const MlpException &e) {
-        // std::cerr << "[THO][E] AttackPromotionMove::ProcessMove invalid move : " << moveText_ << std::endl;
-        std::cerr << "[THO][E] AttackPromotionMove::ProcessMove MlpException " << e.what() << std::endl;
-        std::string message = "AttackPromotionMove::ProcessMove invalid move : " + moveText_ + ", " + e.what();
-        throw MlpException(message.c_str());
-    } catch (...) {
-        std::cerr << "[THO][E] AttackPromotionMove::ProcessMove unkown exception" << std::endl;
-    }
+    AttackMove::ProcessMove(square);
+    PromotionMove::ProcessMove(square);
 }
 
 } // namespace mlp_ha

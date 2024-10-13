@@ -26,16 +26,7 @@ void PromotionMove::ComputeMoveData() {
 }
 
 void PromotionMove::ProcessMove(Square *square) {
-    try {
-        square->ProcessPromotionMove(moveData_.promotionType, this->color_, moveData_.fromPosition,
-                                     moveData_.toPosition);
-    } catch (const MlpException &e) {
-        std::cerr << "[THO][E] PromotionMove::ProcessMove invalid move : " << moveText_ << std::endl;
-        std::string message = "PromotionMove::ProcessMove invalid move : " + moveText_ + ", " + e.what();
-        throw MlpException(message.c_str());
-    } catch (...) {
-        std::cerr << "[THO][E] PromotionMove::ProcessMove unkown exception" << std::endl;
-    }
+    square->ProcessPromotionMove(moveData_.promotionType, this->color_, moveData_.fromPosition, moveData_.toPosition);
 }
 
 } // namespace mlp_ha
