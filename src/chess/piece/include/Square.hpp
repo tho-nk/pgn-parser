@@ -20,6 +20,9 @@ class Square {
     std::string GetCurrentState() const;
 
     const Pieces &GetPieces() const { return pieces_; }
+    bool IsEmpty(const Position &position) const {
+        return std::holds_alternative<EmptyPiece>(pieces_[position.row][position.col]);
+    }
 
     void SetEnPassant(const std::optional<Position> &enPassant) { enPassant_ = enPassant; }
     void ResetEnPassant() { enPassant_ = std::nullopt; }

@@ -14,8 +14,6 @@ class EmptyPiece : public BasePiece<EmptyPiece> {
         position_ = position;
     }
 
-    Positions ComputeFromPositions(const std::string &) { return {}; }
-
     EmptyPiece() = default;
 
   private:

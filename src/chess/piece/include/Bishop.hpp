@@ -14,8 +14,6 @@ class Bishop : public BasePiece<Bishop> {
         position_ = position;
     }
 
-    Positions ComputeFromPositions(const std::string &) { return {}; }
-
     Bishop() = default;
 
   private:

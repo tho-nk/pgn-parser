@@ -14,8 +14,6 @@ class Rook : public BasePiece<Rook> {
         position_ = position;
     }
 
-    Positions ComputeFromPositions(const std::string &) { return {}; }
-
     Rook() = default;
 
   private:

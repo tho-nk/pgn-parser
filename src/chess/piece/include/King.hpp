@@ -14,8 +14,6 @@ class King : public BasePiece<King> {
         position_ = position;
     }
 
-    Positions ComputeFromPositions(const std::string &) { return {}; }
-
     King() = default;
 
   private:

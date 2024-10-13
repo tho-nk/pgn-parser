@@ -14,9 +14,7 @@ class Knight : public BasePiece<Knight> {
         position_ = position;
     }
 
-    Positions ComputeFromPositions(const std::string &) { return {}; }
-
-    Knight() = default;
+     Knight() = default;
 
   private:
     friend class BasePiece<Knight>;
