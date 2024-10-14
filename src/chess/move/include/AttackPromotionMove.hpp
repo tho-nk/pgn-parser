@@ -1,10 +1,11 @@
 #pragma once
 
-#include "move/include/Move.hpp"
+#include "move/include/AttackMove.hpp"
+#include "move/include/PromotionMove.hpp"
 
 namespace mlp_ha {
 
-class AttackPromotionMove : public Move {
+class AttackPromotionMove : public AttackMove, public PromotionMove {
 
   public:
     AttackPromotionMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment);
@@ -14,6 +15,9 @@ class AttackPromotionMove : public Move {
     AttackPromotionMove &operator=(AttackPromotionMove &&) = delete;
     ~AttackPromotionMove() = default;
 
-    virtual void ProcessMove(const std::shared_ptr<Square> &square) final;
+    virtual void ProcessMove() final;
+
+  private:
+    void ComputeMoveData();
 };
 } // namespace mlp_ha

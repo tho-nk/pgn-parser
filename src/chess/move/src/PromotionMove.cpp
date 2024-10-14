@@ -6,29 +6,28 @@
 namespace mlp_ha {
 
 PromotionMove::PromotionMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {}
+    : Move(moveType, color, moveText, comment) {
+    ComputeMoveData();
+}
 
-void PromotionMove::ProcessMove(const std::shared_ptr<Square> &square) {
-    try {
-        // std::clog << "[THO][I] PromotionMove::ProcessMove" << std::endl;
-        auto str = moveText_;
-        // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
-        helper::removeUnwantedChars(str);
+void PromotionMove::ComputeMoveData() {
+    // std::clog << "[THO][I] PromotionMove::ProcessMove" << std::endl;
+    auto str = moveText_;
+    // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
+    helper::removeUnwantedChars(str);
 
-        std::string_view remain(str.data(), str.length() - 2);
-        ToPosition toPosition{remain[1] - '1', remain[0] - 'a'};
-        FromPosition fromPosition{this->color_ == Color::White ? toPosition.row - 1 : toPosition.row + 1,
-                                  toPosition.col};
-        std::string pieceType(str.data() + str.length() - 1, 1);
-        auto type = StringToPieceType(pieceType);
-        square->ProcessPromotionMove(type, this->color_, fromPosition, toPosition);
-    } catch (const MlpException &e) {
-        std::cerr << "[THO][E] PromotionMove::ProcessMove invalid move : " << moveText_ << std::endl;
-        std::string message = "PromotionMove::ProcessMove invalid move : " + moveText_ + ", " + e.what();
-        throw MlpException(message.c_str());
-    } catch (...) {
-        std::cerr << "[THO][E] PromotionMove::ProcessMove unkown exception" << std::endl;
-    }
+    std::string_view remain(str.data(), str.length() - 2);
+    moveData_.toPosition = Position{remain[1] - '1', remain[0] - 'a'};
+    moveData_.fromPosition =
+        Position{moveData_.color == Color::White ? moveData_.toPosition.row - 1 : moveData_.toPosition.row + 1,
+                 moveData_.toPosition.col};
+    std::string promotionType(str.data() + str.length() - 1, 1);
+    moveData_.promotionType = StringToPieceType(promotionType);
+}
+
+void PromotionMove::ProcessMove() {
+    mlp_ha::Square::GetInstance().ProcessPromotionMove(moveData_.promotionType, moveData_.color, moveData_.fromPosition,
+                                                       moveData_.toPosition);
 }
 
 } // namespace mlp_ha

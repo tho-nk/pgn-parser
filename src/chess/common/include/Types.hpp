@@ -17,6 +17,21 @@ struct Position {
     int row;
     int col;
     bool IsValid() const { return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS; }
+
+    bool operator==(const Position &other) const { return row == other.row && col == other.col; }
+    bool operator!=(const Position &other) const { return !(*this == other); }
+    Position &operator+=(const Position &other) {
+        row += other.row;
+        col += other.col;
+        return *this;
+    }
+    Position operator+(const Position &other) const { return Position(row + other.row, col + other.col); }
+
+    Position &Shift(int dr, int dc) {
+        row += dr;
+        col += dc;
+        return *this;
+    }
 };
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3);
 
@@ -33,4 +48,12 @@ using FromPosition = Position;
 using ToPosition = Position;
 using Positions = std::vector<Position>;
 
+struct MoveData {
+    Color color;
+    Position fromPosition;
+    Position toPosition;
+    PieceType pieceType = PieceType::Undefined;
+    PieceType promotionType = PieceType::Undefined;
+    MoveData(const Color &color) : color(color) {}
+};
 } // namespace mlp_ha

@@ -12,7 +12,6 @@ add_executable(${PROJECT_NAME} ${PROJECT_SRC})
 
 target_link_libraries(${PROJECT_NAME}
                         pthread
-                        game
                         piece
                         move
                         common

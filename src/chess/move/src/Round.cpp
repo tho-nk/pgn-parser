@@ -6,9 +6,7 @@
 
 namespace mlp_ha {
 
-Round::Round(const std::string &str, const std::shared_ptr<Square> &square) : roundIndex_(0), square_(square) {
-    ParseRoundText(str);
-}
+Round::Round(const std::string &str) : roundIndex_(0) { ParseRoundText(str); }
 
 void Round::ParseRoundText(const std::string &str) {
     auto getMoveType = [&](std::string_view type) {
@@ -68,12 +66,12 @@ void Round::ParseRoundText(const std::string &str) {
 void Round::Run() const {
     // std::clog << "[THO][I] Round:=" << roundIndex_ << std::endl;
     // std::clog << "[THO][I] White move:" << std::endl;
-    whiteMove_->ProcessMove(square_);
-    // std::clog << square_->GetCurrentState() << std::endl;
+    whiteMove_->ProcessMove();
+    // std::clog << mlp_ha::Square::GetInstance().GetCurrentState() << std::endl;
     // std::clog << std::endl;
     // std::clog << "[THO][I] Black move" << std::endl;
-    blackMove_->ProcessMove(square_);
-    // std::clog << square_->GetCurrentState() << std::endl;
+    blackMove_->ProcessMove();
+    // std::clog << mlp_ha::Square::GetInstance().GetCurrentState() << std::endl;
 
     // std::clog << "\n\n\n" << std::endl;
 }

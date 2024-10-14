@@ -7,25 +7,29 @@
 #include <optional>
 
 namespace mlp_ha {
-class Square : public std::enable_shared_from_this<Square> {
+class Square {
   public:
-    Square(const std::filesystem::path &filePath) : filePath_(filePath), enPassant_(std::nullopt){};
-    Square(const Square &) = delete;
-    Square &operator=(const Square &) = delete;
-    Square(Square &&) = default;
-    Square &operator=(Square &&) = default;
-    ~Square() = default;
+    static Square &GetInstance() {
+        static Square instance;
+        return instance;
+    }
 
-    void InitSquare();
-    std::string GetCurrentState() const;
+    void LoadPGN(const std::filesystem::path &filePath);
+
+    void Run();
+
+    std::string GetCurrentState() const noexcept;
 
     const Pieces &GetPieces() const { return pieces_; }
+    bool IsEmptyAt(const Position &position) const {
+        return std::holds_alternative<EmptyPiece>(pieces_[position.row][position.col]);
+    }
 
     void SetEnPassant(const std::optional<Position> &enPassant) { enPassant_ = enPassant; }
     void ResetEnPassant() { enPassant_ = std::nullopt; }
 
     PiecesReference GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                           const FromPosition &fromPosition) const;
+                                           const FromPosition &fromPosition) const noexcept;
     Position GetKingPosition(const Color &color) const;
 
     // Process BasicMove
@@ -39,25 +43,22 @@ class Square : public std::enable_shared_from_this<Square> {
     void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
     // Process PromotionMove
-    void ProcessPromotionMove(const PieceType &pieceType, const Color &color, const FromPosition &fromPosition,
+    void ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
                               const ToPosition &toPosition);
 
-    // Process AttackPromotionMove Pawn only
-    void ProcessAttackPromotionMove(const PieceType &pieceType, const Color &color, FromPosition &fromPosition,
-                                    const ToPosition &toPosition);
-
-    void Run();
-    void LoadData();
-    void Reset() {
-        pieces_.clear();
-        rounds_.clear();
-    }
-
   private:
-    std::optional<Position> enPassant_;
+    Square() { Init(); }
+    void Init();
+
+    Square(const Square &) = delete;
+    Square &operator=(const Square &) = delete;
+    Square(Square &&) = default;
+    Square &operator=(Square &&) = default;
+    ~Square() = default;
+
+    std::optional<Position> enPassant_{std::nullopt};
     Pieces pieces_;
     Rounds rounds_;
-    std::filesystem::path filePath_;
 
   private:
     void ValidateMove(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,

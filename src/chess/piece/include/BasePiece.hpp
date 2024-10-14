@@ -15,7 +15,7 @@ template <typename ConcretePiece> class BasePiece {
     BasePiece &operator=(const BasePiece &) = delete;
     BasePiece(BasePiece &&) = default;
     BasePiece &operator=(BasePiece &&) = default;
-    ~BasePiece() { square_.reset(); }
+    ~BasePiece() {}
 
     ConcretePiece &self() { return *static_cast<ConcretePiece *>(this); }
     ConcretePiece const &self() const { return *static_cast<ConcretePiece const *>(this); }
@@ -32,9 +32,6 @@ template <typename ConcretePiece> class BasePiece {
     void SetColor(const Color &color) { this->color_ = color; }
     const Color &GetColor() const { return color_; }
 
-    void SetSquare(const std::shared_ptr<Square> &square) { this->square_ = square; }
-    const std::shared_ptr<Square> &GetSquare() const { return square_; }
-
     void SeType(const PieceType &type) { type_ = type; }
     const PieceType &GetType() const { return type_; }
 
@@ -50,12 +47,11 @@ template <typename ConcretePiece> class BasePiece {
 
   protected:
     friend ConcretePiece;
-    BasePiece(const std::shared_ptr<Square> &square = nullptr) : square_(square) {}
+    BasePiece() = default;
 
     PieceType type_{PieceType::Undefined};
     Color color_{Color::Undefined};
     Position position_{-1, -1};
-    std::shared_ptr<Square> square_{nullptr};
 };
 
 } // namespace mlp_ha

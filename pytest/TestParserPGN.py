@@ -1,4 +1,5 @@
 import subprocess
+import pytest
 
 # Replace 'your_binary' with the path to your binary
 binary_path = "./pgn_parser"
@@ -27,13 +28,13 @@ def run_mlp_ha_chess(arg):
     return stdout.decode('utf-8')
 
 
-def test_parsing_pgn():
-    for test in test_cases:
-        stdout_txt = run_mlp_ha_chess(test + ".pgn")
-        with open(test + ".txt", 'r') as file:
-            file_txt = file.read()
-        print("stdout:=")
-        print(stdout_txt)
-        # print("filetxt:=")
-        # print(file_txt)
-        assert(file_txt.rstrip("\n") == stdout_txt.rstrip("\n"))
+@pytest.mark.parametrize("test_case", test_cases)
+def test_parsing_pgn(test_case):
+    stdout_txt = run_mlp_ha_chess(test_case + ".pgn")
+    with open(test_case + ".txt", 'r') as file:
+        file_txt = file.read()
+    print("stdout:=")
+    print(stdout_txt)
+    # print("filetxt:=")
+    # print(file_txt)
+    assert(file_txt.rstrip("\n") == stdout_txt.rstrip("\n"))
