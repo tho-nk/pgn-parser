@@ -47,12 +47,11 @@ template <typename ConcretePiece> class BasePiece {
 
   protected:
     friend ConcretePiece;
-    BasePiece(Square *square = nullptr) : square_(square) {}
+    BasePiece() = default;
 
     PieceType type_{PieceType::Undefined};
     Color color_{Color::Undefined};
     Position position_{-1, -1};
-    Square *square_{nullptr};
 };
 
 } // namespace mlp_ha

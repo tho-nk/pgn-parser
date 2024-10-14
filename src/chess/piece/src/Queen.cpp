@@ -12,7 +12,7 @@ bool Queen::IsValidMove_(const Position &toPosition, const std::optional<Positio
         return false;
     }
 
-    return ValidateMove(dRow, dCol, toPosition, validateKingCheck, square_, GetPosition());
+    return ValidateMove(dRow, dCol, toPosition, validateKingCheck, GetPosition());
 }
 
 bool Queen::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {

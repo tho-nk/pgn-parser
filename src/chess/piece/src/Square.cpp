@@ -9,40 +9,40 @@ namespace mlp_ha {
 void Square::Init() {
     for (int r = 2; r < ROWS - 2; ++r) {
         for (int c = 0; c < COLUMNS; ++c) {
-            pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c}, this);
+            pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c});
         }
     }
 
     // Pawns
     for (auto c = 0; c < COLUMNS; ++c) {
-        pieces_[1][c].emplace<Pawn>(Color::White, Position{1, c}, this);
-        pieces_[6][c].emplace<Pawn>(Color::Black, Position{6, c}, this);
+        pieces_[1][c].emplace<Pawn>(Color::White, Position{1, c});
+        pieces_[6][c].emplace<Pawn>(Color::Black, Position{6, c});
     }
     // Rooks
-    pieces_[0][0].emplace<Rook>(Color::White, Position{0, 0}, this);
-    pieces_[0][7].emplace<Rook>(Color::White, Position{0, 7}, this);
-    pieces_[7][0].emplace<Rook>(Color::Black, Position{7, 0}, this);
-    pieces_[7][7].emplace<Rook>(Color::Black, Position{7, 7}, this);
+    pieces_[0][0].emplace<Rook>(Color::White, Position{0, 0});
+    pieces_[0][7].emplace<Rook>(Color::White, Position{0, 7});
+    pieces_[7][0].emplace<Rook>(Color::Black, Position{7, 0});
+    pieces_[7][7].emplace<Rook>(Color::Black, Position{7, 7});
 
     // Knights
-    pieces_[0][1].emplace<Knight>(Color::White, Position{0, 1}, this);
-    pieces_[0][6].emplace<Knight>(Color::White, Position{0, 6}, this);
-    pieces_[7][1].emplace<Knight>(Color::Black, Position{7, 1}, this);
-    pieces_[7][6].emplace<Knight>(Color::Black, Position{7, 6}, this);
+    pieces_[0][1].emplace<Knight>(Color::White, Position{0, 1});
+    pieces_[0][6].emplace<Knight>(Color::White, Position{0, 6});
+    pieces_[7][1].emplace<Knight>(Color::Black, Position{7, 1});
+    pieces_[7][6].emplace<Knight>(Color::Black, Position{7, 6});
 
     // Bishops
-    pieces_[0][2].emplace<Bishop>(Color::White, Position{0, 2}, this);
-    pieces_[0][5].emplace<Bishop>(Color::White, Position{0, 5}, this);
-    pieces_[7][2].emplace<Bishop>(Color::Black, Position{7, 2}, this);
-    pieces_[7][5].emplace<Bishop>(Color::Black, Position{7, 5}, this);
+    pieces_[0][2].emplace<Bishop>(Color::White, Position{0, 2});
+    pieces_[0][5].emplace<Bishop>(Color::White, Position{0, 5});
+    pieces_[7][2].emplace<Bishop>(Color::Black, Position{7, 2});
+    pieces_[7][5].emplace<Bishop>(Color::Black, Position{7, 5});
 
     // Queens
-    pieces_[0][3].emplace<Queen>(Color::White, Position{0, 3}, this);
-    pieces_[7][3].emplace<Queen>(Color::Black, Position{7, 3}, this);
+    pieces_[0][3].emplace<Queen>(Color::White, Position{0, 3});
+    pieces_[7][3].emplace<Queen>(Color::Black, Position{7, 3});
 
     // Kings
-    pieces_[0][4].emplace<King>(Color::White, Position{0, 4}, this);
-    pieces_[7][4].emplace<King>(Color::Black, Position{7, 4}, this);
+    pieces_[0][4].emplace<King>(Color::White, Position{0, 4});
+    pieces_[7][4].emplace<King>(Color::Black, Position{7, 4});
 }
 
 void Square::Run() {
@@ -51,8 +51,8 @@ void Square::Run() {
     }
 }
 
-void Square::LoadPGN() {
-    auto parsingHelper = helper::ParseFile(filePath_);
+void Square::LoadPGN(const std::filesystem::path &filePath) {
+    auto parsingHelper = helper::ParseFile(filePath);
     if (parsingHelper.roundQueue.empty()) {
         // std::clog << "[THO][I] start game" << std::endl;
         return;
@@ -62,7 +62,7 @@ void Square::LoadPGN() {
     while (!parsingHelper.roundQueue.empty()) {
         auto roundText = parsingHelper.roundQueue.front();
         parsingHelper.roundQueue.pop();
-        rounds_.emplace_back(roundText, this);
+        rounds_.emplace_back(roundText);
         round++;
     }
 
@@ -82,7 +82,7 @@ void Square::LoadPGN() {
     }
     auto roundText = parsingHelper.lastRun.substr(0, found);
     // std::clog << "[THO][I] roundText:=" << roundText << std::endl;
-    rounds_.emplace_back(roundText, this);
+    rounds_.emplace_back(roundText);
 }
 
 std::string Square::GetCurrentState() const noexcept {
@@ -232,18 +232,16 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPo
 
     std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
 
-    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col},
-                                                                    this);
+    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col});
 
     if (enPassant_) {
-        pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value(), this);
+        pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value());
         enPassant_ = std::nullopt;
     }
 }
 
 void Square::ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
                                FromPosition &fromPosition) {
-
     if (fromPosition.IsValid()) {
         return;
     }
@@ -288,19 +286,18 @@ void Square::ValidateMove(const Position &kingPosition, const Position &piecePos
 
 void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
                                   const ToPosition &toPosition) {
-
     switch (promotionType) {
     case PieceType::Queen:
-        pieces_[toPosition.row][toPosition.col].emplace<Queen>(color, toPosition, this);
+        pieces_[toPosition.row][toPosition.col].emplace<Queen>(color, toPosition);
         break;
     case PieceType::Rook:
-        pieces_[toPosition.row][toPosition.col].emplace<Rook>(color, toPosition, this);
+        pieces_[toPosition.row][toPosition.col].emplace<Rook>(color, toPosition);
         break;
     case PieceType::Bishop:
-        pieces_[toPosition.row][toPosition.col].emplace<Bishop>(color, toPosition, this);
+        pieces_[toPosition.row][toPosition.col].emplace<Bishop>(color, toPosition);
         break;
     case PieceType::Knight:
-        pieces_[toPosition.row][toPosition.col].emplace<Knight>(color, toPosition, this);
+        pieces_[toPosition.row][toPosition.col].emplace<Knight>(color, toPosition);
         break;
     case PieceType::Pawn:
     default:
@@ -309,7 +306,7 @@ void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &c
         break;
     }
     pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined,
-                                                                    Position{fromPosition.row, fromPosition.col}, this);
+                                                                    Position{fromPosition.row, fromPosition.col});
 }
 
 } // namespace mlp_ha

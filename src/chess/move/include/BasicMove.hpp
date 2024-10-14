@@ -13,7 +13,7 @@ class BasicMove : public Move {
     BasicMove &operator=(BasicMove &&) = delete;
     ~BasicMove() = default;
 
-    virtual void ProcessMove(Square *square) final;
+    virtual void ProcessMove() final;
 
   private:
     void ComputeMoveData();

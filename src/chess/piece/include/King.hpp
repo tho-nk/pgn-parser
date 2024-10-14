@@ -8,7 +8,7 @@ class Square;
 
 class King : public BasePiece<King> {
   public:
-    King(const Color &color, const Position &position, Square *square) : BasePiece(square) {
+    King(const Color &color, const Position &position) : BasePiece() {
         type_ = PieceType::King;
         color_ = color;
         position_ = position;

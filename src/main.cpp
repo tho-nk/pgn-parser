@@ -17,11 +17,9 @@ int main(int argc, char *argv[]) {
     signal(SIGINT, signalHandler);
     std::filesystem::path filePath = argv[1];
     try {
-        auto square = mlp_ha::Square(filePath);
-        square.Init();
-        square.LoadPGN();
-        square.Run();
-        std::cout << square.GetCurrentState() << std::endl;
+        mlp_ha::Square::GetInstance().LoadPGN(filePath);
+        mlp_ha::Square::GetInstance().Run();
+        std::cout << mlp_ha::Square::GetInstance().GetCurrentState() << std::endl;
     } catch (const mlp_ha::MlpException &e) {
         std::cerr << "[THO][E] MlpException " << e.what() << " for file: " << filePath << std::endl;
     } catch (const std::exception &e) {

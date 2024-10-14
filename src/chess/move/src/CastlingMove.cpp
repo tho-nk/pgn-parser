@@ -9,7 +9,7 @@ namespace mlp_ha {
 CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
     : Move(moveType, color, moveText, comment) {}
 
-void CastlingMove::ProcessMove(Square *square) {
+void CastlingMove::ProcessMove() {
     // std::clog << "[THO][I] CastlingMove::ProcessMove" << std::endl;
     auto str = moveText_;
     // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
@@ -26,8 +26,8 @@ void CastlingMove::ProcessMove(Square *square) {
             toPositionRook.row = 7;
             fromRook.row = 7;
         }
-        square->MovePiece(fromKing, toPositionKing);
-        square->MovePiece(fromRook, toPositionRook);
+        mlp_ha::Square::GetInstance().MovePiece(fromKing, toPositionKing);
+        mlp_ha::Square::GetInstance().MovePiece(fromRook, toPositionRook);
 
     } else {
         ToPosition toPositionKing{0, 6};
@@ -42,8 +42,8 @@ void CastlingMove::ProcessMove(Square *square) {
             fromRook.row = 7;
         }
 
-        square->MovePiece(fromKing, toPositionKing);
-        square->MovePiece(fromRook, toPositionRook);
+        mlp_ha::Square::GetInstance().MovePiece(fromKing, toPositionKing);
+        mlp_ha::Square::GetInstance().MovePiece(fromRook, toPositionRook);
     }
 }
 

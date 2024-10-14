@@ -25,9 +25,9 @@ void PromotionMove::ComputeMoveData() {
     moveData_.promotionType = StringToPieceType(promotionType);
 }
 
-void PromotionMove::ProcessMove(Square *square) {
-    square->ProcessPromotionMove(moveData_.promotionType, moveData_.color, moveData_.fromPosition,
-                                 moveData_.toPosition);
+void PromotionMove::ProcessMove() {
+    mlp_ha::Square::GetInstance().ProcessPromotionMove(moveData_.promotionType, moveData_.color, moveData_.fromPosition,
+                                                       moveData_.toPosition);
 }
 
 } // namespace mlp_ha

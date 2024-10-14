@@ -8,7 +8,7 @@ class Square;
 
 class Pawn : public BasePiece<Pawn> {
   public:
-    Pawn(const Color &color, const Position &position, Square *square) : BasePiece(square) {
+    Pawn(const Color &color, const Position &position) : BasePiece() {
         type_ = PieceType::Pawn;
         color_ = color;
         position_ = position;

@@ -30,7 +30,7 @@ class Move {
     const std::string &GetComment() const { return comment_; }
     const MoveType &GetMoveType() const { return moveType_; }
 
-    virtual void ProcessMove(Square *square) {};
+    virtual void ProcessMove() {};
 
   protected:
     MoveType moveType_{MoveType::Undefined};

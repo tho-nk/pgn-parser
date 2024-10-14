@@ -15,7 +15,7 @@ class AttackPromotionMove : public AttackMove, public PromotionMove {
     AttackPromotionMove &operator=(AttackPromotionMove &&) = delete;
     ~AttackPromotionMove() = default;
 
-    virtual void ProcessMove(Square *square) final;
+    virtual void ProcessMove() final;
 
   private:
     void ComputeMoveData();

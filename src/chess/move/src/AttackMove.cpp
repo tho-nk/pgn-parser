@@ -38,10 +38,12 @@ void AttackMove::ComputeMoveData() {
     moveData_.pieceType = StringToPieceType(pieceType);
 }
 
-void AttackMove::ProcessMove(Square *square) {
-    const auto subPieces = square->GetPieceOfTypeAndColor(moveData_.pieceType, moveData_.color, moveData_.fromPosition);
-    square->ProcessAttackMove(subPieces, moveData_.color, moveData_.toPosition, moveData_.fromPosition);
-    square->AttackPiece(moveData_.fromPosition, moveData_.toPosition);
+void AttackMove::ProcessMove() {
+    const auto subPieces = mlp_ha::Square::GetInstance().GetPieceOfTypeAndColor(moveData_.pieceType, moveData_.color,
+                                                                                moveData_.fromPosition);
+    mlp_ha::Square::GetInstance().ProcessAttackMove(subPieces, moveData_.color, moveData_.toPosition,
+                                                    moveData_.fromPosition);
+    mlp_ha::Square::GetInstance().AttackPiece(moveData_.fromPosition, moveData_.toPosition);
 }
 
 } // namespace mlp_ha

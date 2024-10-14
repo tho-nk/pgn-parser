@@ -11,12 +11,12 @@ class Square;
 
 class Round {
   public:
-    Round(const std::string &str, Square *square);
+    Round(const std::string &str);
     Round(const Round &) = delete;
     Round &operator=(const Round &) = delete;
     Round(Round &&) = default;
     Round &operator=(Round &&) = default;
-    ~Round() {}
+    ~Round() = default;
 
     int GetRoundIndex() const { return roundIndex_; }
     const std::string &GetComment() const { return roundComment_; }
@@ -27,8 +27,6 @@ class Round {
     std::string roundComment_;
     std::unique_ptr<Move> whiteMove_;
     std::unique_ptr<Move> blackMove_;
-
-    Square *square_;
 
   private:
     void ParseRoundText(const std::string &str);

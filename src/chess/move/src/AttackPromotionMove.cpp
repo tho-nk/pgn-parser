@@ -45,9 +45,9 @@ void AttackPromotionMove::ComputeMoveData() {
     moveData_.pieceType = StringToPieceType(pieceType);
 }
 // exf8=R+
-void AttackPromotionMove::ProcessMove(Square *square) {
-    AttackMove::ProcessMove(square);
-    PromotionMove::ProcessMove(square);
+void AttackPromotionMove::ProcessMove() {
+    AttackMove::ProcessMove();
+    PromotionMove::ProcessMove();
 }
 
 } // namespace mlp_ha

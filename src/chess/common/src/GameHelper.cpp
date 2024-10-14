@@ -5,7 +5,7 @@
 
 namespace mlp_ha {
 bool ValidateMove(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
-                  const Square *square, Position p) {
+                  Position p) {
     // Assert that dRow and dCol are not both zero, since a move must involve some change in position
     assert(dRow != 0 || dCol != 0);
     if (dRow != 0) {
@@ -20,7 +20,7 @@ bool ValidateMove(int dRow, int dCol, const Position &toPosition, const std::opt
         if (p == toPosition) {
             return true;
         }
-        if (!square->IsEmptyAt(p)) {
+        if (!mlp_ha::Square::GetInstance().IsEmptyAt(p)) {
             if (!validateKingCheck || validateKingCheck.value() != p) {
                 return false;
             }

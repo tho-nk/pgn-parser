@@ -14,7 +14,7 @@ class PromotionMove : public virtual Move {
     PromotionMove &operator=(PromotionMove &&) = delete;
     ~PromotionMove() = default;
 
-    virtual void ProcessMove(Square *square) override;
+    virtual void ProcessMove() override;
 
   private:
     void ComputeMoveData();

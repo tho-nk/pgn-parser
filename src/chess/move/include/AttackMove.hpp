@@ -15,7 +15,7 @@ class AttackMove : public virtual Move {
     AttackMove &operator=(AttackMove &&) = delete;
     ~AttackMove() = default;
 
-    virtual void ProcessMove(Square *square) override;
+    virtual void ProcessMove() override;
 
   private:
     void ComputeMoveData();

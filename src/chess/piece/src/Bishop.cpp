@@ -12,7 +12,7 @@ bool Bishop::IsValidMove_(const Position &toPosition, const std::optional<Positi
     if (std::abs(dRow) != std::abs(dCol)) {
         return false;
     }
-    return ValidateMove(dRow, dCol, toPosition, validateKingCheck, square_, GetPosition());
+    return ValidateMove(dRow, dCol, toPosition, validateKingCheck, GetPosition());
 }
 
 bool Bishop::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {

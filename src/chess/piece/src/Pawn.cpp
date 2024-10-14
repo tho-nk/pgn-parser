@@ -15,7 +15,7 @@ bool Pawn::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
         }
         // has obstacle
         for (int r = GetPosition().row + 1; r < toPosition.row; ++r) {
-            if (!square_->IsEmptyAt({r, toPosition.col})) {
+            if (!mlp_ha::Square::GetInstance().IsEmptyAt({r, toPosition.col})) {
                 return false;
             }
         }
@@ -31,7 +31,7 @@ bool Pawn::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
         }
         // has obstacle
         for (int r = GetPosition().row - 1; r > toPosition.row; --r) {
-            if (!square_->IsEmptyAt({r, toPosition.col})) {
+            if (!mlp_ha::Square::GetInstance().IsEmptyAt({r, toPosition.col})) {
                 return false;
             }
         }
@@ -43,8 +43,8 @@ bool Pawn::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
 bool Pawn::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     if (GetColor() == Color::White) {
         // en passant
-        if (square_->IsEmptyAt(toPosition)) {
-            square_->SetEnPassant(Position{toPosition.row - 1, toPosition.col});
+        if (mlp_ha::Square::GetInstance().IsEmptyAt(toPosition)) {
+            mlp_ha::Square::GetInstance().SetEnPassant(Position{toPosition.row - 1, toPosition.col});
         }
         // no need to check Check. there only one pawn can move
         if (std::abs(GetPosition().col - toPosition.col) != 1) {
@@ -55,8 +55,8 @@ bool Pawn::IsValidAttackMove_(const Position &toPosition, const std::optional<Po
         }
         return true;
     } else if (GetColor() == Color::Black) {
-        if (square_->IsEmptyAt(toPosition)) {
-            square_->SetEnPassant(Position{toPosition.row + 1, toPosition.col});
+        if (mlp_ha::Square::GetInstance().IsEmptyAt(toPosition)) {
+            mlp_ha::Square::GetInstance().SetEnPassant(Position{toPosition.row + 1, toPosition.col});
         }
         // no need to check Check. there only one pawn can move
         if (std::abs(GetPosition().col - toPosition.col) != 1) {

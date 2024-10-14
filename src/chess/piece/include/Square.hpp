@@ -9,14 +9,15 @@
 namespace mlp_ha {
 class Square {
   public:
-    Square(const std::filesystem::path &filePath) : filePath_(filePath), enPassant_(std::nullopt) { Init(); };
-    Square(const Square &) = delete;
-    Square &operator=(const Square &) = delete;
-    Square(Square &&) = default;
-    Square &operator=(Square &&) = default;
-    ~Square() = default;
+    static Square &GetInstance() {
+        static Square instance;
+        return instance;
+    }
 
-    void Init();
+    void LoadPGN(const std::filesystem::path &filePath);
+
+    void Run();
+
     std::string GetCurrentState() const noexcept;
 
     const Pieces &GetPieces() const { return pieces_; }
@@ -45,14 +46,19 @@ class Square {
     void ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
                               const ToPosition &toPosition);
 
-    void Run();
-    void LoadPGN();
-
   private:
-    std::optional<Position> enPassant_;
+    Square() { Init(); }
+    void Init();
+
+    Square(const Square &) = delete;
+    Square &operator=(const Square &) = delete;
+    Square(Square &&) = default;
+    Square &operator=(Square &&) = default;
+    ~Square() = default;
+
+    std::optional<Position> enPassant_{std::nullopt};
     Pieces pieces_;
     Rounds rounds_;
-    std::filesystem::path filePath_;
 
   private:
     void ValidateMove(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
