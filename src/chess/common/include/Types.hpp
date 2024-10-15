@@ -36,6 +36,11 @@ struct Position {
     }
     bool IsValid() const { return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS; }
 
+    void Reset() {
+        row = -1;
+        col = -1;
+    }
+
     int row;
     int col;
 };

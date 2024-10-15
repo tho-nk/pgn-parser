@@ -36,8 +36,7 @@ class Square {
         return std::holds_alternative<EmptyPiece>(pieces_[position.row][position.col]);
     }
 
-    void SetEnPassant(const std::optional<Position> &enPassant) { enPassant_ = enPassant; }
-    void ResetEnPassant() { enPassant_ = std::nullopt; }
+    void SetEnPassant(const Position &enPassant) { enPassant_ = enPassant; }
 
     PiecesReference GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
                                            const FromPosition &fromPosition) const noexcept;
@@ -58,7 +57,7 @@ class Square {
     Square() = default;
     ~Square() = default;
 
-    std::optional<Position> enPassant_{std::nullopt};
+    Position enPassant_;
     Pieces pieces_;
     Rounds rounds_;
 

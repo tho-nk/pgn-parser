@@ -277,9 +277,9 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toP
     std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
     GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, tmpF);
 
-    if (enPassant_) {
-        GetPiecesAt(enPassant_.value()).emplace<EmptyPiece>(Color::Undefined, enPassant_.value());
-        enPassant_ = std::nullopt;
+    if (enPassant_.IsValid()) {
+        GetPiecesAt(enPassant_).emplace<EmptyPiece>(Color::Undefined, enPassant_);
+        enPassant_.Reset();
     }
 }
 
