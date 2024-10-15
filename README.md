@@ -47,7 +47,7 @@ Scripts are available to build, test the project:
 This parser supports the PGN format based on : <br> https://en.wikipedia.org/wiki/Portable_Game_Notation
 
 - The movetext is based on SAN (Standard Algebraic Notation)
-- Disambiguation is supported by checking `VerifyIfKingBeingCheck` before accepting a move
+- Disambiguation is supported by checking `VerifyIfKingBeingCheck_` before accepting a move
 - PGN file format error detection
 - Output format:
   - The state of the board at the end of the game, in the form of an 8x8 grid.

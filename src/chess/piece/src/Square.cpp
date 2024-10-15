@@ -6,7 +6,7 @@
 
 namespace mlp_ha {
 
-void Square::Init() {
+void Square::ResetState_() {
     for (int r = 2; r < ROWS - 2; ++r) {
         for (int c = 0; c < COLUMNS; ++c) {
             pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c});
@@ -52,6 +52,7 @@ void Square::Run() {
 }
 
 void Square::LoadPGN(const std::filesystem::path &filePath) {
+    ResetState_();
     auto parsingHelper = helper::ParseFile(filePath);
     if (parsingHelper.roundQueue.empty()) {
         // std::clog << "[THO][I] start game" << std::endl;
@@ -90,13 +91,13 @@ std::string Square::GetCurrentState() const noexcept {
     for (int r = ROWS - 1; r >= 0; --r) {
         for (auto c = 0; c < COLUMNS - 1; ++c) {
             std::visit(
-                [&](auto &&piece) {
+                [&](const auto &piece) {
                     ss << piece.GetDraw();
                     ss << "|";
                 },
                 GetPieces()[r][c]);
         }
-        std::visit([&](auto &&piece) { ss << piece.GetDraw(); }, GetPieces()[r][COLUMNS - 1]);
+        std::visit([&](const auto &piece) { ss << piece.GetDraw(); }, GetPieces()[r][COLUMNS - 1]);
         ss << "\n";
     }
     return ss.str();
@@ -106,17 +107,18 @@ PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const
                                                const FromPosition &fromPosition) const noexcept {
     PiecesReference subPieces;
     if (fromPosition.IsValid()) {
-        subPieces.push_back(std::ref(GetPieces()[fromPosition.row][fromPosition.col]));
+        subPieces.push_back(std::cref(GetPiecesAt(fromPosition)));
     } else {
-        auto arange = std::ranges::subrange(GetPieces().front().begin(), GetPieces().back().end());
-        for (const auto &var : arange) {
-            std::visit(
-                [&](auto &&value) {
-                    if (value.GetType() == pieceType && value.GetColor() == color) {
-                        subPieces.push_back(std::ref(GetPieces()[value.GetPosition().row][value.GetPosition().col]));
-                    }
-                },
-                var);
+        for (const auto &file : GetPieces()) {
+            for (const auto &var : file) {
+                std::visit(
+                    [&](const auto &value) {
+                        if (value.GetType() == pieceType && value.GetColor() == color) {
+                            subPieces.push_back(std::cref(GetPiecesAt(value.GetPosition())));
+                        }
+                    },
+                    var);
+            }
         }
     }
     return subPieces;
@@ -128,17 +130,17 @@ Position Square::GetKingPosition(const Color &color) const {
 }
 
 void Square::ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                              FromPosition &fromPosition) {
+                              FromPosition &fromPosition) const {
     if (fromPosition.IsValid()) {
         return;
     }
     bool isValid = false;
     const auto &kingPosition = GetKingPosition(color);
-    for (auto &it : subPieces) {
+    for (const auto &it : subPieces) {
         std::visit(
-            [&](auto &&piece) {
+            [&](const auto &piece) {
                 isValid = piece.IsValidBasicMove(toPosition);
-                ValidateMove(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
+                ValidateMove_(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
             },
             it.get());
         if (isValid)
@@ -150,8 +152,55 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const Color &col
     }
 }
 
-bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor,
-                                    const Position &kingPosition) {
+void Square::ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
+                               FromPosition &fromPosition) {
+    if (fromPosition.IsValid()) {
+        return;
+    }
+    bool isValid = false;
+    const auto &kingPosition = GetKingPosition(color);
+    for (const auto &it : subPieces) {
+        std::visit(
+            [&](const auto &piece) {
+                isValid = piece.IsValidAttackMove(toPosition);
+                ValidateMove_(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
+            },
+            it.get());
+        if (isValid)
+            break;
+    }
+    if (!isValid) {
+        std::cerr << "[THO][E] Square::ProcessAttackMove Error" << std::endl;
+        throw MlpException("Square::ProcessAttackMove Error");
+    }
+}
+
+void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
+                                  const ToPosition &toPosition) {
+    switch (promotionType) {
+    case PieceType::Queen:
+        GetPiecesAt(toPosition).emplace<Queen>(color, toPosition);
+        break;
+    case PieceType::Rook:
+        GetPiecesAt(toPosition).emplace<Rook>(color, toPosition);
+        break;
+    case PieceType::Bishop:
+        GetPiecesAt(toPosition).emplace<Bishop>(color, toPosition);
+        break;
+    case PieceType::Knight:
+        GetPiecesAt(toPosition).emplace<Knight>(color, toPosition);
+        break;
+    case PieceType::Pawn:
+    default:
+        std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
+        throw MlpException("Square::ProcessPromotionMove Cannot promote to undefined piece");
+        break;
+    }
+    GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, fromPosition);
+}
+
+bool Square::VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,
+                                     const Position &kingPosition) const {
     constexpr int dr[] = {-1, 0, 1, 1, 1, 0, -1, -1};
     constexpr int dc[] = {-1, -1, -1, 0, 1, 1, 1, 0};
 
@@ -174,17 +223,16 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
     }
     if (index >= 8) {
         std::cerr << "[THO][E] Cannot find direction" << std::endl;
-        throw MlpException("Square::VerifyIfKingBeingCheck Error");
+        throw MlpException("Square::VerifyIfKingBeingCheck_ Error");
     }
 
     auto FindNextNonEmpty = [this](const Position &start, int dr, int dc) {
         Position pos = {start.row + dr, start.col + dc};
         while (pos.IsValid()) {
-            if (!IsEmptyAt({pos.row, pos.col})) {
+            if (!IsEmptyAt(pos)) {
                 break;
             }
-            pos.row += dr;
-            pos.col += dc;
+            pos.Shift(dr, dc);
         }
         return pos;
     };
@@ -195,80 +243,57 @@ bool Square::VerifyIfKingBeingCheck(const Position &piecePosition, const Color &
 
     if (possibleObstacle.IsValid() && possibleObstacle == kingPosition && possibleOpponent.IsValid()) {
         std::visit(
-            [&](auto &&opponent) {
+            [&](const auto &opponent) {
                 if (opponent.GetColor() != Color::Undefined && opponent.GetColor() != pieceColor) {
                     kingChecked = opponent.IsValidBasicMove(kingPosition, piecePosition);
                 }
             },
-            GetPieces()[possibleOpponent.row][possibleOpponent.col]);
+            GetPiecesAt(possibleOpponent));
     }
 
     return kingChecked;
 }
 
-void Square::MovePiece(const FromPosition &fromPosition, const ToPosition toPosition) {
+void Square::MovePiece(const FromPosition &fromPosition, const ToPosition &toPosition) {
     if (!fromPosition.IsValid() || !toPosition.IsValid()) {
         std::cerr << "[THO][E] Invalid position" << std::endl;
         throw MlpException("Error while moving : Invalid position");
     }
-    auto tmpF = Position(fromPosition.row, fromPosition.col);
-    auto tmpT = Position(toPosition.row, toPosition.col);
+    auto tmpF = fromPosition;
+    auto tmpT = toPosition;
 
-    pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
+    GetPiecesAt(fromPosition).swap(GetPiecesAt(toPosition));
 
-    std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, pieces_[fromPosition.row][fromPosition.col]);
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, GetPiecesAt(fromPosition));
 
-    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
 }
 
-void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition) {
+void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toPosition) {
     if (!fromPosition.IsValid() || !toPosition.IsValid()) {
         std::cerr << "[THO][E] Invalid position" << std::endl;
         throw MlpException("Error while attacking : Invalid position");
     }
-    auto tmpF = Position(fromPosition.row, fromPosition.col);
-    auto tmpT = Position(toPosition.row, toPosition.col);
-    pieces_[fromPosition.row][fromPosition.col].swap(pieces_[toPosition.row][toPosition.col]);
+    auto tmpF = fromPosition;
+    auto tmpT = toPosition;
+    GetPiecesAt(fromPosition).swap(GetPiecesAt(toPosition));
 
-    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, pieces_[toPosition.row][toPosition.col]);
+    std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
 
-    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col});
+    GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col});
 
     if (enPassant_) {
-        pieces_[enPassant_->row][enPassant_->col].emplace<EmptyPiece>(Color::Undefined, enPassant_.value());
+        GetPiecesAt(enPassant_.value()).emplace<EmptyPiece>(Color::Undefined, enPassant_.value());
         enPassant_ = std::nullopt;
     }
 }
 
-void Square::ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                               FromPosition &fromPosition) {
-    if (fromPosition.IsValid()) {
-        return;
-    }
-    bool isValid = false;
-    const auto &kingPosition = GetKingPosition(color);
-    for (auto &it : subPieces) {
-        std::visit(
-            [&](auto &&piece) {
-                isValid = piece.IsValidAttackMove(toPosition);
-                ValidateMove(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
-            },
-            it.get());
-        if (isValid)
-            break;
-    }
-    if (!isValid) {
-        std::cerr << "[THO][E] Square::ProcessAttackMove Error" << std::endl;
-        throw MlpException("Square::ProcessAttackMove Error");
-    }
-}
-
-void Square::ValidateMove(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
-                          const Color &pieceColor, bool &isValid, FromPosition &fromPosition) {
+void Square::ValidateMove_(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
+                           const Color &pieceColor, bool &isValid, FromPosition &fromPosition) const {
     if (isValid) {
         if (!(!AreOnFileOrRowOrDiagonal(kingPosition, piecePosition) ||
               (AreOnFileOrRowOrDiagonal(kingPosition, piecePosition, toPosition)))) {
-            if (VerifyIfKingBeingCheck(piecePosition, pieceColor, kingPosition)) {
+            if (VerifyIfKingBeingCheck_(piecePosition, pieceColor, kingPosition)) {
                 isValid = false;
             }
         }
@@ -278,35 +303,9 @@ void Square::ValidateMove(const Position &kingPosition, const Position &piecePos
             (fromPosition.col != -1 && fromPosition.col != piecePosition.col)) {
             isValid = false;
         } else {
-            fromPosition.row = piecePosition.row;
-            fromPosition.col = piecePosition.col;
+            fromPosition = piecePosition;
         }
     }
-}
-
-void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
-                                  const ToPosition &toPosition) {
-    switch (promotionType) {
-    case PieceType::Queen:
-        pieces_[toPosition.row][toPosition.col].emplace<Queen>(color, toPosition);
-        break;
-    case PieceType::Rook:
-        pieces_[toPosition.row][toPosition.col].emplace<Rook>(color, toPosition);
-        break;
-    case PieceType::Bishop:
-        pieces_[toPosition.row][toPosition.col].emplace<Bishop>(color, toPosition);
-        break;
-    case PieceType::Knight:
-        pieces_[toPosition.row][toPosition.col].emplace<Knight>(color, toPosition);
-        break;
-    case PieceType::Pawn:
-    default:
-        std::cerr << "[THO][E] Square::ProcessPromotionMove" << std::endl;
-        throw MlpException("Square::ProcessPromotionMove Cannot promote to undefined piece");
-        break;
-    }
-    pieces_[fromPosition.row][fromPosition.col].emplace<EmptyPiece>(Color::Undefined,
-                                                                    Position{fromPosition.row, fromPosition.col});
 }
 
 } // namespace mlp_ha

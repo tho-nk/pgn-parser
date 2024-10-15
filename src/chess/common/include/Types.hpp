@@ -14,6 +14,15 @@ std::ostream &operator<<(std::ostream &os, const Color color);
 
 struct Position {
     Position(int r = -1, int c = -1) : row(r), col(c) {}
+    Position(const Position &other) : row(other.row), col(other.col) {}
+    Position &operator=(const Position &other) {
+        if (this != &other) {
+            row = other.row;
+            col = other.col;
+        }
+        return *this;
+    }
+
     int row;
     int col;
     bool IsValid() const { return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS; }

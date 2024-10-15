@@ -14,6 +14,11 @@ class Square {
         return instance;
     }
 
+    Square(const Square &) = delete;
+    Square &operator=(const Square &) = delete;
+    Square(Square &&) = delete;
+    Square &operator=(Square &&) = delete;
+
     void LoadPGN(const std::filesystem::path &filePath);
 
     void Run();
@@ -21,6 +26,12 @@ class Square {
     std::string GetCurrentState() const noexcept;
 
     const Pieces &GetPieces() const { return pieces_; }
+    Pieces &GetPieces() { return pieces_; }
+    const Piece &GetPiecesAt(const Position &position) const noexcept {
+        return GetPieces()[position.row][position.col];
+    }
+    Piece &GetPiecesAt(const Position &position) noexcept { return GetPieces()[position.row][position.col]; }
+
     bool IsEmptyAt(const Position &position) const {
         return std::holds_alternative<EmptyPiece>(pieces_[position.row][position.col]);
     }
@@ -32,28 +43,21 @@ class Square {
                                            const FromPosition &fromPosition) const noexcept;
     Position GetKingPosition(const Color &color) const;
 
-    // Process BasicMove
     void ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                          FromPosition &fromPosition);
-    void MovePiece(const FromPosition &fromPosition, const ToPosition toPosition);
+                          FromPosition &fromPosition) const;
 
-    // Process AttackMove
     void ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
                            FromPosition &fromPosition);
-    void AttackPiece(const FromPosition &fromPosition, const ToPosition toPosition);
 
-    // Process PromotionMove
     void ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
                               const ToPosition &toPosition);
 
-  private:
-    Square() { Init(); }
-    void Init();
+    void MovePiece(const FromPosition &fromPosition, const ToPosition &toPosition);
 
-    Square(const Square &) = delete;
-    Square &operator=(const Square &) = delete;
-    Square(Square &&) = default;
-    Square &operator=(Square &&) = default;
+    void AttackPiece(const FromPosition &fromPosition, const ToPosition &toPosition);
+
+  private:
+    Square() = default;
     ~Square() = default;
 
     std::optional<Position> enPassant_{std::nullopt};
@@ -61,8 +65,10 @@ class Square {
     Rounds rounds_;
 
   private:
-    void ValidateMove(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
-                      const Color &pieceColor, bool &isValid, FromPosition &fromPosition);
-    bool VerifyIfKingBeingCheck(const Position &piecePosition, const Color &pieceColor, const Position &kingPosition);
+    void ResetState_();
+    void ValidateMove_(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
+                       const Color &pieceColor, bool &isValid, FromPosition &fromPosition) const;
+    bool VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,
+                                 const Position &kingPosition) const;
 };
 } // namespace mlp_ha
