@@ -5,8 +5,8 @@
 
 namespace mlp_ha {
 
-AttackMove::AttackMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {
+AttackMove::AttackMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
+    : Move(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }
 

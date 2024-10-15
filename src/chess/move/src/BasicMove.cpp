@@ -7,8 +7,8 @@
 
 namespace mlp_ha {
 
-BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {
+BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
+    : Move(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }
 

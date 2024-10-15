@@ -6,7 +6,7 @@ namespace mlp_ha {
 
 class PromotionMove : public virtual Move {
   public:
-    PromotionMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment);
+    PromotionMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment);
     PromotionMove() = default;
     PromotionMove(const PromotionMove &) = delete;
     PromotionMove &operator=(const PromotionMove &) = delete;

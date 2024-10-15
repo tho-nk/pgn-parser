@@ -50,7 +50,8 @@ void Round::ParseRoundText(const std::string &str) {
     size_t indexBeginBlackMove = indexEndWhiteMove;
     helper::GetComment(moveText, whiteMoveComment, indexBeginBlackMove);
 
-    whiteMove_ = move_factory::CreateMove(getMoveType(whiteMove), Color::White, whiteMove, whiteMoveComment);
+    whiteMove_ = move_factory::CreateMove(getMoveType(whiteMove), Color::White, std::move(whiteMove),
+                                          std::move(whiteMoveComment));
 
     auto indexEndBlackMove = helper::GetNextSpace(moveText, indexBeginBlackMove);
     std::string blackMove = moveText.substr(indexBeginBlackMove, indexEndBlackMove - indexBeginBlackMove);
@@ -60,7 +61,8 @@ void Round::ParseRoundText(const std::string &str) {
     size_t indexEnd = indexEndBlackMove;
     helper::GetComment(moveText, blackMoveComment, indexEnd);
 
-    blackMove_ = move_factory::CreateMove(getMoveType(blackMove), Color::Black, blackMove, blackMoveComment);
+    blackMove_ = move_factory::CreateMove(getMoveType(blackMove), Color::Black, std::move(blackMove),
+                                          std::move(blackMoveComment));
 }
 
 void Round::Run() const {
