@@ -58,6 +58,10 @@ std::ostream &operator<<(std::ostream &os, const MoveType moveType);
 using FromPosition = Position;
 using ToPosition = Position;
 
+/**
+ * @brief Data structure that holds the information about a move.
+ * This is helpful for moving forward and backward in the game.
+ */
 struct MoveData {
     Color color;
     Position fromPosition;

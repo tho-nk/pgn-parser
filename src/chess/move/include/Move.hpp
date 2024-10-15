@@ -8,8 +8,6 @@
 
 namespace mlp_ha {
 
-class Square;
-
 class Move {
   public:
     Move(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)

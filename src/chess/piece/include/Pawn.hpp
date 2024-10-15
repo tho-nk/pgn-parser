@@ -4,8 +4,6 @@
 
 namespace mlp_ha {
 
-class Square;
-
 class Pawn : public BasePiece<Pawn> {
   public:
     Pawn(const Color &color, const Position &position) : BasePiece() {
