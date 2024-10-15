@@ -43,11 +43,9 @@ class Square {
                                            const FromPosition &fromPosition) const noexcept;
     Position GetKingPosition(const Color &color) const;
 
-    void ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                          FromPosition &fromPosition) const;
+    void ProcessBasicMove(const PiecesReference &subPieces, MoveData &moveData) const;
 
-    void ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                           FromPosition &fromPosition);
+    void ProcessAttackMove(const PiecesReference &subPieces, MoveData &moveData) const;
 
     void ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
                               const ToPosition &toPosition);
@@ -66,8 +64,8 @@ class Square {
 
   private:
     void ResetState_();
-    void ValidateMove_(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
-                       const Color &pieceColor, bool &isValid, FromPosition &fromPosition) const;
+    void ValidateMove_(const Position &kingPosition, const Position &piecePosition, MoveData &moveData,
+                       bool &isValid) const;
     bool VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,
                                  const Position &kingPosition) const;
 };

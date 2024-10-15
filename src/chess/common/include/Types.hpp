@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
 
 namespace mlp_ha {
 
@@ -23,10 +22,6 @@ struct Position {
         return *this;
     }
 
-    int row;
-    int col;
-    bool IsValid() const { return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS; }
-
     bool operator==(const Position &other) const { return row == other.row && col == other.col; }
     bool operator!=(const Position &other) const { return !(*this == other); }
     Position &operator+=(const Position &other) {
@@ -35,15 +30,17 @@ struct Position {
         return *this;
     }
     Position operator+(const Position &other) const { return Position(row + other.row, col + other.col); }
-
-    Position &Shift(int dr, int dc) {
+    void Shift(int dr, int dc) {
         row += dr;
         col += dc;
-        return *this;
     }
-};
-bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3);
+    bool IsValid() const { return row >= 0 && row < ROWS && col >= 0 && col < COLUMNS; }
 
+    int row;
+    int col;
+};
+
+bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3);
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2);
 
 enum class PieceType { King, Queen, Rook, Bishop, Knight, Pawn, Undefined };
@@ -55,7 +52,6 @@ std::ostream &operator<<(std::ostream &os, const MoveType moveType);
 
 using FromPosition = Position;
 using ToPosition = Position;
-using Positions = std::vector<Position>;
 
 struct MoveData {
     Color color;

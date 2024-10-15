@@ -1,5 +1,5 @@
 #include "piece/include/Bishop.hpp"
-#include "common/include/GameHelper.hpp"
+#include "piece/include/GameHelper.hpp"
 #include "piece/include/Square.hpp"
 
 namespace mlp_ha {

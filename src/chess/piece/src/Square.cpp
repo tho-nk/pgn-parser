@@ -129,18 +129,17 @@ Position Square::GetKingPosition(const Color &color) const {
     return std::get<King>(kings.at(0).get()).GetPosition();
 }
 
-void Square::ProcessBasicMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                              FromPosition &fromPosition) const {
-    if (fromPosition.IsValid()) {
+void Square::ProcessBasicMove(const PiecesReference &subPieces, MoveData &moveData) const {
+    if (moveData.fromPosition.IsValid()) {
         return;
     }
     bool isValid = false;
-    const auto &kingPosition = GetKingPosition(color);
+    const auto &kingPosition = GetKingPosition(moveData.color);
     for (const auto &it : subPieces) {
         std::visit(
             [&](const auto &piece) {
-                isValid = piece.IsValidBasicMove(toPosition);
-                ValidateMove_(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
+                isValid = piece.IsValidBasicMove(moveData.toPosition);
+                ValidateMove_(kingPosition, piece.GetPosition(), moveData, isValid);
             },
             it.get());
         if (isValid)
@@ -152,18 +151,17 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, const Color &col
     }
 }
 
-void Square::ProcessAttackMove(const PiecesReference &subPieces, const Color &color, const ToPosition &toPosition,
-                               FromPosition &fromPosition) {
-    if (fromPosition.IsValid()) {
+void Square::ProcessAttackMove(const PiecesReference &subPieces, MoveData &moveData) const {
+    if (moveData.fromPosition.IsValid()) {
         return;
     }
     bool isValid = false;
-    const auto &kingPosition = GetKingPosition(color);
+    const auto &kingPosition = GetKingPosition(moveData.color);
     for (const auto &it : subPieces) {
         std::visit(
             [&](const auto &piece) {
-                isValid = piece.IsValidAttackMove(toPosition);
-                ValidateMove_(kingPosition, piece.GetPosition(), toPosition, piece.GetColor(), isValid, fromPosition);
+                isValid = piece.IsValidAttackMove(moveData.toPosition);
+                ValidateMove_(kingPosition, piece.GetPosition(), moveData, isValid);
             },
             it.get());
         if (isValid)
@@ -263,9 +261,7 @@ void Square::MovePiece(const FromPosition &fromPosition, const ToPosition &toPos
     auto tmpT = toPosition;
 
     GetPiecesAt(fromPosition).swap(GetPiecesAt(toPosition));
-
     std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, GetPiecesAt(fromPosition));
-
     std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
 }
 
@@ -276,11 +272,10 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toP
     }
     auto tmpF = fromPosition;
     auto tmpT = toPosition;
+
     GetPiecesAt(fromPosition).swap(GetPiecesAt(toPosition));
-
     std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
-
-    GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, Position{tmpF.row, tmpF.col});
+    GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, tmpF);
 
     if (enPassant_) {
         GetPiecesAt(enPassant_.value()).emplace<EmptyPiece>(Color::Undefined, enPassant_.value());
@@ -288,22 +283,22 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toP
     }
 }
 
-void Square::ValidateMove_(const Position &kingPosition, const Position &piecePosition, const ToPosition &toPosition,
-                           const Color &pieceColor, bool &isValid, FromPosition &fromPosition) const {
+void Square::ValidateMove_(const Position &kingPosition, const Position &piecePosition, MoveData &moveData,
+                           bool &isValid) const {
     if (isValid) {
         if (!(!AreOnFileOrRowOrDiagonal(kingPosition, piecePosition) ||
-              (AreOnFileOrRowOrDiagonal(kingPosition, piecePosition, toPosition)))) {
-            if (VerifyIfKingBeingCheck_(piecePosition, pieceColor, kingPosition)) {
+              (AreOnFileOrRowOrDiagonal(kingPosition, piecePosition, moveData.toPosition)))) {
+            if (VerifyIfKingBeingCheck_(piecePosition, moveData.color, kingPosition)) {
                 isValid = false;
             }
         }
     }
     if (isValid) {
-        if ((fromPosition.row != -1 && fromPosition.row != piecePosition.row) ||
-            (fromPosition.col != -1 && fromPosition.col != piecePosition.col)) {
+        if ((moveData.fromPosition.row != -1 && moveData.fromPosition.row != piecePosition.row) ||
+            (moveData.fromPosition.col != -1 && moveData.fromPosition.col != piecePosition.col)) {
             isValid = false;
         } else {
-            fromPosition = piecePosition;
+            moveData.fromPosition = piecePosition;
         }
     }
 }
