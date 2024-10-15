@@ -1,6 +1,6 @@
 #include "piece/include/Pawn.hpp"
-
 #include "piece/include/Square.hpp"
+
 namespace mlp_ha {
 
 bool Pawn::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {

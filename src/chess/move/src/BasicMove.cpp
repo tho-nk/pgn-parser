@@ -7,8 +7,8 @@
 
 namespace mlp_ha {
 
-BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {
+BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
+    : Move(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }
 
@@ -39,8 +39,7 @@ void BasicMove::ComputeMoveData() {
 void BasicMove::ProcessMove() {
     const auto subPieces = mlp_ha::Square::GetInstance().GetPieceOfTypeAndColor(moveData_.pieceType, moveData_.color,
                                                                                 moveData_.fromPosition);
-    mlp_ha::Square::GetInstance().ProcessBasicMove(subPieces, moveData_.color, moveData_.toPosition,
-                                                   moveData_.fromPosition);
+    mlp_ha::Square::GetInstance().ProcessBasicMove(subPieces, moveData_);
     mlp_ha::Square::GetInstance().MovePiece(moveData_.fromPosition, moveData_.toPosition);
 }
 

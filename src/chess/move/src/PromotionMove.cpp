@@ -5,8 +5,9 @@
 
 namespace mlp_ha {
 
-PromotionMove::PromotionMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {
+PromotionMove::PromotionMove(const MoveType &moveType, const Color &color, std::string &&moveText,
+                             std::string &&comment)
+    : Move(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }
 
@@ -17,10 +18,10 @@ void PromotionMove::ComputeMoveData() {
     helper::removeUnwantedChars(str);
 
     std::string_view remain(str.data(), str.length() - 2);
-    moveData_.toPosition = Position{remain[1] - '1', remain[0] - 'a'};
+    moveData_.toPosition = ToPosition{remain[1] - '1', remain[0] - 'a'};
     moveData_.fromPosition =
-        Position{moveData_.color == Color::White ? moveData_.toPosition.row - 1 : moveData_.toPosition.row + 1,
-                 moveData_.toPosition.col};
+        FromPosition{moveData_.color == Color::White ? moveData_.toPosition.row - 1 : moveData_.toPosition.row + 1,
+                     moveData_.toPosition.col};
     std::string promotionType(str.data() + str.length() - 1, 1);
     moveData_.promotionType = StringToPieceType(promotionType);
 }

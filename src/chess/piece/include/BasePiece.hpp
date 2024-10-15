@@ -7,7 +7,6 @@
 #include <sstream>
 
 namespace mlp_ha {
-class Square;
 
 template <typename ConcretePiece> class BasePiece {
   public:

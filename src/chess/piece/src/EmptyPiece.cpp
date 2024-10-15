@@ -9,6 +9,6 @@ bool EmptyPiece::IsValidBasicMove_(const Position &toPosition, const std::option
 
 bool EmptyPiece::IsValidAttackMove_(const Position &toPosition,
                                     const std::optional<Position> &validateKingCheck) const {
-    return IsValidBasicMove_(toPosition, validateKingCheck);
+    return false;
 }
 } // namespace mlp_ha

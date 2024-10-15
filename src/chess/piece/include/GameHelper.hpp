@@ -5,7 +5,7 @@
 #include <variant>
 
 namespace mlp_ha {
-class Square;
+
 // This validation helper function is applied for Queen, Rook, and Bishop
 bool ValidateMove(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
                   Position p);

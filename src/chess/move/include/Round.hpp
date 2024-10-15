@@ -7,8 +7,6 @@
 
 namespace mlp_ha {
 
-class Square;
-
 class Round {
   public:
     Round(const std::string &str);

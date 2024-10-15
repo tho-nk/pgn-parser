@@ -1,5 +1,5 @@
 
-#include "common/include/GameHelper.hpp"
+#include "piece/include/GameHelper.hpp"
 #include "piece/include/Square.hpp"
 #include <cassert>
 

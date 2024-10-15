@@ -6,8 +6,8 @@
 
 namespace mlp_ha {
 
-CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
-    : Move(moveType, color, moveText, comment) {}
+CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
+    : Move(moveType, color, std::move(moveText), std::move(comment)) {}
 
 void CastlingMove::ProcessMove() {
     // std::clog << "[THO][I] CastlingMove::ProcessMove" << std::endl;

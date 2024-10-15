@@ -6,7 +6,7 @@ namespace mlp_ha {
 
 class BasicMove : public Move {
   public:
-    BasicMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment);
+    BasicMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment);
     BasicMove(const BasicMove &) = delete;
     BasicMove &operator=(const BasicMove &) = delete;
     BasicMove(BasicMove &&) = delete;

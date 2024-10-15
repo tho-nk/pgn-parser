@@ -9,6 +9,7 @@
 #include "piece/include/Rook.hpp"
 #include <array>
 #include <variant>
+#include <vector>
 
 namespace mlp_ha {
 
