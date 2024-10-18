@@ -38,13 +38,9 @@ class Square {
 
     void SetEnPassant(const Position &enPassant) { enPassant_ = enPassant; }
 
-    PiecesReference GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                           const FromPosition &fromPosition) const noexcept;
-    Position GetKingPosition(const Color &color) const;
+    void ProcessBasicMove(MoveData &moveData) const;
 
-    void ProcessBasicMove(const PiecesReference &subPieces, MoveData &moveData) const;
-
-    void ProcessAttackMove(const PiecesReference &subPieces, MoveData &moveData) const;
+    void ProcessAttackMove(MoveData &moveData) const;
 
     void ProcessPromotionMove(MoveData &moveData);
 
@@ -62,9 +58,12 @@ class Square {
 
   private:
     void ResetState_();
-    void ValidateMove_(const Position &kingPosition, const Position &piecePosition, MoveData &moveData,
-                       bool &isValid) const;
+    void ValidateMove_(const Position &piecePosition, MoveData &moveData, bool &isValid) const;
     bool VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,
                                  const Position &kingPosition) const;
+
+    PiecesReference GetPieceOfTypeAndColor_(const PieceType &pieceType, const Color &color,
+                                            const FromPosition &fromPosition) const noexcept;
+    Position GetKingPosition_(const Color &color) const;
 };
 } // namespace mlp_ha

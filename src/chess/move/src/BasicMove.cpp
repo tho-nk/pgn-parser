@@ -37,9 +37,7 @@ void BasicMove::ComputeMoveData() {
 }
 
 void BasicMove::ProcessMove() {
-    const auto subPieces = mlp_ha::Square::GetInstance().GetPieceOfTypeAndColor(moveData_.pieceType, moveData_.color,
-                                                                                moveData_.fromPosition);
-    mlp_ha::Square::GetInstance().ProcessBasicMove(subPieces, moveData_);
+    mlp_ha::Square::GetInstance().ProcessBasicMove(moveData_);
     mlp_ha::Square::GetInstance().MovePiece(moveData_.fromPosition, moveData_.toPosition);
 }
 

@@ -103,8 +103,8 @@ std::string Square::GetCurrentState() const noexcept {
     return ss.str();
 }
 
-PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                               const FromPosition &fromPosition) const noexcept {
+PiecesReference Square::GetPieceOfTypeAndColor_(const PieceType &pieceType, const Color &color,
+                                                const FromPosition &fromPosition) const noexcept {
     PiecesReference subPieces;
     if (fromPosition.IsValid()) {
         subPieces.push_back(std::cref(GetPiecesAt(fromPosition)));
@@ -124,22 +124,22 @@ PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const
     return subPieces;
 }
 
-Position Square::GetKingPosition(const Color &color) const {
-    const auto &kings = GetPieceOfTypeAndColor(PieceType::King, color, Position{});
+Position Square::GetKingPosition_(const Color &color) const {
+    const auto &kings = GetPieceOfTypeAndColor_(PieceType::King, color, Position{});
     return std::get<King>(kings.at(0).get()).GetPosition();
 }
 
-void Square::ProcessBasicMove(const PiecesReference &subPieces, MoveData &moveData) const {
+void Square::ProcessBasicMove(MoveData &moveData) const {
     if (moveData.fromPosition.IsValid()) {
         return;
     }
     bool isValid = false;
-    const auto &kingPosition = GetKingPosition(moveData.color);
+    const auto &subPieces = GetPieceOfTypeAndColor_(moveData.pieceType, moveData.color, moveData.fromPosition);
     for (const auto &it : subPieces) {
         std::visit(
             [&](const auto &piece) {
                 isValid = piece.IsValidBasicMove(moveData.toPosition);
-                ValidateMove_(kingPosition, piece.GetPosition(), moveData, isValid);
+                ValidateMove_(piece.GetPosition(), moveData, isValid);
             },
             it.get());
         if (isValid)
@@ -151,17 +151,17 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, MoveData &moveDa
     }
 }
 
-void Square::ProcessAttackMove(const PiecesReference &subPieces, MoveData &moveData) const {
+void Square::ProcessAttackMove(MoveData &moveData) const {
     if (moveData.fromPosition.IsValid()) {
         return;
     }
     bool isValid = false;
-    const auto &kingPosition = GetKingPosition(moveData.color);
+    const auto &subPieces = GetPieceOfTypeAndColor_(moveData.pieceType, moveData.color, moveData.fromPosition);
     for (const auto &it : subPieces) {
         std::visit(
             [&](const auto &piece) {
                 isValid = piece.IsValidAttackMove(moveData.toPosition);
-                ValidateMove_(kingPosition, piece.GetPosition(), moveData, isValid);
+                ValidateMove_(piece.GetPosition(), moveData, isValid);
             },
             it.get());
         if (isValid)
@@ -284,9 +284,9 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toP
     }
 }
 
-void Square::ValidateMove_(const Position &kingPosition, const Position &piecePosition, MoveData &moveData,
-                           bool &isValid) const {
+void Square::ValidateMove_(const Position &piecePosition, MoveData &moveData, bool &isValid) const {
     if (isValid) {
+        const auto &kingPosition = GetKingPosition_(moveData.color);
         if (!(!AreOnFileOrRowOrDiagonal(kingPosition, piecePosition) ||
               (AreOnFileOrRowOrDiagonal(kingPosition, piecePosition, moveData.toPosition)))) {
             if (VerifyIfKingBeingCheck_(piecePosition, moveData.color, kingPosition)) {
