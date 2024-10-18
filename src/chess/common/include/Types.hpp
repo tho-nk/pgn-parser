@@ -58,16 +58,4 @@ std::ostream &operator<<(std::ostream &os, const MoveType moveType);
 using FromPosition = Position;
 using ToPosition = Position;
 
-/**
- * @brief Data structure that holds the information about a move.
- * This is helpful for moving forward and backward in the game.
- */
-struct MoveData {
-    Color color;
-    Position fromPosition;
-    Position toPosition;
-    PieceType pieceType = PieceType::Undefined;
-    PieceType promotionType = PieceType::Undefined;
-    MoveData(const Color &color) : color(color) {}
-};
 } // namespace mlp_ha

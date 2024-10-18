@@ -4,6 +4,30 @@
 
 namespace mlp_ha {
 
+class AttackMoveData : public MoveData {
+  public:
+    AttackMoveData(const Color &color) : MoveData(color), fromPosition_(), toPosition_(), pieceType_() {}
+    AttackMoveData(const AttackMoveData &) = delete;
+    AttackMoveData &operator=(const AttackMoveData &) = delete;
+    AttackMoveData(AttackMoveData &&) = delete;
+    AttackMoveData &operator=(AttackMoveData &&) = delete;
+    ~AttackMoveData() = default;
+
+    virtual void SetFromPosition(const FromPosition &p) override { fromPosition_ = p; }
+    virtual const FromPosition &GetFromPosition() const override { return fromPosition_; }
+
+    virtual void SetToPosition(const ToPosition &p) override { toPosition_ = p; }
+    virtual const ToPosition &GetToPosition() const override { return toPosition_; }
+
+    virtual void SetPieceType(const PieceType &p) override { pieceType_ = p; }
+    virtual const PieceType &GetPieceType() const override { return pieceType_; }
+
+  private:
+    FromPosition fromPosition_;
+    ToPosition toPosition_;
+    PieceType pieceType_;
+};
+
 class AttackMove : public virtual Move {
 
   public:

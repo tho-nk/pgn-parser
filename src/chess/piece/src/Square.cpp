@@ -63,6 +63,7 @@ void Square::LoadPGN(const std::filesystem::path &filePath) {
     while (!parsingHelper.roundQueue.empty()) {
         auto roundText = parsingHelper.roundQueue.front();
         parsingHelper.roundQueue.pop();
+        // std::clog << roundText << std::endl;
         rounds_.emplace_back(roundText);
         round++;
     }
@@ -82,6 +83,7 @@ void Square::LoadPGN(const std::filesystem::path &filePath) {
         // std::cerr << "[THO][E] Game result error" << std::endl;
     }
     auto roundText = parsingHelper.lastRun.substr(0, found);
+    helper::TrimSpace(roundText);
     // std::clog << "[THO][I] roundText:=" << roundText << std::endl;
     rounds_.emplace_back(roundText);
 }
@@ -103,8 +105,8 @@ std::string Square::GetCurrentState() const noexcept {
     return ss.str();
 }
 
-PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                               const FromPosition &fromPosition) const noexcept {
+PiecesReference Square::GetPieceOfTypeAndColor_(const PieceType &pieceType, const Color &color,
+                                                const FromPosition &fromPosition) const noexcept {
     PiecesReference subPieces;
     if (fromPosition.IsValid()) {
         subPieces.push_back(std::cref(GetPiecesAt(fromPosition)));
@@ -124,70 +126,72 @@ PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const
     return subPieces;
 }
 
-Position Square::GetKingPosition(const Color &color) const {
-    const auto &kings = GetPieceOfTypeAndColor(PieceType::King, color, Position{});
+Position Square::GetKingPosition_(const Color &color) const {
+    const auto &kings = GetPieceOfTypeAndColor_(PieceType::King, color, Position{});
     return std::get<King>(kings.at(0).get()).GetPosition();
 }
 
-void Square::ProcessBasicMove(const PiecesReference &subPieces, MoveData &moveData) const {
-    if (moveData.fromPosition.IsValid()) {
-        return;
+void Square::ProcessBasicMove(MoveData *moveData) {
+    if (!moveData->GetFromPosition().IsValid()) {
+        bool isValid = false;
+        const auto &subPieces =
+            GetPieceOfTypeAndColor_(moveData->GetPieceType(), moveData->GetColor(), moveData->GetFromPosition());
+        for (const auto &it : subPieces) {
+            std::visit(
+                [&](const auto &piece) {
+                    isValid = piece.IsValidBasicMove(moveData->GetToPosition());
+                    ValidateMove_(piece.GetPosition(), moveData, isValid);
+                },
+                it.get());
+            if (isValid)
+                break;
+        }
+        if (!isValid) {
+            std::cerr << "[THO][E] Square::ProcessBasicMove Error" << std::endl;
+            throw MlpException("Square::ProcessBasicMove Error");
+        }
     }
-    bool isValid = false;
-    const auto &kingPosition = GetKingPosition(moveData.color);
-    for (const auto &it : subPieces) {
-        std::visit(
-            [&](const auto &piece) {
-                isValid = piece.IsValidBasicMove(moveData.toPosition);
-                ValidateMove_(kingPosition, piece.GetPosition(), moveData, isValid);
-            },
-            it.get());
-        if (isValid)
-            break;
-    }
-    if (!isValid) {
-        std::cerr << "[THO][E] Square::ProcessBasicMove Error" << std::endl;
-        throw MlpException("Square::ProcessBasicMove Error");
-    }
+    MovePiece_(moveData->GetFromPosition(), moveData->GetToPosition());
 }
 
-void Square::ProcessAttackMove(const PiecesReference &subPieces, MoveData &moveData) const {
-    if (moveData.fromPosition.IsValid()) {
-        return;
+void Square::ProcessAttackMove(MoveData *moveData) {
+    if (!moveData->GetFromPosition().IsValid()) {
+        bool isValid = false;
+        const auto &subPieces =
+            GetPieceOfTypeAndColor_(moveData->GetPieceType(), moveData->GetColor(), moveData->GetFromPosition());
+        for (const auto &it : subPieces) {
+            std::visit(
+                [&](const auto &piece) {
+                    isValid = piece.IsValidAttackMove(moveData->GetToPosition());
+                    ValidateMove_(piece.GetPosition(), moveData, isValid);
+                },
+                it.get());
+            if (isValid)
+                break;
+        }
+        if (!isValid) {
+            std::cerr << "[THO][E] Square::ProcessAttackMove Error" << std::endl;
+            throw MlpException("Square::ProcessAttackMove Error");
+        }
     }
-    bool isValid = false;
-    const auto &kingPosition = GetKingPosition(moveData.color);
-    for (const auto &it : subPieces) {
-        std::visit(
-            [&](const auto &piece) {
-                isValid = piece.IsValidAttackMove(moveData.toPosition);
-                ValidateMove_(kingPosition, piece.GetPosition(), moveData, isValid);
-            },
-            it.get());
-        if (isValid)
-            break;
-    }
-    if (!isValid) {
-        std::cerr << "[THO][E] Square::ProcessAttackMove Error" << std::endl;
-        throw MlpException("Square::ProcessAttackMove Error");
-    }
+    AttackPiece_(moveData->GetFromPosition(), moveData->GetToPosition());
 }
 
 // const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
 //                               const ToPosition &toPosition
-void Square::ProcessPromotionMove(MoveData &moveData) {
-    switch (moveData.promotionType) {
+void Square::ProcessPromotionMove(MoveData *moveData) {
+    switch (moveData->GetPromotionType()) {
     case PieceType::Queen:
-        GetPiecesAt(moveData.toPosition).emplace<Queen>(moveData.color, moveData.toPosition);
+        GetPiecesAt(moveData->GetToPosition()).emplace<Queen>(moveData->GetColor(), moveData->GetToPosition());
         break;
     case PieceType::Rook:
-        GetPiecesAt(moveData.toPosition).emplace<Rook>(moveData.color, moveData.toPosition);
+        GetPiecesAt(moveData->GetToPosition()).emplace<Rook>(moveData->GetColor(), moveData->GetToPosition());
         break;
     case PieceType::Bishop:
-        GetPiecesAt(moveData.toPosition).emplace<Bishop>(moveData.color, moveData.toPosition);
+        GetPiecesAt(moveData->GetToPosition()).emplace<Bishop>(moveData->GetColor(), moveData->GetToPosition());
         break;
     case PieceType::Knight:
-        GetPiecesAt(moveData.toPosition).emplace<Knight>(moveData.color, moveData.toPosition);
+        GetPiecesAt(moveData->GetToPosition()).emplace<Knight>(moveData->GetColor(), moveData->GetToPosition());
         break;
     case PieceType::Pawn:
     default:
@@ -195,7 +199,13 @@ void Square::ProcessPromotionMove(MoveData &moveData) {
         throw MlpException("Square::ProcessPromotionMove Cannot promote to undefined piece");
         break;
     }
-    GetPiecesAt(moveData.fromPosition).emplace<EmptyPiece>(Color::Undefined, moveData.fromPosition);
+
+    GetPiecesAt(moveData->GetFromPosition()).emplace<EmptyPiece>(Color::Undefined, moveData->GetFromPosition());
+}
+
+void Square::ProcessCastlingMove(MoveData *moveData) {
+    MovePiece_(moveData->GetKingFromPosition(), moveData->GetKingToPosition());
+    MovePiece_(moveData->GetRookFromPosition(), moveData->GetRookToPosition());
 }
 
 bool Square::VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,
@@ -253,7 +263,7 @@ bool Square::VerifyIfKingBeingCheck_(const Position &piecePosition, const Color 
     return kingChecked;
 }
 
-void Square::MovePiece(const FromPosition &fromPosition, const ToPosition &toPosition) {
+void Square::MovePiece_(const FromPosition &fromPosition, const ToPosition &toPosition) {
     if (!fromPosition.IsValid() || !toPosition.IsValid()) {
         std::cerr << "[THO][E] Invalid position" << std::endl;
         throw MlpException("Error while moving : Invalid position");
@@ -266,7 +276,7 @@ void Square::MovePiece(const FromPosition &fromPosition, const ToPosition &toPos
     std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
 }
 
-void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toPosition) {
+void Square::AttackPiece_(const FromPosition &fromPosition, const ToPosition &toPosition) {
     if (!fromPosition.IsValid() || !toPosition.IsValid()) {
         std::cerr << "[THO][E] Invalid position" << std::endl;
         throw MlpException("Error while attacking : Invalid position");
@@ -284,22 +294,22 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toP
     }
 }
 
-void Square::ValidateMove_(const Position &kingPosition, const Position &piecePosition, MoveData &moveData,
-                           bool &isValid) const {
+void Square::ValidateMove_(const Position &piecePosition, MoveData *moveData, bool &isValid) const {
     if (isValid) {
+        const auto &kingPosition = GetKingPosition_(moveData->GetColor());
         if (!(!AreOnFileOrRowOrDiagonal(kingPosition, piecePosition) ||
-              (AreOnFileOrRowOrDiagonal(kingPosition, piecePosition, moveData.toPosition)))) {
-            if (VerifyIfKingBeingCheck_(piecePosition, moveData.color, kingPosition)) {
+              (AreOnFileOrRowOrDiagonal(kingPosition, piecePosition, moveData->GetToPosition())))) {
+            if (VerifyIfKingBeingCheck_(piecePosition, moveData->GetColor(), kingPosition)) {
                 isValid = false;
             }
         }
     }
     if (isValid) {
-        if ((moveData.fromPosition.row != -1 && moveData.fromPosition.row != piecePosition.row) ||
-            (moveData.fromPosition.col != -1 && moveData.fromPosition.col != piecePosition.col)) {
+        if ((moveData->GetFromPosition().row != -1 && moveData->GetFromPosition().row != piecePosition.row) ||
+            (moveData->GetFromPosition().col != -1 && moveData->GetFromPosition().col != piecePosition.col)) {
             isValid = false;
         } else {
-            moveData.fromPosition = piecePosition;
+            moveData->SetFromPosition(piecePosition);
         }
     }
 }

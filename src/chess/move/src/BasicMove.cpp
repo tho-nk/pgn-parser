@@ -8,7 +8,8 @@
 namespace mlp_ha {
 
 BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
-    : Move(moveType, color, std::move(moveText), std::move(comment)) {
+    : Move(moveType, std::move(moveText), std::move(comment)) {
+    moveData_ = std::make_unique<BasicMoveData>(color);
     ComputeMoveData();
 }
 
@@ -19,28 +20,25 @@ void BasicMove::ComputeMoveData() {
     helper::removeUnwantedChars(str);
     std::string_view remain(str.data(), str.length() - 2);
     std::string_view dest(str.data() + str.length() - 2, 2);
-    moveData_.toPosition = Position{dest[1] - '1', dest[0] - 'a'};
+    moveData_->SetToPosition(Position{dest[1] - '1', dest[0] - 'a'});
     std::string pieceType = "P";
+    FromPosition fromPosition{-1, -1};
     if (!remain.empty()) {
         pieceType = remain.at(0);
         int index = 1;
         while (index < remain.length()) {
             if (std::isdigit(remain[index])) {
-                moveData_.fromPosition.row = remain[index] - '1';
+                fromPosition.row = remain[index] - '1';
             } else {
-                moveData_.fromPosition.col = remain[index] - 'a';
+                fromPosition.col = remain[index] - 'a';
             }
             index++;
         }
     }
-    moveData_.pieceType = StringToPieceType(pieceType);
+    moveData_->SetFromPosition(fromPosition);
+    moveData_->SetPieceType(StringToPieceType(pieceType));
 }
 
-void BasicMove::ProcessMove() {
-    const auto subPieces = mlp_ha::Square::GetInstance().GetPieceOfTypeAndColor(moveData_.pieceType, moveData_.color,
-                                                                                moveData_.fromPosition);
-    mlp_ha::Square::GetInstance().ProcessBasicMove(subPieces, moveData_);
-    mlp_ha::Square::GetInstance().MovePiece(moveData_.fromPosition, moveData_.toPosition);
-}
+void BasicMove::ProcessMove() { mlp_ha::Square::GetInstance().ProcessBasicMove(moveData_.get()); }
 
 } // namespace mlp_ha

@@ -130,6 +130,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
                     if (round == 2) {
                         ProcessGameComment(sub);
                     }
+                    TrimSpace(sub);
                     q.push(sub);
                     line = line.substr(found);
                     ++round;

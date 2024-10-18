@@ -1,5 +1,6 @@
 
 #include "move/include/MoveFactory.hpp"
+#include "common/include/MlpException.hpp"
 #include "move/include/AttackMove.hpp"
 #include "move/include/AttackPromotionMove.hpp"
 #include "move/include/BasicMove.hpp"
@@ -31,7 +32,7 @@ std::unique_ptr<Move> CreateMove(const MoveType &moveType, const Color &color, s
         break;
     default:
         // std::clog << "[THO][I] Last move - result" << std::endl;
-        return std::make_unique<Move>(MoveType::Undefined, Color::Undefined, "", "");
+        return std::make_unique<Move>(MoveType::Undefined, "", "");
         break;
     }
 }

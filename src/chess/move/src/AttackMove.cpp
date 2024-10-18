@@ -6,7 +6,8 @@
 namespace mlp_ha {
 
 AttackMove::AttackMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
-    : Move(moveType, color, std::move(moveText), std::move(comment)) {
+    : Move(moveType, std::move(moveText), std::move(comment)) {
+    moveData_ = std::make_unique<AttackMoveData>(color);
     ComputeMoveData();
 }
 
@@ -17,32 +18,27 @@ void AttackMove::ComputeMoveData() {
     helper::removeUnwantedChars(str);
     std::string_view remain(str.data(), str.length() - 3); // exclude 'x'
     std::string_view dest(str.data() + str.length() - 2, 2);
-    moveData_.toPosition = Position{dest[1] - '1', dest[0] - 'a'};
-    // FromPosition fromPosition{-1, -1};
+    moveData_->SetToPosition(Position{dest[1] - '1', dest[0] - 'a'});
+    FromPosition fromPosition{-1, -1};
     std::string pieceType = "P";
     if (std::isupper(remain[0])) {
         pieceType = remain.at(0);
         int index = 1;
         while (index < remain.length()) {
             if (std::isdigit(remain[index])) {
-                moveData_.fromPosition.row = remain[index] - '1';
+                fromPosition.row = remain[index] - '1';
             } else {
-                moveData_.fromPosition.col = remain[index] - 'a';
+                fromPosition.col = remain[index] - 'a';
             }
             index++;
         }
     } else {
-        moveData_.fromPosition.col = remain[0] - 'a';
+        fromPosition.col = remain[0] - 'a';
     }
-
-    moveData_.pieceType = StringToPieceType(pieceType);
+    moveData_->SetFromPosition(fromPosition);
+    moveData_->SetPieceType(StringToPieceType(pieceType));
 }
 
-void AttackMove::ProcessMove() {
-    const auto subPieces = mlp_ha::Square::GetInstance().GetPieceOfTypeAndColor(moveData_.pieceType, moveData_.color,
-                                                                                moveData_.fromPosition);
-    mlp_ha::Square::GetInstance().ProcessAttackMove(subPieces, moveData_);
-    mlp_ha::Square::GetInstance().AttackPiece(moveData_.fromPosition, moveData_.toPosition);
-}
+void AttackMove::ProcessMove() { mlp_ha::Square::GetInstance().ProcessAttackMove(moveData_.get()); }
 
 } // namespace mlp_ha
