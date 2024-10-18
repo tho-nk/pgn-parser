@@ -173,20 +173,21 @@ void Square::ProcessAttackMove(const PiecesReference &subPieces, MoveData &moveD
     }
 }
 
-void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
-                                  const ToPosition &toPosition) {
-    switch (promotionType) {
+// const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
+//                               const ToPosition &toPosition
+void Square::ProcessPromotionMove(MoveData &moveData) {
+    switch (moveData.promotionType) {
     case PieceType::Queen:
-        GetPiecesAt(toPosition).emplace<Queen>(color, toPosition);
+        GetPiecesAt(moveData.toPosition).emplace<Queen>(moveData.color, moveData.toPosition);
         break;
     case PieceType::Rook:
-        GetPiecesAt(toPosition).emplace<Rook>(color, toPosition);
+        GetPiecesAt(moveData.toPosition).emplace<Rook>(moveData.color, moveData.toPosition);
         break;
     case PieceType::Bishop:
-        GetPiecesAt(toPosition).emplace<Bishop>(color, toPosition);
+        GetPiecesAt(moveData.toPosition).emplace<Bishop>(moveData.color, moveData.toPosition);
         break;
     case PieceType::Knight:
-        GetPiecesAt(toPosition).emplace<Knight>(color, toPosition);
+        GetPiecesAt(moveData.toPosition).emplace<Knight>(moveData.color, moveData.toPosition);
         break;
     case PieceType::Pawn:
     default:
@@ -194,7 +195,7 @@ void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &c
         throw MlpException("Square::ProcessPromotionMove Cannot promote to undefined piece");
         break;
     }
-    GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, fromPosition);
+    GetPiecesAt(moveData.fromPosition).emplace<EmptyPiece>(Color::Undefined, moveData.fromPosition);
 }
 
 bool Square::VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,

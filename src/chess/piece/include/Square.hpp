@@ -46,8 +46,7 @@ class Square {
 
     void ProcessAttackMove(const PiecesReference &subPieces, MoveData &moveData) const;
 
-    void ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
-                              const ToPosition &toPosition);
+    void ProcessPromotionMove(MoveData &moveData);
 
     void MovePiece(const FromPosition &fromPosition, const ToPosition &toPosition);
 
