@@ -68,6 +68,11 @@ struct MoveData {
     Position toPosition;
     PieceType pieceType = PieceType::Undefined;
     PieceType promotionType = PieceType::Undefined;
+    // Castling
+    FromPosition kingSource;
+    ToPosition kingDesination;
+    FromPosition rookSource;
+    ToPosition rookDesination;
     MoveData(const Color &color) : color(color) {}
 };
 } // namespace mlp_ha

@@ -7,44 +7,51 @@
 namespace mlp_ha {
 
 CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
-    : Move(moveType, color, std::move(moveText), std::move(comment)) {}
+    : Move(moveType, color, std::move(moveText), std::move(comment)) {
+    ComputeMoveData();
+}
 
-void CastlingMove::ProcessMove() {
+void CastlingMove::ComputeMoveData() {
     // std::clog << "[THO][I] CastlingMove::ProcessMove" << std::endl;
     auto str = moveText_;
     // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
     helper::removeUnwantedChars(str);
+
+    FromPosition KingSource;
+    ToPosition KingDesination;
+    FromPosition RookSource;
+    ToPosition RookDesination;
+
     if (str == "O-O-O") {
-        ToPosition toPositionKing{0, 2};
-        FromPosition fromKing{0, 4};
-        ToPosition toPositionRook{0, 3};
-        FromPosition fromRook{0, 0};
+        moveData_.kingDesination = ToPosition{0, 2};
+        moveData_.kingSource = FromPosition{0, 4};
+        moveData_.rookDesination = ToPosition{0, 3};
+        moveData_.rookSource = FromPosition{0, 0};
 
         if (moveData_.color == Color::Black) {
-            toPositionKing.row = 7;
-            fromKing.row = 7;
-            toPositionRook.row = 7;
-            fromRook.row = 7;
+            moveData_.kingDesination.row = 7;
+            moveData_.kingSource.row = 7;
+            moveData_.rookDesination.row = 7;
+            moveData_.rookSource.row = 7;
         }
-        mlp_ha::Square::GetInstance().MovePiece(fromKing, toPositionKing);
-        mlp_ha::Square::GetInstance().MovePiece(fromRook, toPositionRook);
-
     } else {
-        ToPosition toPositionKing{0, 6};
-        FromPosition fromKing{0, 4};
-        ToPosition toPositionRook{0, 5};
-        FromPosition fromRook{0, 7};
+        moveData_.kingDesination = ToPosition{0, 6};
+        moveData_.kingSource = FromPosition{0, 4};
+        moveData_.rookDesination = ToPosition{0, 5};
+        moveData_.rookSource = FromPosition{0, 7};
 
         if (moveData_.color == Color::Black) {
-            toPositionKing.row = 7;
-            fromKing.row = 7;
-            toPositionRook.row = 7;
-            fromRook.row = 7;
+            moveData_.kingDesination.row = 7;
+            moveData_.kingSource.row = 7;
+            moveData_.rookDesination.row = 7;
+            moveData_.rookSource.row = 7;
         }
-
-        mlp_ha::Square::GetInstance().MovePiece(fromKing, toPositionKing);
-        mlp_ha::Square::GetInstance().MovePiece(fromRook, toPositionRook);
     }
+}
+void CastlingMove::ProcessMove() {
+
+    mlp_ha::Square::GetInstance().MovePiece(moveData_.kingSource, moveData_.kingDesination);
+    mlp_ha::Square::GetInstance().MovePiece(moveData_.rookSource, moveData_.rookDesination);
 }
 
 } // namespace mlp_ha
