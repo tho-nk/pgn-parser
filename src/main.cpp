@@ -16,6 +16,12 @@ int main(int argc, char *argv[]) {
 
     signal(SIGINT, signalHandler);
     std::filesystem::path filePath = argv[1];
+    // Check if the file exists
+    if (!std::filesystem::exists(filePath)) {
+        std::cerr << "[THO][E] File does not exist: " << filePath << std::endl;
+        return 1;
+    }
+
     try {
         mlp_ha::Square::GetInstance().LoadPGN(filePath);
         mlp_ha::Square::GetInstance().Run();

@@ -17,11 +17,6 @@ void CastlingMove::ComputeMoveData() {
     // std::clog << "[THO][I] Move:=" << moveText_ << std::endl;
     helper::removeUnwantedChars(str);
 
-    FromPosition KingSource;
-    ToPosition KingDesination;
-    FromPosition RookSource;
-    ToPosition RookDesination;
-
     if (str == "O-O-O") {
         moveData_.kingDesination = ToPosition{0, 2};
         moveData_.kingSource = FromPosition{0, 4};
@@ -48,8 +43,8 @@ void CastlingMove::ComputeMoveData() {
         }
     }
 }
-void CastlingMove::ProcessMove() {
 
+void CastlingMove::ProcessMove() {
     mlp_ha::Square::GetInstance().MovePiece(moveData_.kingSource, moveData_.kingDesination);
     mlp_ha::Square::GetInstance().MovePiece(moveData_.rookSource, moveData_.rookDesination);
 }

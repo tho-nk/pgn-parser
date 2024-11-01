@@ -103,8 +103,8 @@ std::string Square::GetCurrentState() const noexcept {
     return ss.str();
 }
 
-PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const Color &color,
-                                               const FromPosition &fromPosition) const noexcept {
+PiecesReference Square::GetPieceOfTypeAndColor_(const PieceType &pieceType, const Color &color,
+                                                const FromPosition &fromPosition) const noexcept {
     PiecesReference subPieces;
     if (fromPosition.IsValid()) {
         subPieces.push_back(std::cref(GetPiecesAt(fromPosition)));
@@ -124,17 +124,19 @@ PiecesReference Square::GetPieceOfTypeAndColor(const PieceType &pieceType, const
     return subPieces;
 }
 
-Position Square::GetKingPosition(const Color &color) const {
-    const auto &kings = GetPieceOfTypeAndColor(PieceType::King, color, Position{});
+Position Square::GetKingPosition_(const Color &color) const {
+    const auto &kings = GetPieceOfTypeAndColor_(PieceType::King, color, Position{});
     return std::get<King>(kings.at(0).get()).GetPosition();
 }
 
-void Square::ProcessBasicMove(const PiecesReference &subPieces, MoveData &moveData) const {
+void Square::ProcessBasicMove(MoveData &moveData) const {
     if (moveData.fromPosition.IsValid()) {
         return;
     }
     bool isValid = false;
-    const auto &kingPosition = GetKingPosition(moveData.color);
+    const auto subPieces = GetPieceOfTypeAndColor_(moveData.pieceType, moveData.color, moveData.fromPosition);
+
+    const auto &kingPosition = GetKingPosition_(moveData.color);
     for (const auto &it : subPieces) {
         std::visit(
             [&](const auto &piece) {
@@ -151,12 +153,13 @@ void Square::ProcessBasicMove(const PiecesReference &subPieces, MoveData &moveDa
     }
 }
 
-void Square::ProcessAttackMove(const PiecesReference &subPieces, MoveData &moveData) const {
+void Square::ProcessAttackMove(MoveData &moveData) const {
     if (moveData.fromPosition.IsValid()) {
         return;
     }
     bool isValid = false;
-    const auto &kingPosition = GetKingPosition(moveData.color);
+    const auto subPieces = GetPieceOfTypeAndColor_(moveData.pieceType, moveData.color, moveData.fromPosition);
+    const auto &kingPosition = GetKingPosition_(moveData.color);
     for (const auto &it : subPieces) {
         std::visit(
             [&](const auto &piece) {
