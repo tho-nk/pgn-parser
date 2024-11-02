@@ -10,7 +10,8 @@ bool Rook::IsValidMove_(const Position &toPosition, const std::optional<Position
     if (dRow != 0 && dCol != 0) {
         return false;
     }
-    return ValidateMove_(dRow, dCol, toPosition, validateKingCheck, GetPosition());
+    return ValidateMove_(dRow, dCol, toPosition, validateKingCheck, GetPosition(),
+                         [](const Position &p) { return Square::GetInstance().IsEmptyAt(p); });
 }
 
 bool Rook::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {

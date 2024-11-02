@@ -7,6 +7,7 @@
 #include <optional>
 
 namespace mlp_ha {
+
 class Square {
   public:
     static Square &GetInstance() {

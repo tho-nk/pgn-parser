@@ -11,7 +11,8 @@ bool Queen::IsValidMove_(const Position &toPosition, const std::optional<Positio
         return false;
     }
 
-    return ValidateMove_(dRow, dCol, toPosition, validateKingCheck, GetPosition());
+    return ValidateMove_(dRow, dCol, toPosition, validateKingCheck, GetPosition(),
+                         [](const Position &p) { return Square::GetInstance().IsEmptyAt(p); });
 }
 
 bool Queen::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
