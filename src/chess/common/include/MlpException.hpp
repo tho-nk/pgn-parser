@@ -4,14 +4,16 @@
 #include <iostream>
 
 namespace mlp_ha {
-class MlpException : public std::exception {
+class MlpException : public std::runtime_error {
   public:
-    MlpException(const char *message) : m_message(message) {}
+    // Constructor accepting a const char* message
+    explicit MlpException(const char *message) : std::runtime_error(message) {}
 
-    // Override what() method to provide a custom error message
-    const char *what() const noexcept override { return m_message.c_str(); }
+    // Constructor accepting a std::string message
+    explicit MlpException(const std::string &message) : std::runtime_error(message) {}
 
-  private:
-    std::string m_message;
+    // Move constructor
+    explicit MlpException(std::string &&message) : std::runtime_error(std::move(message)) {}
+
 };
 } // namespace mlp_ha

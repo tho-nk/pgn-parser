@@ -17,6 +17,8 @@ class AttackMove : public virtual Move {
 
     virtual void ProcessMove() override;
 
+    virtual bool PreValidateMove() override;
+
   private:
     void ComputeMoveData();
 };

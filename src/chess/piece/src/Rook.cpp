@@ -1,5 +1,4 @@
 #include "piece/include/Rook.hpp"
-#include "piece/include/GameHelper.hpp"
 #include "piece/include/Square.hpp"
 
 namespace mlp_ha {
@@ -11,7 +10,8 @@ bool Rook::IsValidMove_(const Position &toPosition, const std::optional<Position
     if (dRow != 0 && dCol != 0) {
         return false;
     }
-    return ValidateMove(dRow, dCol, toPosition, validateKingCheck, GetPosition());
+    return ValidateMove_(dRow, dCol, toPosition, validateKingCheck, GetPosition(),
+                         [](const Position &p) { return Square::GetInstance().IsEmptyAt(p); });
 }
 
 bool Rook::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {

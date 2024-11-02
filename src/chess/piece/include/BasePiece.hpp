@@ -31,7 +31,7 @@ template <typename ConcretePiece> class BasePiece {
     void SetColor(const Color &color) { this->color_ = color; }
     const Color &GetColor() const { return color_; }
 
-    void SeType(const PieceType &type) { type_ = type; }
+    void SetType(const PieceType &type) { type_ = type; }
     const PieceType &GetType() const { return type_; }
 
     bool IsValidBasicMove(const Position &toPosition,
@@ -51,6 +51,13 @@ template <typename ConcretePiece> class BasePiece {
     PieceType type_{PieceType::Undefined};
     Color color_{Color::Undefined};
     Position position_{-1, -1};
+
+    // This validation helper function is applied for Queen, Rook, and Bishop
+    template <typename IsEmpty>
+    bool ValidateMove_(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
+                       Position p, const IsEmpty &isEmpty) const;
 };
 
 } // namespace mlp_ha
+
+#include "piece/include/BasePiece_impl.h"

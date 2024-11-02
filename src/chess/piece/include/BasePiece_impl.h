@@ -1,11 +1,14 @@
-
-#include "piece/include/GameHelper.hpp"
-#include "piece/include/Square.hpp"
+#include "piece/include/BasePiece.hpp"
+// #include "piece/include/Square.hpp"
 #include <cassert>
 
 namespace mlp_ha {
-bool ValidateMove(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
-                  Position p) {
+
+template <typename ConcretePiece>
+template <typename IsEmpty>
+bool BasePiece<ConcretePiece>::ValidateMove_(int dRow, int dCol, const Position &toPosition,
+                                             const std::optional<Position> &validateKingCheck, Position p,
+                                             const IsEmpty &isEmpty) const {
     // Assert that dRow and dCol are not both zero, since a move must involve some change in position
     assert(dRow != 0 || dCol != 0);
     if (dRow != 0) {
@@ -20,7 +23,7 @@ bool ValidateMove(int dRow, int dCol, const Position &toPosition, const std::opt
         if (p == toPosition) {
             return true;
         }
-        if (!mlp_ha::Square::GetInstance().IsEmptyAt(p)) {
+        if (!isEmpty(p)) {
             if (!validateKingCheck || validateKingCheck.value() != p) {
                 return false;
             }
@@ -29,4 +32,5 @@ bool ValidateMove(int dRow, int dCol, const Position &toPosition, const std::opt
     }
     return false;
 }
+
 } // namespace mlp_ha

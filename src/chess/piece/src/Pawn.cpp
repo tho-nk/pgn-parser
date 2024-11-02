@@ -4,68 +4,64 @@
 namespace mlp_ha {
 
 bool Pawn::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
+    int dRow = toPosition.row - GetPosition().row;
+    int dCol = toPosition.col - GetPosition().col;
+
     if (GetColor() == Color::White) {
-        // no need to check Check. there only one pawn can move
-        if ((GetPosition().col != toPosition.col) || (GetPosition().row >= toPosition.row)) {
-            return false;
-        }
-        // one step move
-        if (GetPosition().row == (toPosition.row - 1)) {
-            return true;
-        }
-        // has obstacle
-        for (int r = GetPosition().row + 1; r < toPosition.row; ++r) {
-            if (!mlp_ha::Square::GetInstance().IsEmptyAt({r, toPosition.col})) {
-                return false;
+        // White pawns move up the board (increasing row number)
+        if (dCol == 0) {
+            // One step forward
+            if (dRow == 1 && mlp_ha::Square::GetInstance().IsEmptyAt(toPosition)) {
+                return true;
+            }
+            // Two steps forward from initial position
+            if (dRow == 2 && GetPosition().row == 1 && mlp_ha::Square::GetInstance().IsEmptyAt(toPosition) &&
+                mlp_ha::Square::GetInstance().IsEmptyAt({GetPosition().row + 1, GetPosition().col})) {
+                return true;
             }
         }
-        return true;
     } else if (GetColor() == Color::Black) {
-        // no need to check Check. there only one pawn can move
-        if ((GetPosition().col != toPosition.col) || (GetPosition().row <= toPosition.row)) {
-            return false;
-        }
-        // on step move
-        if (GetPosition().row == (toPosition.row + 1)) {
-            return true;
-        }
-        // has obstacle
-        for (int r = GetPosition().row - 1; r > toPosition.row; --r) {
-            if (!mlp_ha::Square::GetInstance().IsEmptyAt({r, toPosition.col})) {
-                return false;
+        // Black pawns move down the board (decreasing row number)
+        if (dCol == 0) {
+            // One step forward
+            if (dRow == -1 && mlp_ha::Square::GetInstance().IsEmptyAt(toPosition)) {
+                return true;
+            }
+            // Two steps forward from initial position
+            if (dRow == -2 && GetPosition().row == 6 && mlp_ha::Square::GetInstance().IsEmptyAt(toPosition) &&
+                mlp_ha::Square::GetInstance().IsEmptyAt({GetPosition().row - 1, GetPosition().col})) {
+                return true;
             }
         }
-        return true;
     }
     return false;
 }
 
 bool Pawn::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
+    int dRow = toPosition.row - GetPosition().row;
+    int dCol = toPosition.col - GetPosition().col;
     if (GetColor() == Color::White) {
-        // en passant
-        if (mlp_ha::Square::GetInstance().IsEmptyAt(toPosition)) {
-            mlp_ha::Square::GetInstance().SetEnPassant(Position{toPosition.row - 1, toPosition.col});
+        // White pawns move up the board (increasing row number)
+        if (std::abs(dCol) == 1 && dRow == 1) {
+            // Attack move
+            if (!mlp_ha::Square::GetInstance().IsEmptyAt(toPosition)) {
+                return true;
+            }
+            // En passant
+            mlp_ha::Square::GetInstance().SetEnPassant({GetPosition().row, toPosition.col});
+            return true;
         }
-        // no need to check Check. there only one pawn can move
-        if (std::abs(GetPosition().col - toPosition.col) != 1) {
-            return false;
-        }
-        if (GetPosition().row + 1 != toPosition.row) {
-            return false;
-        }
-        return true;
     } else if (GetColor() == Color::Black) {
-        if (mlp_ha::Square::GetInstance().IsEmptyAt(toPosition)) {
-            mlp_ha::Square::GetInstance().SetEnPassant(Position{toPosition.row + 1, toPosition.col});
+        // Black pawns move down the board (decreasing row number)
+        if (std::abs(dCol) == 1 && dRow == -1) {
+            // Diagonal capture
+            if (!mlp_ha::Square::GetInstance().IsEmptyAt(toPosition)) {
+                return true;
+            }
+            // En passant
+            mlp_ha::Square::GetInstance().SetEnPassant({GetPosition().row, toPosition.col});
+            return true;
         }
-        // no need to check Check. there only one pawn can move
-        if (std::abs(GetPosition().col - toPosition.col) != 1) {
-            return false;
-        }
-        if (GetPosition().row - 1 != toPosition.row) {
-            return false;
-        }
-        return true;
     }
     return false;
 }

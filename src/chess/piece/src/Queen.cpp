@@ -1,5 +1,4 @@
 #include "piece/include/Queen.hpp"
-#include "piece/include/GameHelper.hpp"
 #include "piece/include/Square.hpp"
 
 namespace mlp_ha {
@@ -12,7 +11,8 @@ bool Queen::IsValidMove_(const Position &toPosition, const std::optional<Positio
         return false;
     }
 
-    return ValidateMove(dRow, dCol, toPosition, validateKingCheck, GetPosition());
+    return ValidateMove_(dRow, dCol, toPosition, validateKingCheck, GetPosition(),
+                         [](const Position &p) { return Square::GetInstance().IsEmptyAt(p); });
 }
 
 bool Queen::IsValidBasicMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {

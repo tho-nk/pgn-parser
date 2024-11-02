@@ -50,4 +50,7 @@ void AttackPromotionMove::ProcessMove() {
     PromotionMove::ProcessMove();
 }
 
+bool AttackPromotionMove::PreValidateMove() {
+    return AttackMove::PreValidateMove() && PromotionMove::PreValidateMove();
+}
 } // namespace mlp_ha

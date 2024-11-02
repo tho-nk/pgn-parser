@@ -60,29 +60,23 @@ std::ostream &operator<<(std::ostream &os, const PieceType pieceType) {
     return os;
 }
 
-PieceType StringToPieceType(std::string view) {
-    if (view[0] == 'K') {
+PieceType StringToPieceType(const std::string &view) {
+    switch (view[0]) {
+    case 'K':
         return PieceType::King;
-    }
-    if (view[0] == 'Q') {
+    case 'Q':
         return PieceType::Queen;
-    }
-    if (view[0] == 'R') {
+    case 'R':
         return PieceType::Rook;
-    }
-    if (view[0] == 'B') {
+    case 'B':
         return PieceType::Bishop;
-    }
-    if (view[0] == 'N') {
+    case 'N':
         return PieceType::Knight;
-    }
-    if (view[0] == 'P') {
+    case 'P':
         return PieceType::Pawn;
-    }
-    if (view[0] == ' ') {
+    default:
         return PieceType::Undefined;
     }
-    return PieceType::Undefined;
 }
 
 std::ostream &operator<<(std::ostream &os, const MoveType moveType) {
