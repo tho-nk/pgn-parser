@@ -29,7 +29,7 @@ void CastlingMove::ComputeMoveData() {
             moveData_.rookDesination.row = 7;
             moveData_.rookSource.row = 7;
         }
-    } else {
+    } else if (str == "O-O") {
         moveData_.kingDesination = ToPosition{0, 6};
         moveData_.kingSource = FromPosition{0, 4};
         moveData_.rookDesination = ToPosition{0, 5};
@@ -49,4 +49,8 @@ void CastlingMove::ProcessMove() {
     mlp_ha::Square::GetInstance().MovePiece(moveData_.rookSource, moveData_.rookDesination);
 }
 
+bool CastlingMove::PreValidateMove() {
+    return moveData_.kingSource.IsValid() && moveData_.kingDesination.IsValid() && moveData_.rookSource.IsValid() &&
+           moveData_.rookDesination.IsValid();
+}
 } // namespace mlp_ha

@@ -111,9 +111,7 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
     std::string aline;
     size_t round = 2;
     size_t begin = 0;
-    size_t end = 0;
     std::string remain = "";
-    bool gameCommentFound = false;
     while (std::getline(file, aline)) {
         if (!aline.empty()) {
             if (aline[0] == '[') {

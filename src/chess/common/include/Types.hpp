@@ -50,7 +50,7 @@ bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2);
 
 enum class PieceType { King, Queen, Rook, Bishop, Knight, Pawn, Undefined };
 std::ostream &operator<<(std::ostream &os, const PieceType pieceType);
-PieceType StringToPieceType(std::string view);
+PieceType StringToPieceType(const std::string &view);
 
 enum class MoveType { BasicMove, AttackMove, PromotionMove, CastlingMove, AttackPromotionMove, Undefined };
 std::ostream &operator<<(std::ostream &os, const MoveType moveType);

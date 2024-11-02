@@ -43,4 +43,7 @@ void AttackMove::ProcessMove() {
     mlp_ha::Square::GetInstance().AttackPiece(moveData_.fromPosition, moveData_.toPosition);
 }
 
+bool AttackMove::PreValidateMove() {
+    return moveData_.toPosition.IsValid() && moveData_.pieceType != PieceType::Undefined;
+}
 } // namespace mlp_ha

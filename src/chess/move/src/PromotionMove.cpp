@@ -31,4 +31,7 @@ void PromotionMove::ProcessMove() {
                                                        moveData_.toPosition);
 }
 
+bool PromotionMove::PreValidateMove() {
+    return moveData_.toPosition.IsValid() && moveData_.promotionType != PieceType::Undefined;
+}
 } // namespace mlp_ha

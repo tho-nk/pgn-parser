@@ -55,7 +55,7 @@ template <typename ConcretePiece> class BasePiece {
     // This validation helper function is applied for Queen, Rook, and Bishop
     template <typename IsEmpty>
     bool ValidateMove_(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
-                       Position p, IsEmpty isEmpty) const;
+                       Position p, const IsEmpty &isEmpty) const;
 };
 
 } // namespace mlp_ha
