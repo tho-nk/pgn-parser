@@ -1,5 +1,6 @@
 #include "piece/include/BasePiece.hpp"
 #include "piece/include/Square.hpp"
+#include <cassert>
 
 namespace mlp_ha {
 
@@ -30,7 +31,7 @@ bool BasePiece<ConcretePiece>::ValidateMove_(int dRow, int dCol, const Position 
     return false;
 }
 
-// Explicit template instantiation for Bishop
+// Explicit template instantiation for Queen, Rook, and Bishop
 template class BasePiece<Bishop>;
 template class BasePiece<Queen>;
 template class BasePiece<Rook>;

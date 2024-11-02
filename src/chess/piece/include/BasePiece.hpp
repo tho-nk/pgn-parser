@@ -1,7 +1,6 @@
 #pragma once
 
 #include "common/include/Types.hpp"
-#include <cassert>
 #include <iostream>
 #include <memory>
 #include <optional>
@@ -54,7 +53,6 @@ template <typename ConcretePiece> class BasePiece {
     Position position_{-1, -1};
 
     // This validation helper function is applied for Queen, Rook, and Bishop
-
     bool ValidateMove_(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
                        Position p) const;
 };

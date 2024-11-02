@@ -2,6 +2,7 @@
 #include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
 #include "move/include/Round.hpp"
+#include <cassert>
 #include <ranges>
 
 namespace mlp_ha {
@@ -228,6 +229,7 @@ bool Square::VerifyIfKingBeingCheck_(const Position &piecePosition, const Color 
     }
 
     auto FindNextNonEmpty = [this](const Position &start, int dr, int dc) {
+        assert(dr != 0 || dc != 0);
         Position pos = {start.row + dr, start.col + dc};
         while (pos.IsValid()) {
             if (!IsEmptyAt(pos)) {
