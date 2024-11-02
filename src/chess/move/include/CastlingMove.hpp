@@ -14,5 +14,8 @@ class CastlingMove : public Move {
     ~CastlingMove() = default;
 
     virtual void ProcessMove() final;
+
+  private:
+    void ComputeMoveData();
 };
 } // namespace mlp_ha
