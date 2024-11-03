@@ -17,8 +17,6 @@ class AttackPromotionMove : public AttackMove, public PromotionMove {
 
     virtual void ProcessMove() final;
 
-    virtual bool PreValidateMove() final;
-
   private:
     void ComputeMoveData();
 };

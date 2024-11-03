@@ -52,7 +52,6 @@ template <typename ConcretePiece> class BasePiece {
     Color color_{Color::Undefined};
     Position position_{-1, -1};
 
-    // This validation helper function is applied for Queen, Rook, and Bishop
     template <typename IsEmpty>
     bool ValidateMove_(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
                        Position p, const IsEmpty &isEmpty) const;

@@ -15,8 +15,6 @@ class BasicMove : public Move {
 
     virtual void ProcessMove() final;
 
-    virtual bool PreValidateMove() final;
-
   private:
     void ComputeMoveData();
 };

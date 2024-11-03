@@ -49,8 +49,4 @@ void CastlingMove::ProcessMove() {
     mlp_ha::Square::GetInstance().MovePiece(moveData_.rookSource, moveData_.rookDesination);
 }
 
-bool CastlingMove::PreValidateMove() {
-    return moveData_.kingSource.IsValid() && moveData_.kingDesination.IsValid() && moveData_.rookSource.IsValid() &&
-           moveData_.rookDesination.IsValid();
-}
 } // namespace mlp_ha

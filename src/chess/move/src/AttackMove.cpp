@@ -18,7 +18,6 @@ void AttackMove::ComputeMoveData() {
     std::string_view remain(str.data(), str.length() - 3); // exclude 'x'
     std::string_view dest(str.data() + str.length() - 2, 2);
     moveData_.toPosition = Position{dest[1] - '1', dest[0] - 'a'};
-    // FromPosition fromPosition{-1, -1};
     std::string pieceType = "P";
     if (std::isupper(remain[0])) {
         pieceType = remain.at(0);
@@ -43,7 +42,4 @@ void AttackMove::ProcessMove() {
     mlp_ha::Square::GetInstance().AttackPiece(moveData_.fromPosition, moveData_.toPosition);
 }
 
-bool AttackMove::PreValidateMove() {
-    return moveData_.toPosition.IsValid() && moveData_.pieceType != PieceType::Undefined;
-}
 } // namespace mlp_ha
