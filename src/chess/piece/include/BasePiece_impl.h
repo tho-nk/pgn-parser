@@ -1,5 +1,4 @@
 #include "piece/include/BasePiece.hpp"
-// #include "piece/include/Square.hpp"
 #include <cassert>
 
 namespace mlp_ha {

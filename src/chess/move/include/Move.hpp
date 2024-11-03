@@ -30,8 +30,6 @@ class Move {
 
     virtual void ProcessMove() {};
 
-    virtual bool PreValidateMove() { return true; };
-
   protected:
     MoveType moveType_{MoveType::Undefined};
     std::string moveText_;
