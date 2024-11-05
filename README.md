@@ -15,7 +15,6 @@ It requires:
 The image `iainttho/ubuntu:pgn` comes with preinstalled required packages:
 - gdb, valgrind, pytest
 
-
 Start/Stop the Container:
 - `docker-compose up -d`
 - `docker-compose down --remove-orphans`
@@ -82,11 +81,11 @@ I am still working on developing this parser. Please feel free to provide any fe
 -   Add Iterative mode
 -   Support Forward-Backward interaction
 -   Process tags and comment
--   Improve performace and readability
+-   ✔ Improve performace and readability
 -   Cover more file format error
--   Improve test coverage
--   Handle error
+-   ✔ Improve test coverage
+-   ✔ Handle error
 -   Overload piece swap
--   Handle Color (White/Blacl) more elegant
--   Pull Request!
+-   ✔ Handle Color (White/Blacl) more elegant
+-   ✔ Pull Request!
 
