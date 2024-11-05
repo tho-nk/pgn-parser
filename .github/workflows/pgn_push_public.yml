@@ -14,28 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    # Step 2: Get the pull request ID from the push event (this works because it’s from a merged PR)
-    - name: Get PR ID and commit message
-      id: pr_id_commit_message
-      run: |
-        # Fetch the merge commit ID for the last push to the main branch
-        MERGE_COMMIT=$(git log -1 --pretty=format:"%H")
-
-        # Get the PR number from the merge commit using the GitHub API
-        PR_ID=$(curl -s "https://api.github.com/repos/${{ github.repository }}/commits/${MERGE_COMMIT}" \
-          | jq -r '.commit.message' \
-          | grep -oP '(?<=Merge pull request #)\d+')
-
-        # Get the commit message (this is the actual commit message)
-        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-
-        echo "PR ID: $PR_ID"
-        echo "Commit message: $COMMIT_MESSAGE"
-        
-        # Store the PR ID and commit message in environment variables
-        echo "PR_ID=$PR_ID" >> $GITHUB_ENV
-        echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV  # Store the commit message in an environment variable    
-
     - name: Set up SSH key
       run: |
         mkdir -p ~/.ssh
@@ -45,6 +23,31 @@ jobs:
         ssh-keyscan github.com >> ~/.ssh/known_hosts
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+    # Step 2: Get the pull request ID from the push event (this works because it’s from a merged PR)
+    - name: Get PR ID and commit message
+      id: pr_id_commit_message
+      run: |
+        # Fetch the last commit hash (merge commit)
+        MERGE_COMMIT=$(git log -1 --pretty=format:"%H")
+        echo "Merge Commit: $MERGE_COMMIT"
+
+        # Get the commit message
+        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+        echo "Commit message: $COMMIT_MESSAGE"
+
+        # Extract the PR number from the commit message
+        PR_ID=$(echo "$COMMIT_MESSAGE" | grep -oP '(?<=Merge pull request #)\d+')
+
+        if [ -z "$PR_ID" ]; then
+          echo "No PR ID found in commit message."
+          exit 1
+        fi
+
+        echo "PR ID: $PR_ID"
+
+        # Store the PR ID and commit message in environment variables
+        echo "PR_ID=$PR_ID" >> $GITHUB_ENV
+        echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV
 
     - name: Clone public repository
       run: |
