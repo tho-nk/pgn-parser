@@ -1,0 +1,92 @@
+name: C/C++ CI
+
+on:
+  workflow_run:
+    workflows: ["PR_MAIN"]  # Name of the first workflow
+    types:
+      - completed  # Trigger when Workflow A completes
+    branches:
+      - main  # Ensure this workflow only runs if Workflow A ran on the 'main' branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    # Step 2: Get the pull request ID from the push event (this works because it’s from a merged PR)
+    - name: Get PR ID and commit message
+      id: pr_id_commit_message
+      run: |
+        # Fetch the merge commit ID for the last push to the main branch
+        MERGE_COMMIT=$(git log -1 --pretty=format:"%H")
+
+        # Get the PR number from the merge commit using the GitHub API
+        PR_ID=$(curl -s "https://api.github.com/repos/${{ github.repository }}/commits/${MERGE_COMMIT}" \
+          | jq -r '.commit.message' \
+          | grep -oP '(?<=Merge pull request #)\d+')
+
+        # Get the commit message (this is the actual commit message)
+        COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+
+        echo "PR ID: $PR_ID"
+        echo "Commit message: $COMMIT_MESSAGE"
+        
+        # Store the PR ID and commit message in environment variables
+        echo "PR_ID=$PR_ID" >> $GITHUB_ENV
+        echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV  # Store the commit message in an environment variable    
+
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo $SSH_PRIVATE_KEY
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Clone public repository
+      run: |
+        cd ..
+        mkdir public-repo
+        git clone git@github.com:tho-nk/pgn.git public-repo
+        cd public-repo
+        rm -rf *
+
+    - name: Copy files to public repository
+      run: |
+        cp -R * ../public-repo/
+        mkdir -p ../public-repo/.github/workflows/
+        cp -R .github/workflows/pgn_public.yml_ ../public-repo/.github/workflows/pgn.yml
+      continue-on-error: true
+
+    - name: Commit and Push Changes
+      run: |
+        cd ../public-repo
+        git config --global user.email "tho.nk1325@gmail.com"
+        git config --global user.name "ugitho"
+        
+        # Create a new branch with the PR ID
+        NEW_BRANCH="pr-${{ env.PR_ID }}"
+        git checkout -b "$NEW_BRANCH"
+
+        git add .
+        git commit -m "PR-${{ env.PR_ID }}: ${{ env.COMMIT_MESSAGE }}"
+        
+        # Push the new branch to the remote
+        git push -u origin "$NEW_BRANCH"
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+# Generate SSH key
+# `ssh-keygen -t ed25519 -C "tho.nk1325@gmail.com" -f github_action_key`
+# This command will create two files:
+
+# github_action_key: The private key
+# github_action_key.pub: The public key
+
+# Add github_action_key.pub content to github settings -> ssh and gpg key
+# Add github_action_key content as a private key when running action
+# -> repositoy settings -> Secrets and variables -> Actions -> Repository secrets (SSH_PRIVATE_KEY)
+

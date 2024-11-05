@@ -51,3 +51,15 @@ jobs:
       with:
         name: test-results
         path: pytest/results.xml
+
+# Generate SSH key
+# `ssh-keygen -t ed25519 -C "tho.nk1325@gmail.com" -f github_action_key`
+# This command will create two files:
+
+# github_action_key: The private key
+# github_action_key.pub: The public key
+
+# Add github_action_key.pub content to github settings -> ssh and gpg key
+# Add github_action_key content as a private key when running action
+# -> repositoy settings -> Secrets and variables -> Actions -> Repository secrets (SSH_PRIVATE_KEY)
+
