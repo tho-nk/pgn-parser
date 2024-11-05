@@ -52,11 +52,24 @@ void Round::ParseRoundText(const std::string &str) {
 
     whiteMove_ = move_factory::CreateMove(getMoveType(whiteMove), Color::White, std::move(whiteMove),
                                           std::move(whiteMoveComment));
-
+    //  this works only if 1...MoveText but not for 1... MoveText
     auto indexEndBlackMove = helper::GetNextSpace(moveText, indexBeginBlackMove);
     std::string blackMove = moveText.substr(indexBeginBlackMove, indexEndBlackMove - indexBeginBlackMove);
-    helper::Remove3Dot(blackMove);
     helper::TrimSpace(blackMove);
+    auto ends_with = [](std::string const &value, std::string const &ending) {
+        if (ending.size() > value.size())
+            return false;
+        return std::equal(ending.rbegin(), ending.rend(), value.rbegin());
+    };
+
+    if (ends_with(blackMove, "...")) {
+        indexBeginBlackMove = indexEndBlackMove + 1;
+        indexEndBlackMove = helper::GetNextSpace(moveText, indexBeginBlackMove);
+        blackMove = moveText.substr(indexBeginBlackMove, indexEndBlackMove - indexBeginBlackMove);
+        helper::TrimSpace(blackMove);
+    } else {
+        helper::Remove3Dot(blackMove);
+    }
     std::string blackMoveComment;
     size_t indexEnd = indexEndBlackMove;
     helper::GetComment(moveText, blackMoveComment, indexEnd);

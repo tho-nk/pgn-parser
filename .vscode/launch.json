@@ -11,7 +11,7 @@
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/build/pgn_parser",
             "args": [
-                "${workspaceFolder}/pytest/checking/verify-horizonal-prevent-check.pgn"
+                "${workspaceFolder}/pytest/general/example.pgn"
             ],
             "stopAtEntry": false,
             "externalConsole": false,
