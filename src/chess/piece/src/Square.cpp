@@ -55,36 +55,38 @@ void Square::Run() {
 void Square::LoadPGN(const std::filesystem::path &filePath) {
     ResetState_();
     auto parsingHelper = helper::ParseFile(filePath);
-    if (parsingHelper.roundQueue.empty()) {
-        // std::clog << "[THO][I] start game" << std::endl;
-        return;
-    }
-    rounds_.reserve(parsingHelper.roundQueue.size() + 1);
     int round = 1;
-    while (!parsingHelper.roundQueue.empty()) {
-        auto roundText = parsingHelper.roundQueue.front();
-        parsingHelper.roundQueue.pop();
-        rounds_.emplace_back(roundText);
-        round++;
+    if (!parsingHelper.roundQueue.empty()) {
+        rounds_.reserve(parsingHelper.roundQueue.size() + 1);
+        while (!parsingHelper.roundQueue.empty()) {
+            auto roundText = parsingHelper.roundQueue.front();
+            parsingHelper.roundQueue.pop();
+            rounds_.emplace_back(roundText);
+            round++;
+        }
     }
-
-    if (!helper::IsBalanced(parsingHelper.lastRun)) {
-        std::cerr << "[THO][E] File format error : " << parsingHelper.lastRun << "\n  Cannot process round := " << round
-                  << std::endl;
+    if (!parsingHelper.lastRun.empty()) {
+        if (!helper::IsBalanced(parsingHelper.lastRun)) {
+            std::cerr << "[THO][E] File format error : " << parsingHelper.lastRun
+                      << "\n  Cannot process round := " << round << std::endl;
+        }
+        auto found = parsingHelper.lastRun.find("1-0");
+        if (found == std::string::npos) {
+            found = parsingHelper.lastRun.find("0-1");
+        }
+        if (found == std::string::npos) {
+            found = parsingHelper.lastRun.find("1/2-1/2");
+        }
+        if (found == std::string::npos) {
+            // std::cerr << "[THO][E] Game result error" << std::endl;
+        }
+        auto roundText = parsingHelper.lastRun.substr(0, found);
+        helper::TrimSpace(roundText);
+        // std::clog << "[THO][I] roundText:=" << roundText << std::endl;
+        if (!roundText.empty()) {
+            rounds_.emplace_back(roundText);
+        }
     }
-    auto found = parsingHelper.lastRun.find("1-0");
-    if (found == std::string::npos) {
-        found = parsingHelper.lastRun.find("0-1");
-    }
-    if (found == std::string::npos) {
-        found = parsingHelper.lastRun.find("1/2-1/2");
-    }
-    if (found == std::string::npos) {
-        // std::cerr << "[THO][E] Game result error" << std::endl;
-    }
-    auto roundText = parsingHelper.lastRun.substr(0, found);
-    // std::clog << "[THO][I] roundText:=" << roundText << std::endl;
-    rounds_.emplace_back(roundText);
 }
 
 std::string Square::GetCurrentState() const noexcept {
