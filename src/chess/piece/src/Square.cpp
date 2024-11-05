@@ -1,11 +1,11 @@
 #include "piece/include/Square.hpp"
-#include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
+#include "common/include/PgnException.hpp"
 #include "move/include/Round.hpp"
 #include <cassert>
 #include <ranges>
 
-namespace mlp_ha {
+namespace pgn {
 
 void Square::ResetState_() {
     for (int r = 2; r < ROWS - 2; ++r) {
@@ -152,7 +152,7 @@ void Square::ProcessBasicMove(MoveData &moveData) const {
     }
     if (!isValid) {
         std::cerr << "[THO][E] Square::ProcessBasicMove Error while validating a move" << std::endl;
-        throw MlpException("Square::ProcessBasicMove Error while validating a move");
+        throw PgnException("Square::ProcessBasicMove Error while validating a move");
     }
 }
 
@@ -175,7 +175,7 @@ void Square::ProcessAttackMove(MoveData &moveData) const {
     }
     if (!isValid) {
         std::cerr << "[THO][E] Square::ProcessAttackMove Error while validating an AttackMove" << std::endl;
-        throw MlpException("Square::ProcessAttackMove Error while validating an AttackMove");
+        throw PgnException("Square::ProcessAttackMove Error while validating an AttackMove");
     }
 }
 
@@ -197,7 +197,7 @@ void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &c
     case PieceType::Pawn:
     default:
         std::cerr << "[THO][E] Square::ProcessPromotionMove Error while promoting" << std::endl;
-        throw MlpException("Square::ProcessPromotionMove Error while promoting");
+        throw PgnException("Square::ProcessPromotionMove Error while promoting");
         break;
     }
     GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, fromPosition);
@@ -227,7 +227,7 @@ bool Square::VerifyIfKingBeingCheck_(const Position &piecePosition, const Color 
     }
     if (index >= 8) {
         std::cerr << "[THO][E] Cannot find direction" << std::endl;
-        throw MlpException("Cannot find direction");
+        throw PgnException("Cannot find direction");
     }
 
     auto FindNextNonEmpty = [this](const Position &start, int dr, int dc) {
@@ -262,7 +262,7 @@ bool Square::VerifyIfKingBeingCheck_(const Position &piecePosition, const Color 
 void Square::MovePiece(const FromPosition &fromPosition, const ToPosition &toPosition) {
     if (!fromPosition.IsValid() || !toPosition.IsValid()) {
         std::cerr << "[THO][E] Error while moving : Invalid position" << std::endl;
-        throw MlpException("Error while moving : Invalid position");
+        throw PgnException("Error while moving : Invalid position");
     }
     auto tmpF = fromPosition;
     auto tmpT = toPosition;
@@ -275,7 +275,7 @@ void Square::MovePiece(const FromPosition &fromPosition, const ToPosition &toPos
 void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toPosition) {
     if (!fromPosition.IsValid() || !toPosition.IsValid()) {
         std::cerr << "[THO][E] Error while moving : Invalid position" << std::endl;
-        throw MlpException("Error while attacking : Invalid position");
+        throw PgnException("Error while attacking : Invalid position");
     }
     auto tmpF = fromPosition;
     auto tmpT = toPosition;
@@ -310,4 +310,4 @@ void Square::ValidateMove_(const Position &kingPosition, const Position &piecePo
     }
 }
 
-} // namespace mlp_ha
+} // namespace pgn

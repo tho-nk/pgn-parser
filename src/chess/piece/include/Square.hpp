@@ -6,7 +6,7 @@
 #include <filesystem>
 #include <optional>
 
-namespace mlp_ha {
+namespace pgn {
 
 class Square {
   public:
@@ -69,4 +69,4 @@ class Square {
                                             const FromPosition &fromPosition) const noexcept;
     Position GetKingPosition_(const Color &color) const;
 };
-} // namespace mlp_ha
+} // namespace pgn

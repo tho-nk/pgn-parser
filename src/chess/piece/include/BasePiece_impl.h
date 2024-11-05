@@ -1,7 +1,7 @@
 #include "piece/include/BasePiece.hpp"
 #include <cassert>
 
-namespace mlp_ha {
+namespace pgn {
 
 template <typename ConcretePiece>
 template <typename IsEmpty>
@@ -32,4 +32,4 @@ bool BasePiece<ConcretePiece>::ValidateMove_(int dRow, int dCol, const Position 
     return false;
 }
 
-} // namespace mlp_ha
+} // namespace pgn

@@ -6,7 +6,7 @@
 #include <string_view>
 #include <utility>
 
-namespace mlp_ha {
+namespace pgn {
 
 class Move {
   public:
@@ -36,4 +36,4 @@ class Move {
     std::string comment_;
     MoveData moveData_{Color::Undefined};
 };
-} // namespace mlp_ha
+} // namespace pgn

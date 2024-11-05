@@ -4,11 +4,11 @@
 #include "move/include/Move.hpp"
 #include <memory>
 
-namespace mlp_ha {
+namespace pgn {
 
 namespace move_factory {
 std::unique_ptr<Move> CreateMove(const MoveType &moveType, const Color &color, std::string &&moveText,
                                  std::string &&comment);
 }
 
-} // namespace mlp_ha
+} // namespace pgn

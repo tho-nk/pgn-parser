@@ -1,4 +1,4 @@
-#include "common/include/MlpException.hpp"
+#include "common/include/PgnException.hpp"
 #include "piece/include/Square.hpp"
 #include <csignal>
 #include <iostream>
@@ -22,12 +22,12 @@ int main(int argc, char *argv[]) {
     }
 
     try {
-        auto &squareInstance = mlp_ha::Square::GetInstance();
+        auto &squareInstance = pgn::Square::GetInstance();
         squareInstance.LoadPGN(filePath);
         squareInstance.Run();
         std::cout << squareInstance.GetCurrentState() << std::endl;
-    } catch (const mlp_ha::MlpException &e) {
-        std::cerr << "[THO][E] MlpException " << e.what() << " for file: " << filePath << std::endl;
+    } catch (const pgn::PgnException &e) {
+        std::cerr << "[THO][E] PgnException " << e.what() << " for file: " << filePath << std::endl;
     } catch (const std::exception &e) {
         std::cerr << "[THO][E] Error while parsing PGN : " << e.what() << " for file: " << filePath << std::endl;
     } catch (...) {

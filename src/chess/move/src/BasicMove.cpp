@@ -1,11 +1,11 @@
 #include "move/include/BasicMove.hpp"
-#include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
+#include "common/include/PgnException.hpp"
 #include "piece/include/Square.hpp"
 
 #include <ranges>
 
-namespace mlp_ha {
+namespace pgn {
 
 BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
     : Move(moveType, color, std::move(moveText), std::move(comment)) {
@@ -37,8 +37,8 @@ void BasicMove::ComputeMoveData() {
 }
 
 void BasicMove::ProcessMove() {
-    mlp_ha::Square::GetInstance().ProcessBasicMove(moveData_);
-    mlp_ha::Square::GetInstance().MovePiece(moveData_.fromPosition, moveData_.toPosition);
+    pgn::Square::GetInstance().ProcessBasicMove(moveData_);
+    pgn::Square::GetInstance().MovePiece(moveData_.fromPosition, moveData_.toPosition);
 }
 
-} // namespace mlp_ha
+} // namespace pgn

@@ -2,7 +2,7 @@
 
 #include "piece/include/BasePiece.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 class Rook : public BasePiece<Rook> {
   public:
@@ -25,4 +25,4 @@ class Rook : public BasePiece<Rook> {
     bool IsValidMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const;
 };
 
-} // namespace mlp_ha
+} // namespace pgn

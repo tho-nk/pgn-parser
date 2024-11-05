@@ -1,10 +1,10 @@
 
 #include "move/include/CastlingMove.hpp"
-#include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
+#include "common/include/PgnException.hpp"
 #include "piece/include/Square.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
     : Move(moveType, color, std::move(moveText), std::move(comment)) {
@@ -45,8 +45,8 @@ void CastlingMove::ComputeMoveData() {
 }
 
 void CastlingMove::ProcessMove() {
-    mlp_ha::Square::GetInstance().MovePiece(moveData_.kingSource, moveData_.kingDesination);
-    mlp_ha::Square::GetInstance().MovePiece(moveData_.rookSource, moveData_.rookDesination);
+    pgn::Square::GetInstance().MovePiece(moveData_.kingSource, moveData_.kingDesination);
+    pgn::Square::GetInstance().MovePiece(moveData_.rookSource, moveData_.rookDesination);
 }
 
-} // namespace mlp_ha
+} // namespace pgn

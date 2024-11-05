@@ -1,7 +1,7 @@
 #include "piece/include/Queen.hpp"
 #include "piece/include/Square.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 bool Queen::IsValidMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     int dRow = toPosition.row - GetPosition().row;
     int dCol = toPosition.col - GetPosition().col;
@@ -22,4 +22,4 @@ bool Queen::IsValidBasicMove_(const Position &toPosition, const std::optional<Po
 bool Queen::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     return IsValidMove_(toPosition, validateKingCheck);
 }
-} // namespace mlp_ha
+} // namespace pgn

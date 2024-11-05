@@ -3,7 +3,7 @@
 #include "move/include/AttackMove.hpp"
 #include "move/include/PromotionMove.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 class AttackPromotionMove : public AttackMove, public PromotionMove {
 
@@ -20,4 +20,4 @@ class AttackPromotionMove : public AttackMove, public PromotionMove {
   private:
     void ComputeMoveData();
 };
-} // namespace mlp_ha
+} // namespace pgn

@@ -6,7 +6,7 @@
 #include <optional>
 #include <sstream>
 
-namespace mlp_ha {
+namespace pgn {
 
 template <typename ConcretePiece> class BasePiece {
   public:
@@ -57,6 +57,6 @@ template <typename ConcretePiece> class BasePiece {
                        Position p, const IsEmpty &isEmpty) const;
 };
 
-} // namespace mlp_ha
+} // namespace pgn
 
 #include "piece/include/BasePiece_impl.h"

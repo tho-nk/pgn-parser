@@ -8,7 +8,7 @@
 #include <string>
 #include <string_view>
 
-namespace mlp_ha {
+namespace pgn {
 namespace helper {
 bool IsBalanced(std::string_view str);
 
@@ -48,4 +48,4 @@ ParsingHelper ParseFile(const std::filesystem::path &path);
 
 void ProcessGameComment(std::string &str);
 } // namespace helper
-} // namespace mlp_ha
+} // namespace pgn

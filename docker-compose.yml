@@ -1,7 +1,7 @@
 version: '3'
 services:
   calibration:
-    container_name: mlp_ubuntu
-    image: iainttho/ubuntu:mlp 
+    container_name: pgn_ubuntu
+    image: iainttho/ubuntu:pgn
     volumes:
       - ./:/home/ugitho/workspaces

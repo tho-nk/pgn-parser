@@ -1,6 +1,6 @@
 #include "common/include/Types.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3) {
     if (AreOnFile(p1, p2) && AreOnFile(p2, p3)) {
@@ -109,4 +109,4 @@ std::ostream &operator<<(std::ostream &os, const MoveType moveType) {
     return os;
 }
 
-} // namespace mlp_ha
+} // namespace pgn
