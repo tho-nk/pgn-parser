@@ -70,6 +70,8 @@ jobs:
         cd ..
         mkdir public-repo
         git clone git@github.com:tho-nk/pgn.git public-repo
+        cd public-repo
+        rm -rf *
 
     - name: Copy files to public repository
       run: |
@@ -78,14 +80,51 @@ jobs:
         cp -R .github/workflows/pgn_public.yml_ ../public-repo/.github/workflows/pgn.yml
       continue-on-error: true
 
+    - name: Get latest commit message from the source branch
+      id: get_commit_msg
+      run: |
+        # Fetch the source branch and the pull request
+        git fetch origin +refs/heads/${{ github.head_ref }}:refs/remotes/origin/${{ github.head_ref }}
+        git fetch origin +refs/pull/${{ github.event.pull_request.number }}/merge
+        
+        # Checkout the source branch of the PR
+        git checkout ${{ github.head_ref }}  # Checkout the source branch
+        
+        # Get the latest commit message
+        echo "Latest commit message:"
+        git log -1 --pretty=%B > ../commit_msg.txt  # Store the latest commit message in a file
+        cat ../commit_msg.txt  # Output the commit message for logging purposes
+
     - name: Commit and Push Changes
       run: |
         cd ../public-repo
         git config --global user.email "tho.nk1325@gmail.com"
-        git config --global user.name "ugitho" 
-        git add .
-        git commit -m "Update static files" -a
-        git push origin main  # Replace 'main' with the branch you want to push to
+        git config --global user.name "ugitho"
+        
+        # Check for changes
+        if [ -n "$(git status --porcelain)" ]; then
+          BRANCH_NAME=${GITHUB_REF##*/}  # Get the current branch name
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            BRANCH_NAME=${{ github.head_ref }}  # Get the source branch of the PR
+          fi
+            echo "Current branch name: $BRANCH_NAME"
+          
+          # Create a new branch if it doesn't exist
+          if git show-ref --verify --quiet refs/heads/"$BRANCH_NAME"; then
+              echo "Branch $BRANCH_NAME already exists. Switching to it."
+              git checkout "$BRANCH_NAME"
+          else
+              echo "Creating new branch $BRANCH_NAME."
+              git checkout -b "$BRANCH_NAME"  # Create a new branch with the current branch name
+          fi
+
+          # Use the commit message from the private repo
+          git add .
+          git commit -m "$(cat ../commit_msg.txt)"
+          git push -u origin "$BRANCH_NAME"  # Push to the branch
+        else
+          echo "No changes to commit, skipping."
+        fi
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
