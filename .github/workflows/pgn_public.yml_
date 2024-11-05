@@ -15,9 +15,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y cmake make g++ python3-pytest
+      run: sudo apt-get update && sudo apt-get install -y cmake make g++ python3-pytest && pip install chess
+
     
     - name: Create build directory
       run: mkdir -p build
@@ -44,7 +45,7 @@ jobs:
       run: cp build/${{ env.BINARY }} pytest/
     
     - name: Run tests and generate report
-      run: cd pytest && python3 -m pytest ./TestParserPGN.py --junitxml=results.xml
+      run: cd pytest && python3 generate_test_data.py && python3 -m pytest ./Test*.py --junitxml=results.xml
     
     - name: Upload test results
       uses: actions/upload-artifact@v3
