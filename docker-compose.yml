@@ -1,0 +1,7 @@
+version: '3'
+services:
+  calibration:
+    container_name: pgn_ubuntu
+    image: iainttho/ubuntu:pgn
+    volumes:
+      - ./:/home/ugitho/workspaces

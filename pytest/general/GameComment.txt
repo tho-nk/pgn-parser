@@ -1,0 +1,8 @@
+  |bR|bB|  |bR|bK|  |  
+  |bP|wR|  |  |bN|bP|bP
+bP|wN|  |  |bP|  |  |  
+  |  |  |  |  |  |  |  
+  |  |  |  |wN|  |  |  
+  |  |  |  |  |  |wP|  
+wP|wP|  |  |  |wP|  |wP
+  |  |wR|  |  |  |wK|  
