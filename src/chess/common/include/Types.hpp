@@ -45,6 +45,11 @@ struct Position {
     int col;
 };
 
+inline bool AreOnFile(const Position &p1, const Position &p2) { return p1.col == p2.col; }
+inline bool AreOnRow(const Position &p1, const Position &p2) { return p1.row == p2.row; }
+inline bool AreOnDiagonal(const Position &p1, const Position &p2) {
+    return std::abs(p1.row - p2.row) == std::abs(p1.col - p2.col);
+}
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3);
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2);
 

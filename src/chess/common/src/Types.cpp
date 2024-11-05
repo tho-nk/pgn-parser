@@ -3,7 +3,16 @@
 namespace mlp_ha {
 
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Position p3) {
-    return AreOnFileOrRowOrDiagonal(p1, p2) && AreOnFileOrRowOrDiagonal(p2, p3);
+    if (AreOnFile(p1, p2) && AreOnFile(p2, p3)) {
+        return true;
+    }
+    if (AreOnRow(p1, p2) && AreOnRow(p2, p3)) {
+        return true;
+    }
+    if (AreOnDiagonal(p1, p2) && AreOnDiagonal(p2, p3)) {
+        return true;
+    }
+    return false;
 }
 
 bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2) {

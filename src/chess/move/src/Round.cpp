@@ -79,15 +79,15 @@ void Round::ParseRoundText(const std::string &str) {
 }
 
 void Round::Run() const {
-    // std::clog << "[THO][I] Round:=" << roundIndex_ << std::endl;
-    // std::clog << "[THO][I] White move:" << std::endl;
+    std::clog << "[THO][I] Round:=" << roundIndex_ << std::endl;
+    std::clog << "[THO][I] White move:" << std::endl;
     whiteMove_->ProcessMove();
-    // std::clog << mlp_ha::Square::GetInstance().GetCurrentState() << std::endl;
-    // std::clog << std::endl;
-    // std::clog << "[THO][I] Black move" << std::endl;
+    std::clog << mlp_ha::Square::GetInstance().GetCurrentState() << std::endl;
+    std::clog << std::endl;
+    std::clog << "[THO][I] Black move" << std::endl;
     blackMove_->ProcessMove();
-    // std::clog << mlp_ha::Square::GetInstance().GetCurrentState() << std::endl;
+    std::clog << mlp_ha::Square::GetInstance().GetCurrentState() << std::endl;
 
-    // std::clog << "\n\n\n" << std::endl;
+    std::clog << "\n\n\n" << std::endl;
 }
 } // namespace mlp_ha
