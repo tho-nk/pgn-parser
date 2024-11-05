@@ -2,7 +2,7 @@
 
 #include "move/include/Move.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 class AttackMove : public virtual Move {
 
@@ -20,4 +20,4 @@ class AttackMove : public virtual Move {
   private:
     void ComputeMoveData();
 };
-} // namespace mlp_ha
+} // namespace pgn

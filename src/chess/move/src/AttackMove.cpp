@@ -1,9 +1,9 @@
 #include "move/include/AttackMove.hpp"
-#include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
+#include "common/include/PgnException.hpp"
 #include "piece/include/Square.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 AttackMove::AttackMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
     : Move(moveType, color, std::move(moveText), std::move(comment)) {
@@ -38,8 +38,8 @@ void AttackMove::ComputeMoveData() {
 }
 
 void AttackMove::ProcessMove() {
-    mlp_ha::Square::GetInstance().ProcessAttackMove(moveData_);
-    mlp_ha::Square::GetInstance().AttackPiece(moveData_.fromPosition, moveData_.toPosition);
+    pgn::Square::GetInstance().ProcessAttackMove(moveData_);
+    pgn::Square::GetInstance().AttackPiece(moveData_.fromPosition, moveData_.toPosition);
 }
 
-} // namespace mlp_ha
+} // namespace pgn

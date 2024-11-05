@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-namespace mlp_ha {
+namespace pgn {
 
 constexpr size_t COLUMNS = 8;
 constexpr size_t ROWS = 8;
@@ -80,4 +80,4 @@ struct MoveData {
     ToPosition rookDesination;
     MoveData(const Color &color) : color(color) {}
 };
-} // namespace mlp_ha
+} // namespace pgn

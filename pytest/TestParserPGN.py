@@ -21,7 +21,7 @@ test_cases = ["./checking/diagonal-prevent-check-down",
               "./general/Complex_PGN_with_comments"]
 
 
-def run_mlp_ha_chess(arg):
+def run_pgn_parser(arg):
     print("test:" + arg)
     process = subprocess.Popen([binary_path, arg], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
@@ -30,7 +30,7 @@ def run_mlp_ha_chess(arg):
 
 @pytest.mark.parametrize("test_case", test_cases)
 def test_parsing_pgn(test_case):
-    stdout_txt = run_mlp_ha_chess(test_case + ".pgn")
+    stdout_txt = run_pgn_parser(test_case + ".pgn")
     with open(test_case + ".txt", 'r') as file:
         file_txt = file.read()
     print("stdout:=")

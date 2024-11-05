@@ -1,9 +1,9 @@
 #include "move/include/AttackPromotionMove.hpp"
-#include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
+#include "common/include/PgnException.hpp"
 #include "piece/include/Square.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 AttackPromotionMove::AttackPromotionMove(const MoveType &moveType, const Color &color, std::string &&moveText,
                                          std::string &&comment)
@@ -50,4 +50,4 @@ void AttackPromotionMove::ProcessMove() {
     PromotionMove::ProcessMove();
 }
 
-} // namespace mlp_ha
+} // namespace pgn

@@ -1,7 +1,7 @@
 #include "common/include/ParsingHelper.hpp"
 #include <fstream>
 
-namespace mlp_ha {
+namespace pgn {
 
 namespace helper {
 bool IsBalanced(std::string_view str) {
@@ -144,4 +144,4 @@ ParsingHelper ParseFile(const std::filesystem::path &path) {
     return ParsingHelper{q, remain};
 }
 } // namespace helper
-} // namespace mlp_ha
+} // namespace pgn

@@ -1,7 +1,7 @@
 #include "piece/include/Knight.hpp"
 #include "piece/include/Square.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 bool Knight::IsValidMove_(const Position &toPosition) const {
     // Possible moves for a knight
@@ -26,4 +26,4 @@ bool Knight::IsValidBasicMove_(const Position &toPosition, const std::optional<P
 bool Knight::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     return IsValidMove_(toPosition);
 }
-} // namespace mlp_ha
+} // namespace pgn

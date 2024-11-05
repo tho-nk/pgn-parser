@@ -1,9 +1,9 @@
 #include "move/include/PromotionMove.hpp"
-#include "common/include/MlpException.hpp"
 #include "common/include/ParsingHelper.hpp"
+#include "common/include/PgnException.hpp"
 #include "piece/include/Square.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 PromotionMove::PromotionMove(const MoveType &moveType, const Color &color, std::string &&moveText,
                              std::string &&comment)
@@ -27,8 +27,8 @@ void PromotionMove::ComputeMoveData() {
 }
 
 void PromotionMove::ProcessMove() {
-    mlp_ha::Square::GetInstance().ProcessPromotionMove(moveData_.promotionType, moveData_.color, moveData_.fromPosition,
-                                                       moveData_.toPosition);
+    pgn::Square::GetInstance().ProcessPromotionMove(moveData_.promotionType, moveData_.color, moveData_.fromPosition,
+                                                    moveData_.toPosition);
 }
 
-} // namespace mlp_ha
+} // namespace pgn

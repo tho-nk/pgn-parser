@@ -7,7 +7,7 @@
 #include "move/include/PromotionMove.hpp"
 #include <iostream>
 
-namespace mlp_ha {
+namespace pgn {
 
 namespace move_factory {
 
@@ -36,4 +36,4 @@ std::unique_ptr<Move> CreateMove(const MoveType &moveType, const Color &color, s
     }
 }
 }; // namespace move_factory
-} // namespace mlp_ha
+} // namespace pgn

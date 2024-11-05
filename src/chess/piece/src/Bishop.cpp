@@ -1,7 +1,7 @@
 #include "piece/include/Bishop.hpp"
 #include "piece/include/Square.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 bool Bishop::IsValidMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     int dRow = toPosition.row - GetPosition().row;
@@ -22,4 +22,4 @@ bool Bishop::IsValidBasicMove_(const Position &toPosition, const std::optional<P
 bool Bishop::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     return IsValidMove_(toPosition, validateKingCheck);
 }
-} // namespace mlp_ha
+} // namespace pgn

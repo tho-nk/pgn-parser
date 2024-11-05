@@ -2,7 +2,7 @@
 
 #include "piece/include/BasePiece.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 class Pawn : public BasePiece<Pawn> {
   public:
@@ -23,4 +23,4 @@ class Pawn : public BasePiece<Pawn> {
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
 };
 
-} // namespace mlp_ha
+} // namespace pgn

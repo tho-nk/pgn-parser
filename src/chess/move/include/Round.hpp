@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-namespace mlp_ha {
+namespace pgn {
 
 class Round {
   public:
@@ -32,4 +32,4 @@ class Round {
 
 using Rounds = std::vector<Round>;
 
-} // namespace mlp_ha
+} // namespace pgn

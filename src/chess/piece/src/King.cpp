@@ -1,7 +1,7 @@
 #include "piece/include/King.hpp"
 #include "piece/include/Square.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 bool King::IsValidMove_(const Position &toPosition) const {
     constexpr int dr[] = {-1, 0, 1, 1, 1, 0, -1, -1};
@@ -24,4 +24,4 @@ bool King::IsValidBasicMove_(const Position &toPosition, const std::optional<Pos
 bool King::IsValidAttackMove_(const Position &toPosition, const std::optional<Position> &validateKingCheck) const {
     return IsValidMove_(toPosition);
 }
-} // namespace mlp_ha
+} // namespace pgn

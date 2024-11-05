@@ -2,7 +2,7 @@
 
 #include "move/include/Move.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 class PromotionMove : public virtual Move {
   public:
@@ -19,4 +19,4 @@ class PromotionMove : public virtual Move {
   private:
     void ComputeMoveData();
 };
-} // namespace mlp_ha
+} // namespace pgn

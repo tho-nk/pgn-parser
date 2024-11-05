@@ -6,22 +6,16 @@ It requires:
 
 - CMake 3.22
 - GCC 12.1 and C++20 standard
-- Ubuntu 22.04 or the Docker image `iainttho/ubuntu:mlp` based on Ubuntu 22.04.
+- Ubuntu 22.04 or the Docker image `iainttho/ubuntu:pgn` based on Ubuntu 22.04.
 
 # Build and Run
 
 **Running the Docker Container**
 
-The image `iainttho/ubuntu:mlp` comes with preinstalled required packages:
+The image `iainttho/ubuntu:pgn` comes with preinstalled required packages:
 - gdb, valgrind, pytest
 
-
 Start/Stop the Container:
-
-- `docker run -d --name mlp-ubuntu iainttho/ubuntu:mlp`
-- `docker stop mlp-ubuntu`
-
-or using docker compose to map current volume (no need to clone inside container)
 - `docker-compose up -d`
 - `docker-compose down --remove-orphans`
 
@@ -29,10 +23,8 @@ or using docker compose to map current volume (no need to clone inside container
 
 Enter the container:
 
-- `docker exec -it mlp-ubuntu bash`
-- `cd`
-- `git clone https://nk-tho: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@github.com/tho-nk/mlp-ha.git`
-- `cd mlp-ha`
+- `docker exec -it pgn_ubuntu bash`
+- `cd && cd pgn-parser`
   
 Scripts are available to build, test the project:
 
@@ -89,16 +81,11 @@ I am still working on developing this parser. Please feel free to provide any fe
 -   Add Iterative mode
 -   Support Forward-Backward interaction
 -   Process tags and comment
--   Improve performace and readability
+-   ✔ Improve performace and readability
 -   Cover more file format error
--   Improve test coverage
--   Handle error
+-   ✔ Improve test coverage
+-   ✔ Handle error
 -   Overload piece swap
--   Handle Color (White/Blacl) more elegant
--   Pull Request!
+-   ✔ Handle Color (White/Blacl) more elegant
+-   ✔ Pull Request!
 
-
-
-# Memory
-`valgrind --tool=massif ./build/pgn_parser ./pytest/general/Abdusattorov_Yakubboev.2015.05.14.attack_promotion.pgn`
-`ms_print massif.out.81912 > memory_report_Abdusattorov_Yakubboev.2015.05.14.attack_promotion_SharedPtr.txt`

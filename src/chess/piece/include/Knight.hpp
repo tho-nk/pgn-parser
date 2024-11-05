@@ -2,7 +2,7 @@
 
 #include "piece/include/BasePiece.hpp"
 
-namespace mlp_ha {
+namespace pgn {
 
 class Knight : public BasePiece<Knight> {
   public:
@@ -25,4 +25,4 @@ class Knight : public BasePiece<Knight> {
     bool IsValidMove_(const Position &toPosition) const;
 };
 
-} // namespace mlp_ha
+} // namespace pgn
