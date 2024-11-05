@@ -55,7 +55,7 @@ void Square::Run() {
 void Square::LoadPGN(const std::filesystem::path &filePath) {
     ResetState_();
     auto parsingHelper = helper::ParseFile(filePath);
-    if (parsingHelper.roundQueue.empty()) {
+    if (parsingHelper.roundQueue.empty() && parsingHelper.lastRun.empty()) {
         // std::clog << "[THO][I] start game" << std::endl;
         return;
     }
