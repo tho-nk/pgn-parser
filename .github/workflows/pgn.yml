@@ -51,3 +51,38 @@ jobs:
       with:
         name: test-results
         path: pytest/results.xml
+
+    - name: Clean up
+      run: git clean -xdf
+  
+    - name: Set up SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo $SSH_PRIVATE_KEY
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+        chmod 600 ~/.ssh/id_ed25519
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Clone public repository
+      run: |
+        cd ..
+        mkdir public-repo
+        git clone git@github.com:tho-nk/pgn.git public-repo
+
+    - name: Copy files to public repository
+      run: |
+        cp -R * ../public-repo/
+      continue-on-error: true
+
+    - name: Commit and Push Changes
+      run: |
+        cd ../public-repo
+        git config --global user.email "tho.nk1325@gmail.com"
+        git config --global user.name "ugitho" 
+        git add .
+        git commit -m "Update static files" -a
+        git push origin main  # Replace 'main' with the branch you want to push to
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
