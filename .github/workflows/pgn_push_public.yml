@@ -45,9 +45,13 @@ jobs:
 
         echo "PR ID: $PR_ID"
 
-        # Store the PR ID and commit message in environment variables
-        echo "PR_ID=$PR_ID" >> $GITHUB_ENV
-        echo "COMMIT_MESSAGE=$COMMIT_MESSAGE" >> $GITHUB_ENV
+        # Safely store the PR ID and commit message in environment variables
+        {
+          echo "PR_ID=$PR_ID"
+          echo "COMMIT_MESSAGE<<EOF"
+          echo "$COMMIT_MESSAGE"
+          echo "EOF"
+        } >> $GITHUB_ENV
 
     - name: Clone public repository
       run: |
@@ -81,6 +85,7 @@ jobs:
         git push -u origin "$NEW_BRANCH"
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+
 
 # Generate SSH key
 # `ssh-keygen -t ed25519 -C "tho.nk1325@gmail.com" -f github_action_key`
