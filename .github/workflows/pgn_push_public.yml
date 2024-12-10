@@ -53,7 +53,7 @@ jobs:
       run: |
         cd ..
         mkdir public-repo
-        git clone git@github.com:tho-nk/pgn.git public-repo
+        git clone git@github.com:tho-nk/pgn-parser.git public-repo
         cd public-repo
         rm -rf *
 
