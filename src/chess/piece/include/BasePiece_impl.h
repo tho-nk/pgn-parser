@@ -3,11 +3,10 @@
 
 namespace pgn {
 
-template <typename ConcretePiece>
 template <typename IsEmpty>
-bool BasePiece<ConcretePiece>::ValidateMove_(int dRow, int dCol, const Position &toPosition,
-                                             const std::optional<Position> &validateKingCheck, Position p,
-                                             const IsEmpty &isEmpty) const {
+bool BasePiece::ValidateMove_(int dRow, int dCol, const Position &toPosition,
+                              const std::optional<Position> &validateKingCheck, Position p,
+                              const IsEmpty &isEmpty) const {
     // Assert that dRow and dCol are not both zero, since a move must involve some change in position
     assert(dRow != 0 || dCol != 0);
     if (dRow != 0) {
