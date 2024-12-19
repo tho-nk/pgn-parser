@@ -8,17 +8,18 @@ on:
 
 jobs:
   build:
+    # Specify the Docker container to use
     runs-on: ubuntu-latest
+    container:
+      image: iainttho/ubuntu:24.10.02 # Your custom Docker image
+
     env:
       BUILD_TYPE: release
       BINARY: pgn_parser
 
     steps:
     - uses: actions/checkout@v4
-    
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y cmake make g++ python3-pytest && pip install chess
-    
+  
     - name: Create build directory
       run: mkdir -p build
     
