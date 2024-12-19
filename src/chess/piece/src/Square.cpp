@@ -10,7 +10,7 @@ namespace pgn {
 void Square::ResetState_() {
     for (int r = 2; r < ROWS - 2; ++r) {
         for (int c = 0; c < COLUMNS; ++c) {
-            pieces_[r][c].emplace<EmptyPiece>(Color::Undefined, Position{r, c});
+            pieces_[r][c].emplace<EmptyPiece>(Position{r, c});
         }
     }
 
@@ -200,7 +200,7 @@ void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &c
         throw PgnException("Square::ProcessPromotionMove Error while promoting");
         break;
     }
-    GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, fromPosition);
+    GetPiecesAt(fromPosition).emplace<EmptyPiece>(fromPosition);
 }
 
 bool Square::VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,
@@ -282,10 +282,10 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toP
 
     GetPiecesAt(fromPosition).swap(GetPiecesAt(toPosition));
     std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
-    GetPiecesAt(fromPosition).emplace<EmptyPiece>(Color::Undefined, tmpF);
+    GetPiecesAt(fromPosition).emplace<EmptyPiece>(tmpF);
 
     if (enPassant_.IsValid()) {
-        GetPiecesAt(enPassant_).emplace<EmptyPiece>(Color::Undefined, enPassant_);
+        GetPiecesAt(enPassant_).emplace<EmptyPiece>(enPassant_);
         enPassant_.Reset();
     }
 }
