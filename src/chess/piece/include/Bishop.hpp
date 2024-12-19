@@ -4,7 +4,7 @@
 
 namespace pgn {
 
-class Bishop : public BasePiece<Bishop> {
+class Bishop : public BasePiece {
   public:
     Bishop(const Color &color, const Position &position) : BasePiece() {
         type_ = PieceType::Bishop;
@@ -15,7 +15,7 @@ class Bishop : public BasePiece<Bishop> {
     Bishop() = default;
 
   private:
-    friend class BasePiece<Bishop>;
+    friend class BasePiece;
     bool IsValidBasicMove_(const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
 
