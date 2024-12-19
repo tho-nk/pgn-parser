@@ -8,16 +8,14 @@
 
 namespace pgn {
 
-template <typename ConcretePiece> class BasePiece {
+// template <typename ConcretePiece>
+class BasePiece {
   public:
     BasePiece(const BasePiece &) = delete;
     BasePiece &operator=(const BasePiece &) = delete;
     BasePiece(BasePiece &&) = default;
     BasePiece &operator=(BasePiece &&) = default;
     ~BasePiece() {}
-
-    ConcretePiece &self() { return *static_cast<ConcretePiece *>(this); }
-    ConcretePiece const &self() const { return *static_cast<ConcretePiece const *>(this); }
 
     std::string GetDraw() const {
         std::ostringstream ss;
@@ -34,18 +32,17 @@ template <typename ConcretePiece> class BasePiece {
     void SetType(const PieceType &type) { type_ = type; }
     const PieceType &GetType() const { return type_; }
 
-    bool IsValidBasicMove(const Position &toPosition,
-                          const std::optional<Position> &validateKingCheck = std::nullopt) const {
-        return self().IsValidBasicMove_(toPosition, validateKingCheck);
+    bool IsValidBasicMove(this auto &&self, const Position &toPosition,
+                          const std::optional<Position> &validateKingCheck = std::nullopt) {
+        return self.IsValidBasicMove_(toPosition, validateKingCheck);
     }
 
-    bool IsValidAttackMove(const Position &toPosition,
-                           const std::optional<Position> &validateKingCheck = std::nullopt) const {
-        return self().IsValidAttackMove_(toPosition, validateKingCheck);
+    bool IsValidAttackMove(this auto &&self, const Position &toPosition,
+                           const std::optional<Position> &validateKingCheck = std::nullopt) {
+        return self.IsValidAttackMove_(toPosition, validateKingCheck);
     }
 
   protected:
-    friend ConcretePiece;
     BasePiece() = default;
 
     PieceType type_{PieceType::Undefined};
@@ -55,6 +52,16 @@ template <typename ConcretePiece> class BasePiece {
     template <typename IsEmpty>
     bool ValidateMove_(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
                        Position p, const IsEmpty &isEmpty) const;
+
+    bool IsValidBasicMove_(const Position &toPosition,
+                           const std::optional<Position> &validateKingCheck = std::nullopt) const {
+        return false;
+    }
+
+    bool IsValidAttackMove_(const Position &toPosition,
+                            const std::optional<Position> &validateKingCheck = std::nullopt) const {
+        return false;
+    }
 };
 
 } // namespace pgn
