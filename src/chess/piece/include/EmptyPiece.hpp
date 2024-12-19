@@ -13,13 +13,5 @@ class EmptyPiece : public BasePiece {
     }
 
     EmptyPiece() = default;
-
-  private:
-    friend class BasePiece;
-    bool IsValidBasicMove_(const Position &toPosition,
-                           const std::optional<Position> &validateKingCheck = std::nullopt) const;
-
-    bool IsValidAttackMove_(const Position &toPosition,
-                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
 };
 } // namespace pgn

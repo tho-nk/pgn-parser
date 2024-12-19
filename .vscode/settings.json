@@ -71,7 +71,11 @@
         "type_traits": "cpp",
         "utility": "cpp",
         "ranges": "cpp",
-        "span": "cpp"
+        "span": "cpp",
+        "forward_list": "cpp",
+        "format": "cpp",
+        "thread": "cpp",
+        "print": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/g++-12",
     "editor.formatOnSave": true

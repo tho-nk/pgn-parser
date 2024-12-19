@@ -52,6 +52,16 @@ class BasePiece {
     template <typename IsEmpty>
     bool ValidateMove_(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
                        Position p, const IsEmpty &isEmpty) const;
+
+    bool IsValidBasicMove_(const Position &toPosition,
+                           const std::optional<Position> &validateKingCheck = std::nullopt) const {
+        return false;
+    }
+
+    bool IsValidAttackMove_(const Position &toPosition,
+                            const std::optional<Position> &validateKingCheck = std::nullopt) const {
+        return false;
+    }
 };
 
 } // namespace pgn
