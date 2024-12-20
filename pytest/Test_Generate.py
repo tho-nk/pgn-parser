@@ -21,7 +21,7 @@ for filename in os.listdir(input_dir):
 # Print the list of PGN file names without the extension
 # print(pgn_file_names)
 
-def run_mlp_ha_chess(arg):
+def run_chess(arg):
     print("test:" + arg)
     process = subprocess.Popen([binary_path, arg], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = process.communicate()
@@ -31,7 +31,7 @@ def run_mlp_ha_chess(arg):
 @pytest.mark.parametrize("test_case", pgn_file_names)
 def test_parsing_pgn(test_case):
     print("test_case:=" + test_case)
-    stdout_txt = run_mlp_ha_chess(test_case + ".pgn")
+    stdout_txt = run_chess(test_case + ".pgn")
     with open(test_case + ".txt", 'r') as file:
         file_txt = file.read()
     print("stdout:=")
