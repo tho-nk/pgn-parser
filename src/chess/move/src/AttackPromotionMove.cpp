@@ -7,7 +7,7 @@ namespace pgn {
 
 AttackPromotionMove::AttackPromotionMove(const MoveType &moveType, const Color &color, std::string &&moveText,
                                          std::string &&comment)
-    : Move(moveType, color, std::move(moveText), std::move(comment)) {
+    : MoveBase(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }
 
@@ -45,7 +45,7 @@ void AttackPromotionMove::ComputeMoveData() {
     moveData_.pieceType = StringToPieceType(pieceType);
 }
 // exf8=R+
-void AttackPromotionMove::ProcessMove() {
+void AttackPromotionMove::ProcessMove() const {
     AttackMove::ProcessMove();
     PromotionMove::ProcessMove();
 }

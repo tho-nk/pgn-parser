@@ -8,7 +8,7 @@
 namespace pgn {
 
 BasicMove::BasicMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
-    : Move(moveType, color, std::move(moveText), std::move(comment)) {
+    : MoveBase(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }
 
@@ -36,7 +36,7 @@ void BasicMove::ComputeMoveData() {
     moveData_.pieceType = StringToPieceType(pieceType);
 }
 
-void BasicMove::ProcessMove() {
+void BasicMove::ProcessMove() const {
     pgn::Square::GetInstance().ProcessBasicMove(moveData_);
     pgn::Square::GetInstance().MovePiece(moveData_.fromPosition, moveData_.toPosition);
 }

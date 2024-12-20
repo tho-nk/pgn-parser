@@ -7,7 +7,7 @@
 namespace pgn {
 
 CastlingMove::CastlingMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
-    : Move(moveType, color, std::move(moveText), std::move(comment)) {
+    : MoveBase(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }
 
@@ -44,7 +44,7 @@ void CastlingMove::ComputeMoveData() {
     }
 }
 
-void CastlingMove::ProcessMove() {
+void CastlingMove::ProcessMove() const {
     pgn::Square::GetInstance().MovePiece(moveData_.kingSource, moveData_.kingDesination);
     pgn::Square::GetInstance().MovePiece(moveData_.rookSource, moveData_.rookDesination);
 }

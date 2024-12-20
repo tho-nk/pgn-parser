@@ -20,9 +20,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Install dependencies
-      run: pip3 install --break-system-packages chess
-    
     - name: Create build directory
       run: mkdir -p build
     

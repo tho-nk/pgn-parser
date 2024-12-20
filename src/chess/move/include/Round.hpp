@@ -23,8 +23,8 @@ class Round {
   private:
     int roundIndex_;
     std::string roundComment_;
-    std::unique_ptr<Move> whiteMove_;
-    std::unique_ptr<Move> blackMove_;
+    Move whiteMove_;
+    Move blackMove_;
 
   private:
     void ParseRoundText(const std::string &str);

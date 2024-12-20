@@ -11,29 +11,24 @@ namespace pgn {
 
 namespace move_factory {
 
-std::unique_ptr<Move> CreateMove(const MoveType &moveType, const Color &color, std::string &&moveText,
-                                 std::string &&comment) {
+pgn::Move CreateMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment) {
     switch (moveType) {
     case MoveType::BasicMove:
-        return std::make_unique<BasicMove>(moveType, color, std::move(moveText), std::move(comment));
-        break;
+        return pgn::Move(std::in_place_type<pgn::BasicMove>, moveType, color, std::move(moveText), std::move(comment));
     case MoveType::PromotionMove:
-        return std::make_unique<PromotionMove>(moveType, color, std::move(moveText), std::move(comment));
-        break;
+        return pgn::Move(std::in_place_type<pgn::PromotionMove>, moveType, color, std::move(moveText),
+                         std::move(comment));
     case MoveType::CastlingMove:
-        return std::make_unique<CastlingMove>(moveType, color, std::move(moveText), std::move(comment));
-        break;
+        return pgn::Move(std::in_place_type<pgn::CastlingMove>, moveType, color, std::move(moveText),
+                         std::move(comment));
     case MoveType::AttackMove:
-        return std::make_unique<AttackMove>(moveType, color, std::move(moveText), std::move(comment));
-        break;
+        return pgn::Move(std::in_place_type<pgn::AttackMove>, moveType, color, std::move(moveText), std::move(comment));
     case MoveType::AttackPromotionMove:
-        return std::make_unique<AttackPromotionMove>(moveType, color, std::move(moveText), std::move(comment));
-        break;
+        return pgn::Move(std::in_place_type<pgn::AttackPromotionMove>, moveType, color, std::move(moveText),
+                         std::move(comment));
     default:
-        // std::clog << "[THO][I] Last move - result" << std::endl;
-        return std::make_unique<Move>(MoveType::Undefined, Color::Undefined, "", "");
-        break;
+        return pgn::Move(std::in_place_type<pgn::MoveBase>, MoveType::Undefined, Color::Undefined, "", "");
     }
 }
-}; // namespace move_factory
+} // namespace move_factory
 } // namespace pgn

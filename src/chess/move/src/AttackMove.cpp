@@ -6,7 +6,7 @@
 namespace pgn {
 
 AttackMove::AttackMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
-    : Move(moveType, color, std::move(moveText), std::move(comment)) {
+    : MoveBase(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }
 
@@ -37,7 +37,7 @@ void AttackMove::ComputeMoveData() {
     moveData_.pieceType = StringToPieceType(pieceType);
 }
 
-void AttackMove::ProcessMove() {
+void AttackMove::ProcessMove() const {
     pgn::Square::GetInstance().ProcessAttackMove(moveData_);
     pgn::Square::GetInstance().AttackPiece(moveData_.fromPosition, moveData_.toPosition);
 }
