@@ -9,7 +9,7 @@ bool AreOnFileOrRowOrDiagonal(const Position &p1, const Position &p2, const Posi
     if (AreOnRow(p1, p2) && AreOnRow(p2, p3)) {
         return true;
     }
-    if (AreOnDiagonal(p1, p2) && AreOnDiagonal(p2, p3)) {
+    if (AreOnDiagonal(p1, p2) && AreOnDiagonal(p2, p3) && AreOnDiagonal(p1, p3)) {
         return true;
     }
     return false;
