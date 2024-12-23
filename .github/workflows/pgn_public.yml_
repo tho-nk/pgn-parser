@@ -11,7 +11,7 @@ jobs:
     # Specify the Docker container to use
     runs-on: ubuntu-latest
     container:
-      image: iainttho/ubuntu:24.10.02 # Your custom Docker image
+      image: iainttho/ubuntu:24.10.github_ci # Your custom Docker image
 
     env:
       BUILD_TYPE: release
