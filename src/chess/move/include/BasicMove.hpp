@@ -1,19 +1,19 @@
 #pragma once
 
-#include "move/include/Move.hpp"
+#include "move/include/MoveBase.hpp"
 
 namespace pgn {
 
-class BasicMove : public Move {
+class BasicMove : public MoveBase {
   public:
     BasicMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment);
     BasicMove(const BasicMove &) = delete;
     BasicMove &operator=(const BasicMove &) = delete;
-    BasicMove(BasicMove &&) = delete;
-    BasicMove &operator=(BasicMove &&) = delete;
+    BasicMove(BasicMove &&) = default;
+    BasicMove &operator=(BasicMove &&) = default;
     ~BasicMove() = default;
 
-    virtual void ProcessMove() final;
+    void ProcessMove() const;
 
   private:
     void ComputeMoveData();
