@@ -1,0 +1,11 @@
+[package]
+name = "chess-pieces"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+
+[dependencies]
+chess-common = { path = "../chess-common" }
+
+[dev-dependencies]
+proptest = "1.4"

@@ -1,0 +1,17 @@
+[workspace]
+members = [
+    "chess-common",
+    "chess-pieces",
+    "chess-moves",
+    "chess-pgn-parser"
+]
+
+resolver = "2"
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["tho-nk"]
+
+[workspace.dependencies]
+thiserror = "1.0"
