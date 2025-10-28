@@ -1,0 +1,10 @@
+[package]
+name = "pgn_parser"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[example]]
+name = "parse_demo"
+path = "examples/parse_demo.rs"
