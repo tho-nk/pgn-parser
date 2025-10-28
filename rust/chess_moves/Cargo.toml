@@ -1,0 +1,10 @@
+[package]
+name = "chess_moves"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[[example]]
+name = "move_demo"
+path = "examples/move_demo.rs"
