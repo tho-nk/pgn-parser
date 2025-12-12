@@ -6,7 +6,7 @@ namespace pgn {
 
 class CastlingMove : public Move {
   public:
-    CastlingMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment);
+    CastlingMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment);
     CastlingMove(const CastlingMove &) = delete;
     CastlingMove &operator=(const CastlingMove &) = delete;
     CastlingMove(CastlingMove &&) = delete;

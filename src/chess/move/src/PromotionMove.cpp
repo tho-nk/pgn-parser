@@ -5,8 +5,7 @@
 
 namespace pgn {
 
-PromotionMove::PromotionMove(const MoveType &moveType, const Color &color, std::string &&moveText,
-                             std::string &&comment)
+PromotionMove::PromotionMove(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
     : Move(moveType, color, std::move(moveText), std::move(comment)) {
     ComputeMoveData();
 }

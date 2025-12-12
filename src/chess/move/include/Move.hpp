@@ -10,8 +10,8 @@ namespace pgn {
 
 class Move {
   public:
-    Move(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment)
-        : moveType_(moveType), moveData_(color), moveText_(std::move(moveText)), comment_(std::move(comment)) {};
+    Move(const MoveType &moveType, const Color &color, std::string moveText, std::string comment)
+        : moveType_(moveType), moveData_(color), moveText_(std::move(moveText)), comment_(std::move(comment)){};
     Move() = default;
     Move(const Move &) = delete;
     Move &operator=(const Move &) = delete;
