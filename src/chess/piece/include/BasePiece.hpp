@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common/include/Types.hpp"
+#include <concepts>
 #include <iostream>
 #include <memory>
 #include <optional>
@@ -8,36 +9,49 @@
 
 namespace pgn {
 
-// template <typename ConcretePiece>
-class BasePiece {
+struct PieceState {
+    PieceType type{PieceType::Undefined};
+    Color color{Color::Undefined};
+    Position position{-1, -1};
+};
+
+template <typename Derived> class BasePiece {
   public:
     BasePiece(const BasePiece &) = delete;
     BasePiece &operator=(const BasePiece &) = delete;
     BasePiece(BasePiece &&) = default;
     BasePiece &operator=(BasePiece &&) = default;
-    ~BasePiece() {}
+    ~BasePiece() = default;
 
     std::string GetDraw() const {
         std::ostringstream ss;
-        ss << color_ << type_;
+        ss << state_.color << state_.type;
         return ss.str();
     }
 
-    void SetPosition(const Position &position) { this->position_ = position; }
-    const Position &GetPosition() const { return position_; }
+    void SetPosition(const Position &position) { this->state_.position = position; }
+    const Position &GetPosition() const { return state_.position; }
 
-    void SetColor(const Color &color) { this->color_ = color; }
-    const Color &GetColor() const { return color_; }
+    void SetColor(const Color &color) { this->state_.color = color; }
+    const Color &GetColor() const { return state_.color; }
 
-    void SetType(const PieceType &type) { type_ = type; }
-    const PieceType &GetType() const { return type_; }
+    void SetType(const PieceType &type) { state_.type = type; }
+    const PieceType &GetType() const { return state_.type; }
 
-    bool IsValidBasicMove(this auto &&self, const Position &toPosition,
+    template <typename T = Derived>
+    requires requires(const T &piece, const Position &toPosition, const std::optional<Position> &validateKingCheck) {
+        { piece.IsValidBasicMove_(toPosition, validateKingCheck) } -> std::convertible_to<bool>;
+    }
+    bool IsValidBasicMove(this const Derived &self, const Position &toPosition,
                           const std::optional<Position> &validateKingCheck = std::nullopt) {
         return self.IsValidBasicMove_(toPosition, validateKingCheck);
     }
 
-    bool IsValidAttackMove(this auto &&self, const Position &toPosition,
+    template <typename T = Derived>
+    requires requires(const T &piece, const Position &toPosition, const std::optional<Position> &validateKingCheck) {
+        { piece.IsValidAttackMove_(toPosition, validateKingCheck) } -> std::convertible_to<bool>;
+    }
+    bool IsValidAttackMove(this const Derived &self, const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) {
         return self.IsValidAttackMove_(toPosition, validateKingCheck);
     }
@@ -45,23 +59,11 @@ class BasePiece {
   protected:
     BasePiece() = default;
 
-    PieceType type_{PieceType::Undefined};
-    Color color_{Color::Undefined};
-    Position position_{-1, -1};
+    PieceState state_{};
 
     template <typename IsEmpty>
     bool ValidateMove_(int dRow, int dCol, const Position &toPosition, const std::optional<Position> &validateKingCheck,
                        Position p, const IsEmpty &isEmpty) const;
-
-    bool IsValidBasicMove_(const Position &toPosition,
-                           const std::optional<Position> &validateKingCheck = std::nullopt) const {
-        return false;
-    }
-
-    bool IsValidAttackMove_(const Position &toPosition,
-                            const std::optional<Position> &validateKingCheck = std::nullopt) const {
-        return false;
-    }
 };
 
 } // namespace pgn
