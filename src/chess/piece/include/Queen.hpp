@@ -4,18 +4,16 @@
 
 namespace pgn {
 
-class Queen : public BasePiece {
+class Queen : public BasePiece<Queen> {
   public:
-    Queen(const Color &color, const Position &position) : BasePiece() {
-        type_ = PieceType::Queen;
-        color_ = color;
-        position_ = position;
+    Queen(const Color &color, const Position &position) : BasePiece<Queen>() {
+        SetType(PieceType::Queen);
+        SetColor(color);
+        SetPosition(position);
     }
 
     Queen() = default;
 
-  private:
-    friend class BasePiece;
     bool IsValidBasicMove_(const Position &toPosition,
                            const std::optional<Position> &validateKingCheck = std::nullopt) const;
 

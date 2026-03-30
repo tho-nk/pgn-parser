@@ -4,25 +4,23 @@
 
 namespace pgn {
 
-class Knight : public BasePiece {
+class Knight : public BasePiece<Knight> {
   public:
-    Knight(const Color &color, const Position &position) : BasePiece() {
-        type_ = PieceType::Knight;
-        color_ = color;
-        position_ = position;
+    Knight(const Color &color, const Position &position) : BasePiece<Knight>() {
+        SetType(PieceType::Knight);
+        SetColor(color);
+        SetPosition(position);
     }
 
-     Knight() = default;
+    Knight() = default;
 
-   private:
-     friend class BasePiece;
-     bool IsValidBasicMove_(const Position &toPosition,
+    bool IsValidBasicMove_(const Position &toPosition,
+                           const std::optional<Position> &validateKingCheck = std::nullopt) const;
+
+    bool IsValidAttackMove_(const Position &toPosition,
                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
 
-     bool IsValidAttackMove_(const Position &toPosition,
-                             const std::optional<Position> &validateKingCheck = std::nullopt) const;
-
-     bool IsValidMove_(const Position &toPosition) const;
+    bool IsValidMove_(const Position &toPosition) const;
 };
 
 } // namespace pgn
