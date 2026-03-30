@@ -49,9 +49,8 @@ void Round::ParseRoundText(const std::string &str) {
     std::string whiteMoveComment;
     size_t indexBeginBlackMove = indexEndWhiteMove;
     helper::GetComment(moveText, whiteMoveComment, indexBeginBlackMove);
-
-    whiteMove_ = move_factory::CreateMove(getMoveType(whiteMove), Color::White, std::move(whiteMove),
-                                          std::move(whiteMoveComment));
+    auto wMoveType = getMoveType(whiteMove);
+    whiteMove_ = move_factory::CreateMove(wMoveType, Color::White, std::move(whiteMove), std::move(whiteMoveComment));
     //  this works only if 1...MoveText but not for 1... MoveText
     auto indexEndBlackMove = helper::GetNextSpace(moveText, indexBeginBlackMove);
     std::string blackMove = moveText.substr(indexBeginBlackMove, indexEndBlackMove - indexBeginBlackMove);
@@ -73,9 +72,8 @@ void Round::ParseRoundText(const std::string &str) {
     std::string blackMoveComment;
     size_t indexEnd = indexEndBlackMove;
     helper::GetComment(moveText, blackMoveComment, indexEnd);
-
-    blackMove_ = move_factory::CreateMove(getMoveType(blackMove), Color::Black, std::move(blackMove),
-                                          std::move(blackMoveComment));
+    auto bMoveType = getMoveType(blackMove);
+    blackMove_ = move_factory::CreateMove(bMoveType, Color::Black, std::move(blackMove), std::move(blackMoveComment));
 }
 
 void Round::Run() const {
