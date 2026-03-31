@@ -2,8 +2,10 @@
 #include "common/include/ParsingHelper.hpp"
 #include "common/include/PgnException.hpp"
 #include "move/include/Round.hpp"
+#include <array>
 #include <cassert>
 #include <ranges>
+#include <string_view>
 
 namespace pgn {
 
@@ -54,6 +56,8 @@ void Square::Run() {
 
 void Square::LoadPGN(const std::filesystem::path &filePath) {
     ResetState_();
+    rounds_.clear();
+
     auto parsingHelper = helper::ParseFile(filePath);
     int round = 1;
     if (!parsingHelper.roundQueue.empty()) {
@@ -70,12 +74,13 @@ void Square::LoadPGN(const std::filesystem::path &filePath) {
             std::cerr << "[THO][E] File format error : " << parsingHelper.lastRun
                       << "\n  Cannot process round := " << round << std::endl;
         }
-        auto found = parsingHelper.lastRun.find("1-0");
-        if (found == std::string::npos) {
-            found = parsingHelper.lastRun.find("0-1");
-        }
-        if (found == std::string::npos) {
-            found = parsingHelper.lastRun.find("1/2-1/2");
+        constexpr std::array<std::string_view, 3> resultTokens = {"1-0", "0-1", "1/2-1/2"};
+        auto found = std::string::npos;
+        for (const auto token : resultTokens) {
+            found = parsingHelper.lastRun.find(token);
+            if (found != std::string::npos) {
+                break;
+            }
         }
         if (found == std::string::npos) {
             // std::cerr << "[THO][E] Game result error" << std::endl;
@@ -198,7 +203,6 @@ void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &c
     default:
         std::cerr << "[THO][E] Square::ProcessPromotionMove Error while promoting" << std::endl;
         throw PgnException("Square::ProcessPromotionMove Error while promoting");
-        break;
     }
     GetPiecesAt(fromPosition).emplace<EmptyPiece>(fromPosition);
 }
