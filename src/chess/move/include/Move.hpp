@@ -15,9 +15,9 @@ class Move {
     Move() = default;
     Move(const Move &) = delete;
     Move &operator=(const Move &) = delete;
-    Move(Move &&) = delete;
-    Move &operator=(Move &&) = delete;
-    virtual ~Move() = default;
+    Move(Move &&) = default;
+    Move &operator=(Move &&) = default;
+    ~Move() = default;
 
     void SetMove(std::string move, std::string comment) {
         moveText_ = std::move(move);
@@ -28,12 +28,10 @@ class Move {
     const std::string &GetComment() const { return comment_; }
     const MoveType &GetMoveType() const { return moveType_; }
 
-    virtual void ProcessMove() {};
-
   protected:
     MoveType moveType_{MoveType::Undefined};
     std::string moveText_;
     std::string comment_;
-    MoveData moveData_{Color::Undefined};
+    mutable MoveData moveData_{Color::Undefined};
 };
 } // namespace pgn

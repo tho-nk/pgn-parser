@@ -74,8 +74,8 @@ void Round::ParseRoundText(const std::string &str) {
 
     // Ownership of parsed strings is transferred into the created move object.
     // Example: whiteMove="Nf3" and whiteMoveComment="develops knight" are moved into White move instance.
-    whiteMove_ = move_factory::CreateMove(getMoveType(whiteMove), Color::White, std::move(whiteMove),
-                                          std::move(whiteMoveComment));
+    whiteMove_.emplace(move_factory::CreateMove(getMoveType(whiteMove), Color::White, std::move(whiteMove),
+                                                std::move(whiteMoveComment)));
 
     // Parse black move token. Supports all common PGN forms:
     // "1. e4 e5", "1. e4 ...e5", and "1. e4 ... e5".
@@ -97,18 +97,18 @@ void Round::ParseRoundText(const std::string &str) {
     size_t indexEnd = indexEndBlackMove;
     helper::GetComment(moveText, blackMoveComment, indexEnd);
 
-    blackMove_ = move_factory::CreateMove(getMoveType(blackMove), Color::Black, std::move(blackMove),
-                                          std::move(blackMoveComment));
+    blackMove_.emplace(move_factory::CreateMove(getMoveType(blackMove), Color::Black, std::move(blackMove),
+                                                std::move(blackMoveComment)));
 }
 
-void Round::Run() const {
+void Round::Run() {
     // std::clog << "[THO][I] Round:=" << roundIndex_ << std::endl;
     // std::clog << "[THO][I] White move:" << std::endl;
-    whiteMove_->ProcessMove();
+    ProcessMove(*whiteMove_);
     // std::clog << pgn::Square::GetInstance().GetCurrentState() << std::endl;
     // std::clog << std::endl;
     // std::clog << "[THO][I] Black move" << std::endl;
-    blackMove_->ProcessMove();
+    ProcessMove(*blackMove_);
     // std::clog << pgn::Square::GetInstance().GetCurrentState() << std::endl;
 
     // std::clog << "\n\n\n" << std::endl;

@@ -10,11 +10,11 @@ class PromotionMove : public virtual Move {
     PromotionMove() = default;
     PromotionMove(const PromotionMove &) = delete;
     PromotionMove &operator=(const PromotionMove &) = delete;
-    PromotionMove(PromotionMove &&) = delete;
+    PromotionMove(PromotionMove &&) = default;
     PromotionMove &operator=(PromotionMove &&) = delete;
     ~PromotionMove() = default;
 
-    virtual void ProcessMove() override;
+    void ProcessMove();
 
   private:
     void ComputeMoveData();

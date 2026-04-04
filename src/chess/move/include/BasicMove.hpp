@@ -9,11 +9,11 @@ class BasicMove : public Move {
     BasicMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment);
     BasicMove(const BasicMove &) = delete;
     BasicMove &operator=(const BasicMove &) = delete;
-    BasicMove(BasicMove &&) = delete;
-    BasicMove &operator=(BasicMove &&) = delete;
+    BasicMove(BasicMove &&) = default;
+    BasicMove &operator=(BasicMove &&) = default;
     ~BasicMove() = default;
 
-    virtual void ProcessMove() final;
+    void ProcessMove();
 
   private:
     void ComputeMoveData();

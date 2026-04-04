@@ -1,8 +1,8 @@
 #pragma once
 
-#include "move/include/Move.hpp"
+#include "move/include/MoveFactory.hpp"
 #include <iostream>
-#include <memory>
+#include <optional>
 #include <vector>
 
 namespace pgn {
@@ -18,13 +18,13 @@ class Round {
 
     int GetRoundIndex() const { return roundIndex_; }
     const std::string &GetComment() const { return roundComment_; }
-    void Run() const;
+    void Run();
 
   private:
     int roundIndex_;
     std::string roundComment_;
-    std::unique_ptr<Move> whiteMove_;
-    std::unique_ptr<Move> blackMove_;
+    std::optional<MoveVariant> whiteMove_;
+    std::optional<MoveVariant> blackMove_;
 
   private:
     void ParseRoundText(const std::string &str);

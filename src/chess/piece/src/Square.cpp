@@ -52,7 +52,7 @@ void Square::ResetState_() {
 }
 
 void Square::Run() {
-    for (const auto &round : rounds_) {
+    for (auto &round : rounds_) {
         round.Run();
     }
 }

@@ -11,11 +11,11 @@ class AttackMove : public virtual Move {
     AttackMove() = default;
     AttackMove(const AttackMove &) = delete;
     AttackMove &operator=(const AttackMove &) = delete;
-    AttackMove(AttackMove &&) = delete;
+    AttackMove(AttackMove &&) = default;
     AttackMove &operator=(AttackMove &&) = delete;
     ~AttackMove() = default;
 
-    virtual void ProcessMove() override;
+    void ProcessMove();
 
   private:
     void ComputeMoveData();

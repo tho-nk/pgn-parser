@@ -11,11 +11,11 @@ class AttackPromotionMove : public AttackMove, public PromotionMove {
     AttackPromotionMove(const MoveType &moveType, const Color &color, std::string &&moveText, std::string &&comment);
     AttackPromotionMove(const AttackPromotionMove &) = delete;
     AttackPromotionMove &operator=(const AttackPromotionMove &) = delete;
-    AttackPromotionMove(AttackPromotionMove &&) = delete;
+    AttackPromotionMove(AttackPromotionMove &&) = default;
     AttackPromotionMove &operator=(AttackPromotionMove &&) = delete;
     ~AttackPromotionMove() = default;
 
-    virtual void ProcessMove() final;
+    void ProcessMove();
 
   private:
     void ComputeMoveData();
