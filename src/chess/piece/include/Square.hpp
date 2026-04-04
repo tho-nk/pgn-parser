@@ -3,6 +3,7 @@
 #include "move/include/Round.hpp"
 #include "piece/include/Pieces.hpp"
 
+#include <array>
 #include <filesystem>
 #include <optional>
 
@@ -55,10 +56,13 @@ class Square {
     ~Square() = default;
 
     Position enPassant_;
+    std::array<Position, 2> kingPositions_;
     Pieces pieces_;
     Rounds rounds_;
 
   private:
+    static constexpr std::size_t ColorToKingIndex_(const Color color) { return color == Color::White ? 0U : 1U; }
+
     void ResetState_();
     void ValidateMove_(const Position &kingPosition, const Position &piecePosition, MoveData &moveData,
                        bool &isValid) const;
