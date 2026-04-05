@@ -18,7 +18,10 @@ test_cases = ["./checking/diagonal-prevent-check-down",
               "./general/EnPassant",
               "./general/Fabiano-Hikaru_Round_1_April_4_2024",
               "./general/Jumanov-Nodirbek_2014.03.02",
-              "./general/Complex_PGN_with_comments"]
+              "./general/Complex_PGN_with_comments",
+              "./perf/Nikolic_Arsovic",
+              "./perf/Abdusattorov_Nodirbek",
+              "./perf/Abdusattorov_Yakubboev"]
 
 
 def run_pgn_parser(arg):
