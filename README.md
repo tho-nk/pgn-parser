@@ -96,3 +96,6 @@ valgrind --tool=callgrind --callgrind-out-file=pytest/perf/Nikolic_Arsovic.callg
 kcachegrind pytest/perf/Nikolic_Arsovic.callgrind.out.*
 
 valgrind --tool=callgrind --callgrind-out-file=pytest/perf/Abdusattorov_Nodirbek.callgrind.out.%p ./build/gcc-make-RelWithDebInfo/pgn_parser pytest/perf/Abdusattorov_Nodirbek
+
+
+valgrind --tool=callgrind --callgrind-out-file=pytest/perf/Abdusattorov_Yakubboev.callgrind.out.%p ./build/gcc-make-RelWithDebInfo/pgn_parser pytest/perf/Abdusattorov_Yakubboev
