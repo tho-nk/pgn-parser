@@ -90,3 +90,7 @@ I am still working on developing this parser. Please feel free to provide any fe
 -   ✔ Handle Color (White/Blacl) more elegant
 -   ✔ Pull Request!
 
+# PerfTest
+valgrind --tool=callgrind --callgrind-out-file=pytest/perf/callgrind_Nikolic_Arsovic.out.%p ./build/gcc-make-RelWithDebInfo/pgn_parser pytest/perf/Nikolic_Arsovic.pgn
+
+kcachegrind pytest/perf/callgrind_Nikolic_Arsovic.out.*
