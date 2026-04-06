@@ -3,8 +3,10 @@
 #include "move/include/Round.hpp"
 #include "piece/include/Pieces.hpp"
 
+#include <array>
 #include <filesystem>
 #include <optional>
+#include <vector>
 
 namespace pgn {
 
@@ -51,14 +53,27 @@ class Square {
     void AttackPiece(const FromPosition &fromPosition, const ToPosition &toPosition);
 
   private:
+    static constexpr int kColorCount_ = 2;
+    static constexpr int kPieceTypeCount_ = 6;
+
     Square() = default;
     ~Square() = default;
 
     Position enPassant_;
     Pieces pieces_;
     Rounds rounds_;
+    std::array<std::array<std::vector<Position>, kPieceTypeCount_>, kColorCount_> piecePositions_;
+    std::array<Position, kColorCount_> kingPositions_;
 
   private:
+    static int ColorToIndex_(const Color &color) noexcept;
+    static int PieceTypeToIndex_(const PieceType &pieceType) noexcept;
+    void AddPieceToCache_(const Color &color, const PieceType &pieceType, const Position &position);
+    void RemovePieceFromCache_(const Color &color, const PieceType &pieceType, const Position &position);
+    void MovePieceInCache_(const Color &color, const PieceType &pieceType, const Position &fromPosition,
+                           const Position &toPosition);
+    void RebuildPositionCache_();
+
     void ResetState_();
     void ValidateMove_(const Position &kingPosition, const Position &piecePosition, MoveData &moveData,
                        bool &isValid) const;

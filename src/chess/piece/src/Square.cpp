@@ -2,12 +2,102 @@
 #include "common/include/ParsingHelper.hpp"
 #include "common/include/PgnException.hpp"
 #include "move/include/Round.hpp"
+#include <algorithm>
 #include <array>
 #include <cassert>
 #include <ranges>
 #include <string_view>
 
 namespace pgn {
+
+int Square::ColorToIndex_(const Color &color) noexcept {
+    switch (color) {
+    case Color::White:
+        return 0;
+    case Color::Black:
+        return 1;
+    case Color::Undefined:
+    default:
+        return -1;
+    }
+}
+
+int Square::PieceTypeToIndex_(const PieceType &pieceType) noexcept {
+    switch (pieceType) {
+    case PieceType::King:
+        return 0;
+    case PieceType::Queen:
+        return 1;
+    case PieceType::Rook:
+        return 2;
+    case PieceType::Bishop:
+        return 3;
+    case PieceType::Knight:
+        return 4;
+    case PieceType::Pawn:
+        return 5;
+    case PieceType::Undefined:
+    default:
+        return -1;
+    }
+}
+
+void Square::AddPieceToCache_(const Color &color, const PieceType &pieceType, const Position &position) {
+    const auto colorIndex = ColorToIndex_(color);
+    const auto typeIndex = PieceTypeToIndex_(pieceType);
+    if (colorIndex < 0 || typeIndex < 0 || !position.IsValid()) {
+        return;
+    }
+
+    auto &positions = piecePositions_[colorIndex][typeIndex];
+    if (std::find(positions.begin(), positions.end(), position) == positions.end()) {
+        positions.push_back(position);
+    }
+
+    if (pieceType == PieceType::King) {
+        kingPositions_[colorIndex] = position;
+    }
+}
+
+void Square::RemovePieceFromCache_(const Color &color, const PieceType &pieceType, const Position &position) {
+    const auto colorIndex = ColorToIndex_(color);
+    const auto typeIndex = PieceTypeToIndex_(pieceType);
+    if (colorIndex < 0 || typeIndex < 0 || !position.IsValid()) {
+        return;
+    }
+
+    auto &positions = piecePositions_[colorIndex][typeIndex];
+    positions.erase(std::remove(positions.begin(), positions.end(), position), positions.end());
+
+    if (pieceType == PieceType::King && kingPositions_[colorIndex] == position) {
+        kingPositions_[colorIndex].Reset();
+    }
+}
+
+void Square::MovePieceInCache_(const Color &color, const PieceType &pieceType, const Position &fromPosition,
+                               const Position &toPosition) {
+    RemovePieceFromCache_(color, pieceType, fromPosition);
+    AddPieceToCache_(color, pieceType, toPosition);
+}
+
+void Square::RebuildPositionCache_() {
+    for (auto &types : piecePositions_) {
+        for (auto &positions : types) {
+            positions.clear();
+        }
+    }
+    for (auto &kingPosition : kingPositions_) {
+        kingPosition.Reset();
+    }
+
+    for (const auto &file : GetPieces()) {
+        for (const auto &var : file) {
+            std::visit(
+                [&](const auto &piece) { AddPieceToCache_(piece.GetColor(), piece.GetType(), piece.GetPosition()); },
+                var);
+        }
+    }
+}
 
 void Square::ResetState_() {
     for (int r = 2; r < ROWS - 2; ++r) {
@@ -46,6 +136,9 @@ void Square::ResetState_() {
     // Kings
     pieces_[0][4].emplace<King>(Color::White, Position{0, 4});
     pieces_[7][4].emplace<King>(Color::Black, Position{7, 4});
+
+    enPassant_.Reset();
+    RebuildPositionCache_();
 }
 
 void Square::Run() {
@@ -117,24 +210,25 @@ PiecesReference Square::GetPieceOfTypeAndColor_(const PieceType &pieceType, cons
     if (fromPosition.IsValid()) {
         subPieces.push_back(std::cref(GetPiecesAt(fromPosition)));
     } else {
-        for (const auto &file : GetPieces()) {
-            for (const auto &var : file) {
-                std::visit(
-                    [&](const auto &value) {
-                        if (value.GetType() == pieceType && value.GetColor() == color) {
-                            subPieces.push_back(std::cref(GetPiecesAt(value.GetPosition())));
-                        }
-                    },
-                    var);
-            }
+        const auto colorIndex = ColorToIndex_(color);
+        const auto typeIndex = PieceTypeToIndex_(pieceType);
+        if (colorIndex < 0 || typeIndex < 0) {
+            return subPieces;
+        }
+
+        for (const auto &position : piecePositions_[colorIndex][typeIndex]) {
+            subPieces.push_back(std::cref(GetPiecesAt(position)));
         }
     }
     return subPieces;
 }
 
 Position Square::GetKingPosition_(const Color &color) const {
-    const auto &kings = GetPieceOfTypeAndColor_(PieceType::King, color, Position{});
-    return std::get<King>(kings.at(0).get()).GetPosition();
+    const auto colorIndex = ColorToIndex_(color);
+    if (colorIndex < 0) {
+        return Position{};
+    }
+    return kingPositions_[colorIndex];
 }
 
 void Square::ProcessBasicMove(MoveData &moveData) const {
@@ -186,6 +280,22 @@ void Square::ProcessAttackMove(MoveData &moveData) const {
 
 void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &color, const FromPosition &fromPosition,
                                   const ToPosition &toPosition) {
+    std::visit(
+        [&](const auto &piece) {
+            if (piece.GetType() == PieceType::Pawn && piece.GetColor() == color) {
+                RemovePieceFromCache_(piece.GetColor(), piece.GetType(), piece.GetPosition());
+            }
+        },
+        GetPiecesAt(fromPosition));
+
+    std::visit(
+        [&](const auto &piece) {
+            if (piece.GetType() == PieceType::Pawn && piece.GetColor() == color) {
+                RemovePieceFromCache_(piece.GetColor(), piece.GetType(), piece.GetPosition());
+            }
+        },
+        GetPiecesAt(toPosition));
+
     switch (promotionType) {
     case PieceType::Queen:
         GetPiecesAt(toPosition).emplace<Queen>(color, toPosition);
@@ -204,6 +314,7 @@ void Square::ProcessPromotionMove(const PieceType &promotionType, const Color &c
         std::cerr << "[THO][E] Square::ProcessPromotionMove Error while promoting" << std::endl;
         throw PgnException("Square::ProcessPromotionMove Error while promoting");
     }
+    AddPieceToCache_(color, promotionType, toPosition);
     GetPiecesAt(fromPosition).emplace<EmptyPiece>(fromPosition);
 }
 
@@ -270,10 +381,21 @@ void Square::MovePiece(const FromPosition &fromPosition, const ToPosition &toPos
     }
     auto tmpF = fromPosition;
     auto tmpT = toPosition;
+    Color movingColor = Color::Undefined;
+    PieceType movingType = PieceType::Undefined;
+
+    std::visit(
+        [&](const auto &piece) {
+            movingColor = piece.GetColor();
+            movingType = piece.GetType();
+        },
+        GetPiecesAt(fromPosition));
 
     GetPiecesAt(fromPosition).swap(GetPiecesAt(toPosition));
     std::visit([&](auto &&piece) { piece.SetPosition(tmpF); }, GetPiecesAt(fromPosition));
     std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
+
+    MovePieceInCache_(movingColor, movingType, fromPosition, toPosition);
 }
 
 void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toPosition) {
@@ -283,12 +405,35 @@ void Square::AttackPiece(const FromPosition &fromPosition, const ToPosition &toP
     }
     auto tmpF = fromPosition;
     auto tmpT = toPosition;
+    Color attackerColor = Color::Undefined;
+    PieceType attackerType = PieceType::Undefined;
+    Color capturedColor = Color::Undefined;
+    PieceType capturedType = PieceType::Undefined;
+
+    std::visit(
+        [&](const auto &piece) {
+            attackerColor = piece.GetColor();
+            attackerType = piece.GetType();
+        },
+        GetPiecesAt(fromPosition));
+
+    std::visit(
+        [&](const auto &piece) {
+            capturedColor = piece.GetColor();
+            capturedType = piece.GetType();
+        },
+        GetPiecesAt(toPosition));
 
     GetPiecesAt(fromPosition).swap(GetPiecesAt(toPosition));
     std::visit([&](auto &&piece) { piece.SetPosition(tmpT); }, GetPiecesAt(toPosition));
     GetPiecesAt(fromPosition).emplace<EmptyPiece>(tmpF);
 
+    RemovePieceFromCache_(capturedColor, capturedType, toPosition);
+    MovePieceInCache_(attackerColor, attackerType, fromPosition, toPosition);
+
     if (enPassant_.IsValid()) {
+        std::visit([&](const auto &piece) { RemovePieceFromCache_(piece.GetColor(), piece.GetType(), enPassant_); },
+                   GetPiecesAt(enPassant_));
         GetPiecesAt(enPassant_).emplace<EmptyPiece>(enPassant_);
         enPassant_.Reset();
     }
