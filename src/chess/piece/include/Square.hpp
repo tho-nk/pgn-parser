@@ -3,6 +3,7 @@
 #include "move/include/Round.hpp"
 #include "piece/include/Pieces.hpp"
 
+#include <array>
 #include <filesystem>
 #include <optional>
 
@@ -51,22 +52,41 @@ class Square {
     void AttackPiece(const FromPosition &fromPosition, const ToPosition &toPosition);
 
   private:
+    static constexpr int kColorCount_ = 2;
+    static constexpr int kPieceTypeCount_ = 6;
+    static constexpr int kMaxPiecesPerType_ = 16;
+
+    struct PositionList {
+        std::array<Position, kMaxPiecesPerType_> data{};
+        size_t count = 0;
+    };
+
     Square() = default;
     ~Square() = default;
 
     Position enPassant_;
     Pieces pieces_;
     Rounds rounds_;
+    std::array<std::array<PositionList, kPieceTypeCount_>, kColorCount_> piecePositions_;
+    std::array<Position, kColorCount_> kingPositions_;
 
   private:
+    static int ColorToIndex_(const Color &color) noexcept;
+    static int PieceTypeToIndex_(const PieceType &pieceType) noexcept;
+    void AddPieceToCache_(const Color &color, const PieceType &pieceType, const Position &position);
+    void RemovePieceFromCache_(const Color &color, const PieceType &pieceType, const Position &position);
+    void MovePieceInCache_(const Color &color, const PieceType &pieceType, const Position &fromPosition,
+                           const Position &toPosition);
+    PositionList GetPiecePositions_(const PieceType &pieceType, const Color &color,
+                                    const FromPosition &fromPosition) const noexcept;
+    void RebuildPositionCache_();
+
     void ResetState_();
     void ValidateMove_(const Position &kingPosition, const Position &piecePosition, MoveData &moveData,
                        bool &isValid) const;
     bool VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,
                                  const Position &kingPosition) const;
 
-    PiecesReference GetPieceOfTypeAndColor_(const PieceType &pieceType, const Color &color,
-                                            const FromPosition &fromPosition) const noexcept;
     Position GetKingPosition_(const Color &color) const;
 };
 } // namespace pgn
