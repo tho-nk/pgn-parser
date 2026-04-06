@@ -50,9 +50,20 @@ void Square::AddPieceToCache_(const Color &color, const PieceType &pieceType, co
     }
 
     auto &positions = piecePositions_[colorIndex][typeIndex];
-    if (std::find(positions.begin(), positions.end(), position) == positions.end()) {
-        positions.push_back(position);
+    // Append only if not already present; this keeps each piece position unique in the cache.
+    for (size_t i = 0; i < positions.count; ++i) {
+        if (positions.data[i] == position) {
+            return;
+        }
     }
+
+    if (positions.count >= positions.data.size()) {
+        std::cerr << "[THO][E] Position cache overflow" << std::endl;
+        throw PgnException("Position cache overflow");
+    }
+
+    // Store at the first free slot, then advance the logical size.
+    positions.data[positions.count++] = position;
 
     if (pieceType == PieceType::King) {
         kingPositions_[colorIndex] = position;
@@ -67,7 +78,14 @@ void Square::RemovePieceFromCache_(const Color &color, const PieceType &pieceTyp
     }
 
     auto &positions = piecePositions_[colorIndex][typeIndex];
-    positions.erase(std::remove(positions.begin(), positions.end(), position), positions.end());
+    // O(1) erase pattern: replace removed slot with last active element and shrink count.
+    for (size_t i = 0; i < positions.count; ++i) {
+        if (positions.data[i] == position) {
+            positions.data[i] = positions.data[positions.count - 1];
+            --positions.count;
+            break;
+        }
+    }
 
     if (pieceType == PieceType::King && kingPositions_[colorIndex] == position) {
         kingPositions_[colorIndex].Reset();
@@ -76,14 +94,50 @@ void Square::RemovePieceFromCache_(const Color &color, const PieceType &pieceTyp
 
 void Square::MovePieceInCache_(const Color &color, const PieceType &pieceType, const Position &fromPosition,
                                const Position &toPosition) {
-    RemovePieceFromCache_(color, pieceType, fromPosition);
-    AddPieceToCache_(color, pieceType, toPosition);
+    const auto colorIndex = ColorToIndex_(color);
+    const auto typeIndex = PieceTypeToIndex_(pieceType);
+    if (colorIndex < 0 || typeIndex < 0 || !fromPosition.IsValid() || !toPosition.IsValid()) {
+        return;
+    }
+
+    auto &positions = piecePositions_[colorIndex][typeIndex];
+    // In-place relocate of one cached position; avoids remove+add churn.
+    for (size_t i = 0; i < positions.count; ++i) {
+        if (positions.data[i] == fromPosition) {
+            positions.data[i] = toPosition;
+            if (pieceType == PieceType::King) {
+                kingPositions_[colorIndex] = toPosition;
+            }
+            return;
+        }
+    }
+
+    std::cerr << "[THO][E] Cache desync: source position not found in MovePieceInCache_" << std::endl;
+    throw PgnException("Cache desync: source position not found in MovePieceInCache_");
+}
+
+Square::PositionList Square::GetPiecePositions_(const PieceType &pieceType, const Color &color,
+                                                const FromPosition &fromPosition) const noexcept {
+    PositionList result;
+    if (fromPosition.IsValid()) {
+        result.data[0] = fromPosition;
+        result.count = 1;
+        return result;
+    }
+
+    const auto colorIndex = ColorToIndex_(color);
+    const auto typeIndex = PieceTypeToIndex_(pieceType);
+    if (colorIndex < 0 || typeIndex < 0) {
+        return result;
+    }
+
+    return piecePositions_[colorIndex][typeIndex];
 }
 
 void Square::RebuildPositionCache_() {
     for (auto &types : piecePositions_) {
         for (auto &positions : types) {
-            positions.clear();
+            positions.count = 0;
         }
     }
     for (auto &kingPosition : kingPositions_) {
@@ -204,25 +258,6 @@ std::string Square::GetCurrentState() const noexcept {
     return ss.str();
 }
 
-PiecesReference Square::GetPieceOfTypeAndColor_(const PieceType &pieceType, const Color &color,
-                                                const FromPosition &fromPosition) const noexcept {
-    PiecesReference subPieces;
-    if (fromPosition.IsValid()) {
-        subPieces.push_back(std::cref(GetPiecesAt(fromPosition)));
-    } else {
-        const auto colorIndex = ColorToIndex_(color);
-        const auto typeIndex = PieceTypeToIndex_(pieceType);
-        if (colorIndex < 0 || typeIndex < 0) {
-            return subPieces;
-        }
-
-        for (const auto &position : piecePositions_[colorIndex][typeIndex]) {
-            subPieces.push_back(std::cref(GetPiecesAt(position)));
-        }
-    }
-    return subPieces;
-}
-
 Position Square::GetKingPosition_(const Color &color) const {
     const auto colorIndex = ColorToIndex_(color);
     if (colorIndex < 0) {
@@ -236,16 +271,17 @@ void Square::ProcessBasicMove(MoveData &moveData) const {
         return;
     }
     bool isValid = false;
-    const auto subPieces = GetPieceOfTypeAndColor_(moveData.pieceType, moveData.color, moveData.fromPosition);
+    const auto subPieces = GetPiecePositions_(moveData.pieceType, moveData.color, moveData.fromPosition);
 
     const auto &kingPosition = GetKingPosition_(moveData.color);
-    for (const auto &it : subPieces) {
+    for (size_t i = 0; i < subPieces.count; ++i) {
+        const auto &pieceRef = GetPiecesAt(subPieces.data[i]);
         std::visit(
             [&](const auto &piece) {
                 isValid = piece.IsValidBasicMove(moveData.toPosition);
                 ValidateMove_(kingPosition, piece.GetPosition(), moveData, isValid);
             },
-            it.get());
+            pieceRef);
         if (isValid)
             break;
     }
@@ -260,15 +296,16 @@ void Square::ProcessAttackMove(MoveData &moveData) const {
         return;
     }
     bool isValid = false;
-    const auto subPieces = GetPieceOfTypeAndColor_(moveData.pieceType, moveData.color, moveData.fromPosition);
+    const auto subPieces = GetPiecePositions_(moveData.pieceType, moveData.color, moveData.fromPosition);
     const auto &kingPosition = GetKingPosition_(moveData.color);
-    for (const auto &it : subPieces) {
+    for (size_t i = 0; i < subPieces.count; ++i) {
+        const auto &pieceRef = GetPiecesAt(subPieces.data[i]);
         std::visit(
             [&](const auto &piece) {
                 isValid = piece.IsValidAttackMove(moveData.toPosition);
                 ValidateMove_(kingPosition, piece.GetPosition(), moveData, isValid);
             },
-            it.get());
+            pieceRef);
         if (isValid)
             break;
     }

@@ -6,7 +6,6 @@
 #include <array>
 #include <filesystem>
 #include <optional>
-#include <vector>
 
 namespace pgn {
 
@@ -55,6 +54,12 @@ class Square {
   private:
     static constexpr int kColorCount_ = 2;
     static constexpr int kPieceTypeCount_ = 6;
+    static constexpr int kMaxPiecesPerType_ = 16;
+
+    struct PositionList {
+        std::array<Position, kMaxPiecesPerType_> data{};
+        size_t count = 0;
+    };
 
     Square() = default;
     ~Square() = default;
@@ -62,7 +67,7 @@ class Square {
     Position enPassant_;
     Pieces pieces_;
     Rounds rounds_;
-    std::array<std::array<std::vector<Position>, kPieceTypeCount_>, kColorCount_> piecePositions_;
+    std::array<std::array<PositionList, kPieceTypeCount_>, kColorCount_> piecePositions_;
     std::array<Position, kColorCount_> kingPositions_;
 
   private:
@@ -72,6 +77,8 @@ class Square {
     void RemovePieceFromCache_(const Color &color, const PieceType &pieceType, const Position &position);
     void MovePieceInCache_(const Color &color, const PieceType &pieceType, const Position &fromPosition,
                            const Position &toPosition);
+    PositionList GetPiecePositions_(const PieceType &pieceType, const Color &color,
+                                    const FromPosition &fromPosition) const noexcept;
     void RebuildPositionCache_();
 
     void ResetState_();
@@ -80,8 +87,6 @@ class Square {
     bool VerifyIfKingBeingCheck_(const Position &piecePosition, const Color &pieceColor,
                                  const Position &kingPosition) const;
 
-    PiecesReference GetPieceOfTypeAndColor_(const PieceType &pieceType, const Color &color,
-                                            const FromPosition &fromPosition) const noexcept;
     Position GetKingPosition_(const Color &color) const;
 };
 } // namespace pgn
